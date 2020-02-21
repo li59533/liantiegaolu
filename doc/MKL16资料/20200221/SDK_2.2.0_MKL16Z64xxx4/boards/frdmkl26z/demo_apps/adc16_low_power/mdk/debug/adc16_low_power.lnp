@@ -1,0 +1,23 @@
+--cpu Cortex-M0+
+"debug\startup_mkl26z4.o"
+"debug\system_mkl26z4.o"
+"debug\fsl_lpsci.o"
+"debug\fsl_uart.o"
+"debug\fsl_lptmr.o"
+"debug\fsl_gpio.o"
+"debug\fsl_clock.o"
+"debug\fsl_adc16.o"
+"debug\fsl_sim.o"
+"debug\fsl_pmc.o"
+"debug\fsl_common.o"
+"debug\fsl_smc.o"
+"debug\fsl_flash.o"
+"debug\adc16_low_power.o"
+"debug\pin_mux.o"
+"debug\board.o"
+"debug\clock_config.o"
+"debug\fsl_debug_console.o"
+--library_type=microlib --diag_suppress 6314 --strict --scatter "MKL26Z128xxx4_flash.scf"
+--remove --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\output\adc16_low_power.map" -o debug\adc16_low_power.out

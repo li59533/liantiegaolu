@@ -1,0 +1,10 @@
+debug\system_mkl26z4.o: ../../../../../devices/MKL26Z4/system_MKL26Z4.c
+debug\system_mkl26z4.o: D:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+debug\system_mkl26z4.o: ../../../../../devices/MKL26Z4/fsl_device_registers.h
+debug\system_mkl26z4.o: ../../../../../devices/MKL26Z4/MKL26Z4.h
+debug\system_mkl26z4.o: ../../../../../CMSIS/Include/core_cm0plus.h
+debug\system_mkl26z4.o: ../../../../../CMSIS/Include/core_cmInstr.h
+debug\system_mkl26z4.o: ../../../../../CMSIS/Include/cmsis_armcc.h
+debug\system_mkl26z4.o: ../../../../../CMSIS/Include/core_cmFunc.h
+debug\system_mkl26z4.o: ../../../../../devices/MKL26Z4/system_MKL26Z4.h
+debug\system_mkl26z4.o: ../../../../../devices/MKL26Z4/MKL26Z4_features.h

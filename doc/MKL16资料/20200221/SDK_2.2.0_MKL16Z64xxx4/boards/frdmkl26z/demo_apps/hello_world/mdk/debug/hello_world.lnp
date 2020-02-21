@@ -1,0 +1,18 @@
+--cpu Cortex-M0+
+"debug\startup_mkl26z4.o"
+"debug\fsl_lpsci.o"
+"debug\fsl_uart.o"
+"debug\fsl_common.o"
+"debug\fsl_gpio.o"
+"debug\fsl_smc.o"
+"debug\fsl_flash.o"
+"debug\fsl_clock.o"
+"debug\hello_world.o"
+"debug\pin_mux.o"
+"debug\board.o"
+"debug\clock_config.o"
+"debug\fsl_debug_console.o"
+--library_type=microlib --diag_suppress 6314 --strict --scatter "MKL26Z128xxx4_flash.scf"
+--remove --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\output\hello_world.map" -o debug\hello_world.out
