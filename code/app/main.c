@@ -19,7 +19,7 @@
  * @addtogroup    XXX 
  * @{  
  */
-
+#include "bsp_mkl16_tim.h"
 /**	
  * @addtogroup    main_Modules 
  * @{  
@@ -110,7 +110,9 @@ int main(void)
 	{
 		DEBUG("Test\r\n");
 		BSP_Test_Delay(1000);
-		BSP_LED_Toggle(BSP_LED1);
+		//BSP_LED_Toggle(BSP_LED1);
+		
+		//DEBUG("Time Count : %d\r\n",BSP_MKL16_GetCurCount());
 	}
 }
 

@@ -67,6 +67,7 @@
 
 #if BSP_TIM_MODULE_ENABLE == 1
 	#include "fsl_lptmr.h"	
+	#include "fsl_tpm.h"
 #endif	
 
 

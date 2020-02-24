@@ -15,7 +15,7 @@
 #include "bsp_mkl16_clock.h"
 
 #include "bsp_led.h"
-
+#include "bsp_mkl16_tim.h"
 /**
  * @addtogroup    XXX 
  * @{  
@@ -109,6 +109,9 @@ void Board_Init_ClockRUN(void)
 void Board_Init_BSP(void)
 {
 	BSP_LED_Init();
+	
+	BSP_MKL16_Clock_Init(BSP_CLOCK0);
+
 }
 
 

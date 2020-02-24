@@ -1,233 +1,0 @@
-Dependencies for Project 'hello_world', Target 'hello_world Debug': (DO NOT MODIFY !)
-F (../../../../../devices/MKL26Z4/arm/startup_MKL26Z4.s)(0x5E4D722E)(--cpu Cortex-M0+ -g --apcs=interwork --pd "__MICROLIB SETA 1"-I.\RTE\_hello_world_Debug-ID:\Keil_v5\Arm\Packs\Keil\Kinetis_KLxx_DFP\1.14.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include--pd "__UVISION_VERSION SETA 528" --pd "MKL26Z128xxx4 SETA 1" --pd "DEBUG SETA 1"--list .\output\startup_mkl26z4.lst -o debug\startup_mkl26z4.o --depend debug\startup_mkl26z4.d)
-F (../../../../../devices/MKL26Z4/system_MKL26Z4.c)(0x5E4D722E)(--c99 -c --cpu Cortex-M0+ -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../../../../../CMSIS/Include -I ../../../../../devices -I .. -I ../../.. -I ../../../../../devices/MKL26Z4/drivers -I ../../../../../devices/MKL26Z4/utilities -I ../../../../../devices/MKL26Z4 --library_interface=armcc --library_type=standardlib --diag_suppress=66,1296,186  -I.\RTE\_hello_world_Debug-ID:\Keil_v5\Arm\Packs\Keil\Kinetis_KLxx_DFP\1.14.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="528" -DMKL26Z128xxx4 -DDEBUG -DCPU_MKL26Z128VLH4 -DPRINTF_FLOAT_ENABLE="0" -DSCANF_FLOAT_ENABLE="0" -DPRINTF_ADVANCED_ENABLE="0" -DSCANF_ADVANCED_ENABLE="0" -DFRDM_KL26Z -DFREEDOM-o debug\system_mkl26z4.o --omf_browse debug\system_mkl26z4.crf --depend debug\system_mkl26z4.d)
-I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5CEB79E2)
-I (../../../../../devices/MKL26Z4/fsl_device_registers.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/MKL26Z4.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cm0plus.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cmInstr.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/cmsis_armcc.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cmFunc.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/system_MKL26Z4.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/MKL26Z4_features.h)(0x5E4D722E)
-F (../../../../../devices/MKL26Z4/system_MKL26Z4.h)(0x5E4D722E)()
-F (../readme.txt)(0x5E4D722E)()
-F (../../../../../devices/MKL26Z4/drivers/fsl_lpsci.h)(0x5E4D722E)()
-F (../../../../../devices/MKL26Z4/drivers/fsl_lpsci.c)(0x5E4D722E)(--c99 -c --cpu Cortex-M0+ -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../../../../../CMSIS/Include -I ../../../../../devices -I .. -I ../../.. -I ../../../../../devices/MKL26Z4/drivers -I ../../../../../devices/MKL26Z4/utilities -I ../../../../../devices/MKL26Z4 --library_interface=armcc --library_type=standardlib --diag_suppress=66,1296,186  -I.\RTE\_hello_world_Debug-ID:\Keil_v5\Arm\Packs\Keil\Kinetis_KLxx_DFP\1.14.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="528" -DMKL26Z128xxx4 -DDEBUG -DCPU_MKL26Z128VLH4 -DPRINTF_FLOAT_ENABLE="0" -DSCANF_FLOAT_ENABLE="0" -DPRINTF_ADVANCED_ENABLE="0" -DSCANF_ADVANCED_ENABLE="0" -DFRDM_KL26Z -DFREEDOM-o debug\fsl_lpsci.o --omf_browse debug\fsl_lpsci.crf --depend debug\fsl_lpsci.d)
-I (../../../../../devices/MKL26Z4/drivers/fsl_lpsci.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/drivers/fsl_common.h)(0x5E4D722E)
-I (D:\Keil_v5\ARM\ARMCC\include\assert.h)(0x5CEB79D6)
-I (D:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5CEB79DE)
-I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5CEB79E2)
-I (D:\Keil_v5\ARM\ARMCC\include\string.h)(0x5CEB79E2)
-I (../../../../../devices/MKL26Z4/fsl_device_registers.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/MKL26Z4.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cm0plus.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cmInstr.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/cmsis_armcc.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cmFunc.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/system_MKL26Z4.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/MKL26Z4_features.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/drivers/fsl_clock.h)(0x5E4D722E)
-F (../../../../../devices/MKL26Z4/drivers/fsl_uart.h)(0x5E4D722E)()
-F (../../../../../devices/MKL26Z4/drivers/fsl_uart.c)(0x5E4D722E)(--c99 -c --cpu Cortex-M0+ -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../../../../../CMSIS/Include -I ../../../../../devices -I .. -I ../../.. -I ../../../../../devices/MKL26Z4/drivers -I ../../../../../devices/MKL26Z4/utilities -I ../../../../../devices/MKL26Z4 --library_interface=armcc --library_type=standardlib --diag_suppress=66,1296,186  -I.\RTE\_hello_world_Debug-ID:\Keil_v5\Arm\Packs\Keil\Kinetis_KLxx_DFP\1.14.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="528" -DMKL26Z128xxx4 -DDEBUG -DCPU_MKL26Z128VLH4 -DPRINTF_FLOAT_ENABLE="0" -DSCANF_FLOAT_ENABLE="0" -DPRINTF_ADVANCED_ENABLE="0" -DSCANF_ADVANCED_ENABLE="0" -DFRDM_KL26Z -DFREEDOM-o debug\fsl_uart.o --omf_browse debug\fsl_uart.crf --depend debug\fsl_uart.d)
-I (../../../../../devices/MKL26Z4/drivers/fsl_uart.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/drivers/fsl_common.h)(0x5E4D722E)
-I (D:\Keil_v5\ARM\ARMCC\include\assert.h)(0x5CEB79D6)
-I (D:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5CEB79DE)
-I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5CEB79E2)
-I (D:\Keil_v5\ARM\ARMCC\include\string.h)(0x5CEB79E2)
-I (../../../../../devices/MKL26Z4/fsl_device_registers.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/MKL26Z4.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cm0plus.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cmInstr.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/cmsis_armcc.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cmFunc.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/system_MKL26Z4.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/MKL26Z4_features.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/drivers/fsl_clock.h)(0x5E4D722E)
-F (../../../../../devices/MKL26Z4/drivers/fsl_port.h)(0x5E4D722E)()
-F (../../../../../devices/MKL26Z4/drivers/fsl_common.h)(0x5E4D722E)()
-F (../../../../../devices/MKL26Z4/drivers/fsl_common.c)(0x5E4D722E)(--c99 -c --cpu Cortex-M0+ -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../../../../../CMSIS/Include -I ../../../../../devices -I .. -I ../../.. -I ../../../../../devices/MKL26Z4/drivers -I ../../../../../devices/MKL26Z4/utilities -I ../../../../../devices/MKL26Z4 --library_interface=armcc --library_type=standardlib --diag_suppress=66,1296,186  -I.\RTE\_hello_world_Debug-ID:\Keil_v5\Arm\Packs\Keil\Kinetis_KLxx_DFP\1.14.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="528" -DMKL26Z128xxx4 -DDEBUG -DCPU_MKL26Z128VLH4 -DPRINTF_FLOAT_ENABLE="0" -DSCANF_FLOAT_ENABLE="0" -DPRINTF_ADVANCED_ENABLE="0" -DSCANF_ADVANCED_ENABLE="0" -DFRDM_KL26Z -DFREEDOM-o debug\fsl_common.o --omf_browse debug\fsl_common.crf --depend debug\fsl_common.d)
-I (../../../../../devices/MKL26Z4/drivers/fsl_common.h)(0x5E4D722E)
-I (D:\Keil_v5\ARM\ARMCC\include\assert.h)(0x5CEB79D6)
-I (D:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5CEB79DE)
-I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5CEB79E2)
-I (D:\Keil_v5\ARM\ARMCC\include\string.h)(0x5CEB79E2)
-I (../../../../../devices/MKL26Z4/fsl_device_registers.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/MKL26Z4.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cm0plus.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cmInstr.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/cmsis_armcc.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cmFunc.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/system_MKL26Z4.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/MKL26Z4_features.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/drivers/fsl_clock.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/utilities/fsl_debug_console.h)(0x5E4D722E)
-F (../../../../../devices/MKL26Z4/drivers/fsl_gpio.h)(0x5E4D722E)()
-F (../../../../../devices/MKL26Z4/drivers/fsl_gpio.c)(0x5E4D722E)(--c99 -c --cpu Cortex-M0+ -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../../../../../CMSIS/Include -I ../../../../../devices -I .. -I ../../.. -I ../../../../../devices/MKL26Z4/drivers -I ../../../../../devices/MKL26Z4/utilities -I ../../../../../devices/MKL26Z4 --library_interface=armcc --library_type=standardlib --diag_suppress=66,1296,186  -I.\RTE\_hello_world_Debug-ID:\Keil_v5\Arm\Packs\Keil\Kinetis_KLxx_DFP\1.14.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="528" -DMKL26Z128xxx4 -DDEBUG -DCPU_MKL26Z128VLH4 -DPRINTF_FLOAT_ENABLE="0" -DSCANF_FLOAT_ENABLE="0" -DPRINTF_ADVANCED_ENABLE="0" -DSCANF_ADVANCED_ENABLE="0" -DFRDM_KL26Z -DFREEDOM-o debug\fsl_gpio.o --omf_browse debug\fsl_gpio.crf --depend debug\fsl_gpio.d)
-I (../../../../../devices/MKL26Z4/drivers/fsl_gpio.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/drivers/fsl_common.h)(0x5E4D722E)
-I (D:\Keil_v5\ARM\ARMCC\include\assert.h)(0x5CEB79D6)
-I (D:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5CEB79DE)
-I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5CEB79E2)
-I (D:\Keil_v5\ARM\ARMCC\include\string.h)(0x5CEB79E2)
-I (../../../../../devices/MKL26Z4/fsl_device_registers.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/MKL26Z4.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cm0plus.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cmInstr.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/cmsis_armcc.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cmFunc.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/system_MKL26Z4.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/MKL26Z4_features.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/drivers/fsl_clock.h)(0x5E4D722E)
-F (../../../../../devices/MKL26Z4/drivers/fsl_smc.h)(0x5E4D722E)()
-F (../../../../../devices/MKL26Z4/drivers/fsl_smc.c)(0x5E4D722E)(--c99 -c --cpu Cortex-M0+ -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../../../../../CMSIS/Include -I ../../../../../devices -I .. -I ../../.. -I ../../../../../devices/MKL26Z4/drivers -I ../../../../../devices/MKL26Z4/utilities -I ../../../../../devices/MKL26Z4 --library_interface=armcc --library_type=standardlib --diag_suppress=66,1296,186  -I.\RTE\_hello_world_Debug-ID:\Keil_v5\Arm\Packs\Keil\Kinetis_KLxx_DFP\1.14.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="528" -DMKL26Z128xxx4 -DDEBUG -DCPU_MKL26Z128VLH4 -DPRINTF_FLOAT_ENABLE="0" -DSCANF_FLOAT_ENABLE="0" -DPRINTF_ADVANCED_ENABLE="0" -DSCANF_ADVANCED_ENABLE="0" -DFRDM_KL26Z -DFREEDOM-o debug\fsl_smc.o --omf_browse debug\fsl_smc.crf --depend debug\fsl_smc.d)
-I (../../../../../devices/MKL26Z4/drivers/fsl_smc.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/drivers/fsl_common.h)(0x5E4D722E)
-I (D:\Keil_v5\ARM\ARMCC\include\assert.h)(0x5CEB79D6)
-I (D:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5CEB79DE)
-I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5CEB79E2)
-I (D:\Keil_v5\ARM\ARMCC\include\string.h)(0x5CEB79E2)
-I (../../../../../devices/MKL26Z4/fsl_device_registers.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/MKL26Z4.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cm0plus.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cmInstr.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/cmsis_armcc.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cmFunc.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/system_MKL26Z4.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/MKL26Z4_features.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/drivers/fsl_clock.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/drivers/fsl_flash.h)(0x5E4D722E)
-F (../../../../../devices/MKL26Z4/drivers/fsl_flash.c)(0x5E4D722E)(--c99 -c --cpu Cortex-M0+ -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../../../../../CMSIS/Include -I ../../../../../devices -I .. -I ../../.. -I ../../../../../devices/MKL26Z4/drivers -I ../../../../../devices/MKL26Z4/utilities -I ../../../../../devices/MKL26Z4 --library_interface=armcc --library_type=standardlib --diag_suppress=66,1296,186  -I.\RTE\_hello_world_Debug-ID:\Keil_v5\Arm\Packs\Keil\Kinetis_KLxx_DFP\1.14.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="528" -DMKL26Z128xxx4 -DDEBUG -DCPU_MKL26Z128VLH4 -DPRINTF_FLOAT_ENABLE="0" -DSCANF_FLOAT_ENABLE="0" -DPRINTF_ADVANCED_ENABLE="0" -DSCANF_ADVANCED_ENABLE="0" -DFRDM_KL26Z -DFREEDOM-o debug\fsl_flash.o --omf_browse debug\fsl_flash.crf --depend debug\fsl_flash.d)
-I (../../../../../devices/MKL26Z4/drivers/fsl_flash.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/drivers/fsl_common.h)(0x5E4D722E)
-I (D:\Keil_v5\ARM\ARMCC\include\assert.h)(0x5CEB79D6)
-I (D:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5CEB79DE)
-I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5CEB79E2)
-I (D:\Keil_v5\ARM\ARMCC\include\string.h)(0x5CEB79E2)
-I (../../../../../devices/MKL26Z4/fsl_device_registers.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/MKL26Z4.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cm0plus.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cmInstr.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/cmsis_armcc.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cmFunc.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/system_MKL26Z4.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/MKL26Z4_features.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/drivers/fsl_clock.h)(0x5E4D722E)
-F (../../../../../devices/MKL26Z4/drivers/fsl_flash.h)(0x5E4D722E)()
-F (../../../../../devices/MKL26Z4/drivers/fsl_clock.h)(0x5E4D722E)()
-F (../../../../../devices/MKL26Z4/drivers/fsl_clock.c)(0x5E4D722E)(--c99 -c --cpu Cortex-M0+ -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../../../../../CMSIS/Include -I ../../../../../devices -I .. -I ../../.. -I ../../../../../devices/MKL26Z4/drivers -I ../../../../../devices/MKL26Z4/utilities -I ../../../../../devices/MKL26Z4 --library_interface=armcc --library_type=standardlib --diag_suppress=66,1296,186  -I.\RTE\_hello_world_Debug-ID:\Keil_v5\Arm\Packs\Keil\Kinetis_KLxx_DFP\1.14.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="528" -DMKL26Z128xxx4 -DDEBUG -DCPU_MKL26Z128VLH4 -DPRINTF_FLOAT_ENABLE="0" -DSCANF_FLOAT_ENABLE="0" -DPRINTF_ADVANCED_ENABLE="0" -DSCANF_ADVANCED_ENABLE="0" -DFRDM_KL26Z -DFREEDOM-o debug\fsl_clock.o --omf_browse debug\fsl_clock.crf --depend debug\fsl_clock.d)
-I (../../../../../devices/MKL26Z4/drivers/fsl_clock.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/drivers/fsl_common.h)(0x5E4D722E)
-I (D:\Keil_v5\ARM\ARMCC\include\assert.h)(0x5CEB79D6)
-I (D:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5CEB79DE)
-I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5CEB79E2)
-I (D:\Keil_v5\ARM\ARMCC\include\string.h)(0x5CEB79E2)
-I (../../../../../devices/MKL26Z4/fsl_device_registers.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/MKL26Z4.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cm0plus.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cmInstr.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/cmsis_armcc.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cmFunc.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/system_MKL26Z4.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/MKL26Z4_features.h)(0x5E4D722E)
-F (../hello_world.c)(0x5E4D722E)(--c99 -c --cpu Cortex-M0+ -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../../../../../CMSIS/Include -I ../../../../../devices -I .. -I ../../.. -I ../../../../../devices/MKL26Z4/drivers -I ../../../../../devices/MKL26Z4/utilities -I ../../../../../devices/MKL26Z4 --library_interface=armcc --library_type=standardlib --diag_suppress=66,1296,186  -I.\RTE\_hello_world_Debug-ID:\Keil_v5\Arm\Packs\Keil\Kinetis_KLxx_DFP\1.14.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="528" -DMKL26Z128xxx4 -DDEBUG -DCPU_MKL26Z128VLH4 -DPRINTF_FLOAT_ENABLE="0" -DSCANF_FLOAT_ENABLE="0" -DPRINTF_ADVANCED_ENABLE="0" -DSCANF_ADVANCED_ENABLE="0" -DFRDM_KL26Z -DFREEDOM-o debug\hello_world.o --omf_browse debug\hello_world.crf --depend debug\hello_world.d)
-I (../../../../../devices/MKL26Z4/fsl_device_registers.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/MKL26Z4.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cm0plus.h)(0x5E4D722E)
-I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5CEB79E2)
-I (../../../../../CMSIS/Include/core_cmInstr.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/cmsis_armcc.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cmFunc.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/system_MKL26Z4.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/MKL26Z4_features.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/utilities/fsl_debug_console.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/drivers/fsl_common.h)(0x5E4D722E)
-I (D:\Keil_v5\ARM\ARMCC\include\assert.h)(0x5CEB79D6)
-I (D:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5CEB79DE)
-I (D:\Keil_v5\ARM\ARMCC\include\string.h)(0x5CEB79E2)
-I (../../../../../devices/MKL26Z4/drivers/fsl_clock.h)(0x5E4D722E)
-I (../board.h)(0x5E4D722E)
-I (../clock_config.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/drivers/fsl_gpio.h)(0x5E4D722E)
-I (../pin_mux.h)(0x5E4D722E)
-F (../pin_mux.c)(0x5E4D722E)(--c99 -c --cpu Cortex-M0+ -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../../../../../CMSIS/Include -I ../../../../../devices -I .. -I ../../.. -I ../../../../../devices/MKL26Z4/drivers -I ../../../../../devices/MKL26Z4/utilities -I ../../../../../devices/MKL26Z4 --library_interface=armcc --library_type=standardlib --diag_suppress=66,1296,186  -I.\RTE\_hello_world_Debug-ID:\Keil_v5\Arm\Packs\Keil\Kinetis_KLxx_DFP\1.14.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="528" -DMKL26Z128xxx4 -DDEBUG -DCPU_MKL26Z128VLH4 -DPRINTF_FLOAT_ENABLE="0" -DSCANF_FLOAT_ENABLE="0" -DPRINTF_ADVANCED_ENABLE="0" -DSCANF_ADVANCED_ENABLE="0" -DFRDM_KL26Z -DFREEDOM-o debug\pin_mux.o --omf_browse debug\pin_mux.crf --depend debug\pin_mux.d)
-I (../../../../../devices/MKL26Z4/drivers/fsl_common.h)(0x5E4D722E)
-I (D:\Keil_v5\ARM\ARMCC\include\assert.h)(0x5CEB79D6)
-I (D:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5CEB79DE)
-I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5CEB79E2)
-I (D:\Keil_v5\ARM\ARMCC\include\string.h)(0x5CEB79E2)
-I (../../../../../devices/MKL26Z4/fsl_device_registers.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/MKL26Z4.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cm0plus.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cmInstr.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/cmsis_armcc.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cmFunc.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/system_MKL26Z4.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/MKL26Z4_features.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/drivers/fsl_clock.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/drivers/fsl_port.h)(0x5E4D722E)
-I (../pin_mux.h)(0x5E4D722E)
-F (../pin_mux.h)(0x5E4D722E)()
-F (../board.c)(0x5E4D722E)(--c99 -c --cpu Cortex-M0+ -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../../../../../CMSIS/Include -I ../../../../../devices -I .. -I ../../.. -I ../../../../../devices/MKL26Z4/drivers -I ../../../../../devices/MKL26Z4/utilities -I ../../../../../devices/MKL26Z4 --library_interface=armcc --library_type=standardlib --diag_suppress=66,1296,186  -I.\RTE\_hello_world_Debug-ID:\Keil_v5\Arm\Packs\Keil\Kinetis_KLxx_DFP\1.14.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="528" -DMKL26Z128xxx4 -DDEBUG -DCPU_MKL26Z128VLH4 -DPRINTF_FLOAT_ENABLE="0" -DSCANF_FLOAT_ENABLE="0" -DPRINTF_ADVANCED_ENABLE="0" -DSCANF_ADVANCED_ENABLE="0" -DFRDM_KL26Z -DFREEDOM-o debug\board.o --omf_browse debug\board.crf --depend debug\board.d)
-I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5CEB79E2)
-I (../board.h)(0x5E4D722E)
-I (../clock_config.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/drivers/fsl_common.h)(0x5E4D722E)
-I (D:\Keil_v5\ARM\ARMCC\include\assert.h)(0x5CEB79D6)
-I (D:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5CEB79DE)
-I (D:\Keil_v5\ARM\ARMCC\include\string.h)(0x5CEB79E2)
-I (../../../../../devices/MKL26Z4/fsl_device_registers.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/MKL26Z4.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cm0plus.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cmInstr.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/cmsis_armcc.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cmFunc.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/system_MKL26Z4.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/MKL26Z4_features.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/drivers/fsl_clock.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/drivers/fsl_gpio.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/utilities/fsl_debug_console.h)(0x5E4D722E)
-F (../board.h)(0x5E4D722E)()
-F (../clock_config.c)(0x5E4D722E)(--c99 -c --cpu Cortex-M0+ -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../../../../../CMSIS/Include -I ../../../../../devices -I .. -I ../../.. -I ../../../../../devices/MKL26Z4/drivers -I ../../../../../devices/MKL26Z4/utilities -I ../../../../../devices/MKL26Z4 --library_interface=armcc --library_type=standardlib --diag_suppress=66,1296,186  -I.\RTE\_hello_world_Debug-ID:\Keil_v5\Arm\Packs\Keil\Kinetis_KLxx_DFP\1.14.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="528" -DMKL26Z128xxx4 -DDEBUG -DCPU_MKL26Z128VLH4 -DPRINTF_FLOAT_ENABLE="0" -DSCANF_FLOAT_ENABLE="0" -DPRINTF_ADVANCED_ENABLE="0" -DSCANF_ADVANCED_ENABLE="0" -DFRDM_KL26Z -DFREEDOM-o debug\clock_config.o --omf_browse debug\clock_config.crf --depend debug\clock_config.d)
-I (../../../../../devices/MKL26Z4/drivers/fsl_smc.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/drivers/fsl_common.h)(0x5E4D722E)
-I (D:\Keil_v5\ARM\ARMCC\include\assert.h)(0x5CEB79D6)
-I (D:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5CEB79DE)
-I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5CEB79E2)
-I (D:\Keil_v5\ARM\ARMCC\include\string.h)(0x5CEB79E2)
-I (../../../../../devices/MKL26Z4/fsl_device_registers.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/MKL26Z4.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cm0plus.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cmInstr.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/cmsis_armcc.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cmFunc.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/system_MKL26Z4.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/MKL26Z4_features.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/drivers/fsl_clock.h)(0x5E4D722E)
-I (../clock_config.h)(0x5E4D722E)
-F (../clock_config.h)(0x5E4D722E)()
-F (../../../../../devices/MKL26Z4/utilities/fsl_debug_console.c)(0x5E4D722E)(--c99 -c --cpu Cortex-M0+ -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I ../../../../../CMSIS/Include -I ../../../../../devices -I .. -I ../../.. -I ../../../../../devices/MKL26Z4/drivers -I ../../../../../devices/MKL26Z4/utilities -I ../../../../../devices/MKL26Z4 --library_interface=armcc --library_type=standardlib --diag_suppress=66,1296,186  -I.\RTE\_hello_world_Debug-ID:\Keil_v5\Arm\Packs\Keil\Kinetis_KLxx_DFP\1.14.0\Device\Include-ID:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="528" -DMKL26Z128xxx4 -DDEBUG -DCPU_MKL26Z128VLH4 -DPRINTF_FLOAT_ENABLE="0" -DSCANF_FLOAT_ENABLE="0" -DPRINTF_ADVANCED_ENABLE="0" -DSCANF_ADVANCED_ENABLE="0" -DFRDM_KL26Z -DFREEDOM-o debug\fsl_debug_console.o --omf_browse debug\fsl_debug_console.crf --depend debug\fsl_debug_console.d)
-I (D:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x5CEB79E4)
-I (D:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x5CEB79E2)
-I (D:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x5CEB79E2)
-I (D:\Keil_v5\ARM\ARMCC\include\math.h)(0x5CEB79D6)
-I (../../../../../devices/MKL26Z4/utilities/fsl_debug_console.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/drivers/fsl_common.h)(0x5E4D722E)
-I (D:\Keil_v5\ARM\ARMCC\include\assert.h)(0x5CEB79D6)
-I (D:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x5CEB79DE)
-I (D:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5CEB79E2)
-I (D:\Keil_v5\ARM\ARMCC\include\string.h)(0x5CEB79E2)
-I (../../../../../devices/MKL26Z4/fsl_device_registers.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/MKL26Z4.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cm0plus.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cmInstr.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/cmsis_armcc.h)(0x5E4D722E)
-I (../../../../../CMSIS/Include/core_cmFunc.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/system_MKL26Z4.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/MKL26Z4_features.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/drivers/fsl_clock.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/drivers/fsl_uart.h)(0x5E4D722E)
-I (../../../../../devices/MKL26Z4/drivers/fsl_lpsci.h)(0x5E4D722E)
-F (../../../../../devices/MKL26Z4/utilities/fsl_debug_console.h)(0x5E4D722E)()

@@ -27,7 +27,7 @@
  * @defgroup      bsp_mkl16_tim_Exported_Macros 
  * @{  
  */
-
+#define  BSP_CLOCK0  0
 /**
  * @}
  */
@@ -63,8 +63,9 @@
  * @defgroup      bsp_mkl16_tim_Exported_Functions 
  * @{  
  */
-
-
+ 
+void BSP_MKL16_Clock_Init(uint8_t BSP_CLOCKx);
+uint32_t BSP_MKL16_GetCurCount(void);
 /**
  * @}
  */
