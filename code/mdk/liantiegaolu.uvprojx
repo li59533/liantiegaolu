@@ -583,24 +583,29 @@
           <GroupName>bsp</GroupName>
           <Files>
             <File>
-              <FileName>bsp_mkl16_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\bsp\bsp_mkl16_clock.c</FilePath>
-            </File>
-            <File>
               <FileName>bsp_mkl16_conf.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\bsp\bsp_mkl16_conf.h</FilePath>
             </File>
             <File>
-              <FileName>bsp_led.c</FileName>
+              <FileName>bsp_mkl16_rtc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\bsp\bsp_led.c</FilePath>
+              <FilePath>..\bsp\bsp_mkl16_rtc.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_mkl16_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\bsp\bsp_mkl16_clock.c</FilePath>
             </File>
             <File>
               <FileName>bsp_mkl16_tim.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\bsp\bsp_mkl16_tim.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_led.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\bsp\bsp_led.c</FilePath>
             </File>
           </Files>
         </Group>

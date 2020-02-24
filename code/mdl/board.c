@@ -16,6 +16,7 @@
 
 #include "bsp_led.h"
 #include "bsp_mkl16_tim.h"
+#include "bsp_mkl16_rtc.h"
 /**
  * @addtogroup    XXX 
  * @{  
@@ -112,7 +113,8 @@ void Board_Init_BSP(void)
 	BSP_LED_Init();
 	
 	//BSP_MKL16_Clock_Init(BSP_CLOCK0);
-	BSP_MKL16_Clock_Init(BSP_CLOCK1);
+	//BSP_MKL16_Clock_Init(BSP_CLOCK1);
+	BSP_MKL16_RTC_Init();
 }
 
 
