@@ -22,7 +22,22 @@
  * @addtogroup    bsp_mkl16_clock_Modules 
  * @{  
  */
+/*
 
+00> kCLOCK_CoreSysClk:48000000
+00> kCLOCK_PlatClk:48000000
+00> kCLOCK_BusClk:24000000
+00> kCLOCK_FlashClk:24000000
+00> kCLOCK_PllFllSelClk:48000000
+00> kCLOCK_Er32kClk:1000
+00> kCLOCK_McgFixedFreqClk:250000
+00> kCLOCK_McgInternalRefClk:32768
+00> kCLOCK_McgFllClk:0
+00> kCLOCK_McgPll0Clk:96000000
+00> kCLOCK_LpoClk:1000
+00> kCLOCK_Osc0ErClk:8000000
+
+*/
 /**
  * @defgroup      bsp_mkl16_clock_Exported_Macros 
  * @{  
@@ -94,6 +109,7 @@ extern const osc_config_t oscConfig_BOARD_BootClockVLPR;
  * @{  
  */
 void BSP_MKL16_SystemClockInit(void);
+void BSP_MKL16_ShowClock(void);
 /**
  * @}
  */

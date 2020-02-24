@@ -12,7 +12,7 @@
  */
 
 #include "bsp_mkl16_clock.h"
-
+#include "clog.h"
 /**
  * @addtogroup    XXX 
  * @{  
@@ -300,6 +300,24 @@ void BOARD_BootClockVLPR(void)
     /* Set SystemCoreClock variable. */
     SystemCoreClock = BOARD_BOOTCLOCKVLPR_CORE_CLOCK;
 }
+
+
+void BSP_MKL16_ShowClock(void)
+{
+	DEBUG("kCLOCK_CoreSysClk:%d\r\n", CLOCK_GetFreq(kCLOCK_CoreSysClk));
+	DEBUG("kCLOCK_PlatClk:%d\r\n", CLOCK_GetFreq(kCLOCK_PlatClk));
+	DEBUG("kCLOCK_BusClk:%d\r\n", CLOCK_GetFreq(kCLOCK_BusClk));
+	DEBUG("kCLOCK_FlashClk:%d\r\n", CLOCK_GetFreq(kCLOCK_FlashClk));
+	DEBUG("kCLOCK_PllFllSelClk:%d\r\n", CLOCK_GetFreq(kCLOCK_PllFllSelClk));
+	DEBUG("kCLOCK_Er32kClk:%d\r\n", CLOCK_GetFreq(kCLOCK_Er32kClk));
+	DEBUG("kCLOCK_McgFixedFreqClk:%d\r\n", CLOCK_GetFreq(kCLOCK_McgFixedFreqClk));
+	DEBUG("kCLOCK_McgInternalRefClk:%d\r\n", CLOCK_GetFreq(kCLOCK_McgInternalRefClk));
+	DEBUG("kCLOCK_McgFllClk:%d\r\n", CLOCK_GetFreq(kCLOCK_McgFllClk));
+	DEBUG("kCLOCK_McgPll0Clk:%d\r\n", CLOCK_GetFreq(kCLOCK_McgPll0Clk));
+	DEBUG("kCLOCK_LpoClk:%d\r\n", CLOCK_GetFreq(kCLOCK_LpoClk));
+	DEBUG("kCLOCK_Osc0ErClk:%d\r\n", CLOCK_GetFreq(kCLOCK_Osc0ErClk));	
+}
+
 
 /**
  * @}

@@ -104,14 +104,15 @@
 void Board_Init_ClockRUN(void)
 {
 	BSP_MKL16_SystemClockInit();
+	BSP_MKL16_ShowClock();
 }
 
 void Board_Init_BSP(void)
 {
 	BSP_LED_Init();
 	
-	BSP_MKL16_Clock_Init(BSP_CLOCK0);
-
+	//BSP_MKL16_Clock_Init(BSP_CLOCK0);
+	BSP_MKL16_Clock_Init(BSP_CLOCK1);
 }
 
 

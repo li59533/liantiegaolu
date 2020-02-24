@@ -102,16 +102,16 @@
  */
 int main(void)
 {
-	Board_Init_BSP();
 	Board_Init_ClockRUN();
 	
+	Board_Init_BSP();
 	
 	while(1)
 	{
-		DEBUG("Test\r\n");
+		//DEBUG("Time Count : %d\r\n" , BSP_MKL16_GetTimrCurCount(BSP_CLOCK1));
 		BSP_Test_Delay(1000);
 		//BSP_LED_Toggle(BSP_LED1);
-		
+		//DEBUG("Time Count : %d\r\n" , BSP_MKL16_GetTimrCurCount(BSP_CLOCK1));
 		//DEBUG("Time Count : %d\r\n",BSP_MKL16_GetCurCount());
 	}
 }
