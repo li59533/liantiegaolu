@@ -1,6 +1,6 @@
 /**
  **************************************************************************************************
- * @file        bsp_led.h
+ * @file        bsp_mkl16_adc.h
  * @author
  * @version
  * @date        
@@ -10,8 +10,8 @@
  *
  **************************************************************************************************
  */
-#ifndef _BSP_LED_H_
-#define _BSP_LED_H_
+#ifndef _BSP_MKL16_ADC_H_
+#define _BSP_MKL16_ADC_H_
 
 /**
  * @addtogroup    XXX 
@@ -19,31 +19,22 @@
  */
 #include "self_def.h"
 /**
- * @addtogroup    bsp_led_Modules 
+ * @addtogroup    bsp_mkl16_adc_Modules 
  * @{  
  */
 
 /**
- * @defgroup      bsp_led_Exported_Macros 
+ * @defgroup      bsp_mkl16_adc_Exported_Macros 
  * @{  
  */
 
-#define BSP_LED1   0 
-#define BSP_LED2   1
 
-#define BSP_LED_COUNT  1
-
-
-
-// ----------define self -------------
-#define BSP_LED_TEST  BSP_LED1
-// -----------------------------------
 /**
  * @}
  */
 
 /**
- * @defgroup      bsp_led_Exported_Constants
+ * @defgroup      bsp_mkl16_adc_Exported_Constants
  * @{  
  */
 
@@ -52,7 +43,7 @@
  */
 
 /**
- * @defgroup      bsp_led_Exported_Types 
+ * @defgroup      bsp_mkl16_adc_Exported_Types 
  * @{  
  */
 
@@ -61,7 +52,7 @@
  */
 
 /**
- * @defgroup      bsp_led_Exported_Variables 
+ * @defgroup      bsp_mkl16_adc_Exported_Variables 
  * @{  
  */
 
@@ -70,16 +61,13 @@
  */
 
 /**
- * @defgroup      bsp_led_Exported_Functions 
+ * @defgroup      bsp_mkl16_adc_Exported_Functions 
  * @{  
  */
-void BSP_LED_Init(void);
+void BSP_MKL16_ADC_Init(void);
+uint32_t BSP_MKL16_ADC_GetValue(uint8_t channel);
 
-void BSP_LED_Open(uint8_t BSP_LEDx);
-
-void BSP_LED_Close(uint8_t BSP_LEDx);
-
-void BSP_LED_Toggle(uint8_t BSP_LEDx);
+void BSP_MKL16_ADC_ShowValue(void);
 
 /**
  * @}

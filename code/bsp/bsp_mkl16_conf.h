@@ -38,10 +38,10 @@
 #define BSP_GPIO_MODULE_ENABLE			1
 #define BSP_TIM_MODULE_ENABLE			1
 #define BSP_RTC_MODULE_ENABLE			1
+#define BSP_ADC_MODULE_ENABLE			1
 
 
 
-#define BSP_ADC_MODULE_ENABLE			0
 #define BSP_CAN_MODULE_ENABLE 			0
 #define BSP_DAC_MODULE_ENABLE			0
 #define BSP_DMA_MODULE_ENABLE			0
@@ -80,6 +80,11 @@
 
 #if BSP_RTC_MODULE_ENABLE == 1	
 	#include "fsl_rtc.h"
+#endif	
+
+
+#if BSP_ADC_MODULE_ENABLE == 1	
+	#include "fsl_adc16.h"
 #endif	
 
 

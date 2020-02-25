@@ -607,6 +607,11 @@
               <FileType>1</FileType>
               <FilePath>..\bsp\bsp_led.c</FilePath>
             </File>
+            <File>
+              <FileName>bsp_mkl16_adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\bsp\bsp_mkl16_adc.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

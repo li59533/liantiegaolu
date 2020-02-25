@@ -122,9 +122,6 @@ static void bsp_mkl16_tmp0_init(void)
 	CLOCK_EnableClock(kCLOCK_Tpm0);
 	CLOCK_SetTpmClock(1); //SIM->SOPT2   
 	
-	
-
-	
 	TPM_GetDefaultConfig(&config);
 	
 	config.enableDebugMode = false;
@@ -132,20 +129,17 @@ static void bsp_mkl16_tmp0_init(void)
 	config.enableReloadOnTrigger = false;
 	config.enableStartOnTrigger = false ;
 	config.enableStopOnOverflow = false;
-	config.prescale = kTPM_Prescale_Divide_1;
+	config.prescale = kTPM_Prescale_Divide_128;
 	//config.triggerSelect = kTPM_Trigger_Select_8;
 	config.useGlobalTimeBase = false;
 	
 	TPM_Init(TPM0, &config);
 	
-	TPM_SetTimerPeriod(TPM0, 48000);
+	TPM_SetTimerPeriod(TPM0, 65535);
 	
-	TPM_EnableInterrupts(TPM0, kTPM_TimeOverflowInterruptEnable);
-	
-	EnableIRQ(TPM0_IRQn);
-	
-	
-	
+//	TPM_EnableInterrupts(TPM0, kTPM_TimeOverflowInterruptEnable);
+//	
+//	EnableIRQ(TPM0_IRQn);
 	
 	TPM_StartTimer(TPM0, kTPM_SystemClock);
 }
@@ -207,7 +201,7 @@ void LPTMR0_IRQHandler(void)
 
 void TPM0_IRQHandler(void)
 {
-	//DEBUG("TPM0_IRQHandler\r\n");
+	DEBUG("TPM0_IRQHandler\r\n");
 	//DEBUG("Time Count : %d\r\n" , BSP_MKL16_GetTimrCurCount(BSP_CLOCK1));
 	
 	TPM_ClearStatusFlags( TPM0 ,kTPM_TimeOverflowFlag);

@@ -21,6 +21,7 @@
  */
 #include "bsp_mkl16_tim.h"
 #include "bsp_mkl16_rtc.h"
+#include "bsp_mkl16_adc.h"
 /**	
  * @addtogroup    main_Modules 
  * @{  
@@ -112,11 +113,10 @@ int main(void)
 		//DEBUG("Time Count : %d\r\n" , BSP_MKL16_GetTimrCurCount(BSP_CLOCK1));
 		BSP_Test_Delay(1000);
 		
-		BSP_MKL16_ShowDate();
-		
+		//BSP_MKL16_ShowDate();
+		//BSP_MKL16_ADC_ShowValue();
 		//BSP_LED_Toggle(BSP_LED1);
 		//DEBUG("Time Count : %d\r\n" , BSP_MKL16_GetTimrCurCount(BSP_CLOCK1));
-		//DEBUG("Time Count : %d\r\n",BSP_MKL16_GetCurCount());
 	}
 }
 
