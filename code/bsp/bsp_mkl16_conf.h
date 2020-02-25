@@ -39,21 +39,19 @@
 #define BSP_TIM_MODULE_ENABLE			1
 #define BSP_RTC_MODULE_ENABLE			1
 #define BSP_ADC_MODULE_ENABLE			1
-
+#define BSP_DMA_MODULE_ENABLE			0
+#define BSP_USART_MODULE_ENABLE			1
 
 
 #define BSP_CAN_MODULE_ENABLE 			0
 #define BSP_DAC_MODULE_ENABLE			0
-#define BSP_DMA_MODULE_ENABLE			0
 #define BSP_EXTI_MODULE_ENABLE 			0
 #define BSP_FLASH_MODULE_ENABLE			0
-
 #define BSP_IIC_MODULE_ENABLE			0
 #define BSP_SPI_MODULE_ENABLE			0
-
-#define BSP_USART_MODULE_ENABLE			0
 #define BSP_WDG_MODULE_ENABLE			0
 #define BSP_SYSTICK_MODULE_ENABLE		0
+
 // -----------------------------------------------
 
 #if USING_MKL16_LIB == 1
@@ -87,7 +85,15 @@
 	#include "fsl_adc16.h"
 #endif	
 
+#if BSP_DMA_MODULE_ENABLE == 1	
+	#include "fsl_dma.h"
+	#include "fsl_dmamux.h"
+#endif	
 
+#if BSP_USART_MODULE_ENABLE == 1	
+	#include "fsl_uart.h"
+	#include "fsl_lpsci.h"
+#endif	
 
 /**
  * @}
