@@ -1,6 +1,6 @@
 /**
  **************************************************************************************************
- * @file        bsp_mkl16_tim.h
+ * @file        bsp_rtc.h
  * @author
  * @version
  * @date        
@@ -10,8 +10,8 @@
  *
  **************************************************************************************************
  */
-#ifndef _BSP_MKL16_TIM_H_
-#define _BSP_MKL16_TIM_H_
+#ifndef _BSP_RTC_H_
+#define _BSP_RTC_H_
 
 /**
  * @addtogroup    XXX 
@@ -19,17 +19,14 @@
  */
 #include "self_def.h"
 /**
- * @addtogroup    bsp_mkl16_tim_Modules 
+ * @addtogroup    bsp_rtc_Modules 
  * @{  
  */
 
 /**
- * @defgroup      bsp_mkl16_tim_Exported_Macros 
+ * @defgroup      bsp_rtc_Exported_Macros 
  * @{  
  */
-#define		BSP_CLOCK0  0
-#define		BSP_CLOCK1  1
-#define 	BSP_CLOCK2  2
 
 
 /**
@@ -37,16 +34,7 @@
  */
 
 /**
- * @defgroup      bsp_mkl16_tim_Exported_Constants
- * @{  
- */
-
-/**
- * @}
- */
-
-/**
- * @defgroup      bsp_mkl16_tim_Exported_Types 
+ * @defgroup      bsp_rtc_Exported_Constants
  * @{  
  */
 
@@ -55,7 +43,7 @@
  */
 
 /**
- * @defgroup      bsp_mkl16_tim_Exported_Variables 
+ * @defgroup      bsp_rtc_Exported_Types 
  * @{  
  */
 
@@ -64,12 +52,25 @@
  */
 
 /**
- * @defgroup      bsp_mkl16_tim_Exported_Functions 
+ * @defgroup      bsp_rtc_Exported_Variables 
  * @{  
  */
- 
-void BSP_MKL16_Clock_Init(uint8_t BSP_CLOCKx);
-uint32_t BSP_MKL16_GetTimrCurCount(uint8_t BSP_CLOCKx);
+
+/**
+ * @}
+ */
+
+/**
+ * @defgroup      bsp_rtc_Exported_Functions 
+ * @{  
+ */
+
+void BSP_RTC_Init(void);
+void BSP_ShowDate(void);
+
+
+
+
 /**
  * @}
  */

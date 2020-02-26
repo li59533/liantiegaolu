@@ -19,9 +19,9 @@
  * @addtogroup    XXX 
  * @{  
  */
-#include "bsp_mkl16_tim.h"
-#include "bsp_mkl16_rtc.h"
-#include "bsp_mkl16_adc.h"
+#include "bsp_tim.h"
+#include "bsp_rtc.h"
+#include "bsp_adc.h"
 /**	
  * @addtogroup    main_Modules 
  * @{  

@@ -1,6 +1,6 @@
 /**
  **************************************************************************************************
- * @file        bsp_mkl16_adc.c
+ * @file        bsp_adc.c
  * @author
  * @version
  * @date        
@@ -11,7 +11,7 @@
  **************************************************************************************************
  */
 
-#include "bsp_mkl16_conf.h"
+#include "bsp_conf.h"
 
 #include "clog.h"
 
@@ -21,12 +21,12 @@
  */
 #include "bsp_led.h"
 /**
- * @addtogroup    bsp_mkl16_adc_Modules 
+ * @addtogroup    bsp_adc_Modules 
  * @{  
  */
 
 /**
- * @defgroup      bsp_mkl16_adc_IO_Defines 
+ * @defgroup      bsp_adc_IO_Defines 
  * @brief         
  * @{  
  */
@@ -36,7 +36,7 @@
  */
 
 /**
- * @defgroup       bsp_mkl16_adc_Macros_Defines 
+ * @defgroup       bsp_adc_Macros_Defines 
  * @brief         
  * @{  
  */
@@ -46,7 +46,7 @@
  */
 
 /**
- * @defgroup      bsp_mkl16_adc_Constants_Defines 
+ * @defgroup      bsp_adc_Constants_Defines 
  * @brief         
  * @{  
  */
@@ -56,7 +56,7 @@
  */
 
 /**
- * @defgroup       bsp_mkl16_adc_Private_Types
+ * @defgroup       bsp_adc_Private_Types
  * @brief         
  * @{  
  */
@@ -66,7 +66,7 @@
  */
 
 /**
- * @defgroup      bsp_mkl16_adc_Private_Variables 
+ * @defgroup      bsp_adc_Private_Variables 
  * @brief         
  * @{  
  */
@@ -76,7 +76,7 @@
  */
 
 /**
- * @defgroup      bsp_mkl16_adc_Public_Variables 
+ * @defgroup      bsp_adc_Public_Variables 
  * @brief         
  * @{  
  */
@@ -86,21 +86,21 @@
  */
 
 /**
- * @defgroup      bsp_mkl16_adc_Private_FunctionPrototypes 
+ * @defgroup      bsp_adc_Private_FunctionPrototypes 
  * @brief         
  * @{  
  */
-//static void bsp_mkl16_adcDMA_init(void);
+//static void bsp_adcDMA_init(void);
 /**
  * @}
  */
 
 /**
- * @defgroup      bsp_mkl16_adc_Functions 
+ * @defgroup      bsp_adc_Functions 
  * @brief         
  * @{  
  */
-void BSP_MKL16_ADC_Init(void)
+void BSP_ADC_Init(void)
 {
 	adc16_config_t config = { 0 };
 	gpio_pin_config_t gpio_pin_config = { 0 };
@@ -162,16 +162,16 @@ void BSP_MKL16_ADC_Init(void)
 	
 	
 	// ---------Open DMA -------
-	//bsp_mkl16_adcDMA_init();
+	//bsp_adcDMA_init();
 	// -------------------------
 }
 
 //dma_handle_t dma_handle ;
 //dma_transfer_config_t transferConfig;	
-//#define BSP_MKL16_ADC_DATA_LEN     16
-//uint32_t bsp_mkl16_adc_DataArray[BSP_MKL16_ADC_DATA_LEN] = { 0 };
+//#define BSP_ADC_DATA_LEN     16
+//uint32_t bsp_adc_DataArray[BSP_ADC_DATA_LEN] = { 0 };
 
-//static void bsp_mkl16_adcDMA_init(void)
+//static void bsp_adcDMA_init(void)
 //{
 //	ADC16_EnableDMA(ADC0, true);
 //	
@@ -191,7 +191,7 @@ void BSP_MKL16_ADC_Init(void)
 //    /* Setup transfer */
 //	
 //    DMA_PrepareTransfer(&transferConfig, (void *)ADC16_RESULT_REG_ADDR, sizeof(uint32_t),
-//                        (void *)bsp_mkl16_adc_DataArray, sizeof(uint32_t), sizeof(bsp_mkl16_adc_DataArray),
+//                        (void *)bsp_adc_DataArray, sizeof(uint32_t), sizeof(bsp_adc_DataArray),
 //                        kDMA_PeripheralToMemory);
 //						
 //    DMA_SetTransferConfig(DMA0, 0, &transferConfig);
@@ -208,15 +208,15 @@ void BSP_MKL16_ADC_Init(void)
 //}
 
 
-uint32_t BSP_MKL16_ADC_GetValue(uint8_t channel)
+uint32_t BSP_ADC_GetValue(uint8_t channel)
 {
 	return ADC16_GetChannelConversionValue( ADC0 , 0);
 }
 
 // --------------Test -----
-void BSP_MKL16_ADC_ShowValue(void)
+void BSP_ADC_ShowValue(void)
 {
-	DEBUG("ADC Value:%d\r\n" ,BSP_MKL16_ADC_GetValue(0) );
+	DEBUG("ADC Value:%d\r\n" ,BSP_ADC_GetValue(0) );
 }
 
 // ------------------------
@@ -226,7 +226,7 @@ void BSP_MKL16_ADC_ShowValue(void)
 void ADC0_IRQHandler(void)
 {
 	DEBUG("ADC0_IRQHandler%d\r\n" );
-	BSP_MKL16_ADC_ShowValue();
+	BSP_ADC_ShowValue();
 	BSP_LED_Toggle(BSP_LED_TEST);
 }
 // ---------------------------

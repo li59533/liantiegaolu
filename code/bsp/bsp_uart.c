@@ -1,6 +1,6 @@
 /**
  **************************************************************************************************
- * @file        bsp_mkl16_uart.c
+ * @file        bsp_uart.c
  * @author
  * @version
  * @date        
@@ -10,8 +10,8 @@
  *
  **************************************************************************************************
  */
-#include "bsp_mkl16_conf.h"
-#include "bsp_mkl16_uart.h"
+#include "bsp_conf.h"
+#include "bsp_uart.h"
 #include "clog.h"
 /**
  * @addtogroup    XXX 
@@ -19,12 +19,12 @@
  */
 #include "bsp_led.h"
 /**
- * @addtogroup    bsp_mkl16_uart_Modules 
+ * @addtogroup    bsp_uart_Modules 
  * @{  
  */
 
 /**
- * @defgroup      bsp_mkl16_uart_IO_Defines 
+ * @defgroup      bsp_uart_IO_Defines 
  * @brief         
  * @{  
  */
@@ -34,7 +34,7 @@
  */
 
 /**
- * @defgroup       bsp_mkl16_uart_Macros_Defines 
+ * @defgroup       bsp_uart_Macros_Defines 
  * @brief         
  * @{  
  */
@@ -44,7 +44,7 @@
  */
 
 /**
- * @defgroup      bsp_mkl16_uart_Constants_Defines 
+ * @defgroup      bsp_uart_Constants_Defines 
  * @brief         
  * @{  
  */
@@ -54,7 +54,7 @@
  */
 
 /**
- * @defgroup       bsp_mkl16_uart_Private_Types
+ * @defgroup       bsp_uart_Private_Types
  * @brief         
  * @{  
  */
@@ -64,7 +64,7 @@
  */
 
 /**
- * @defgroup      bsp_mkl16_uart_Private_Variables 
+ * @defgroup      bsp_uart_Private_Variables 
  * @brief         
  * @{  
  */
@@ -74,7 +74,7 @@
  */
 
 /**
- * @defgroup      bsp_mkl16_uart_Public_Variables 
+ * @defgroup      bsp_uart_Public_Variables 
  * @brief         
  * @{  
  */
@@ -84,19 +84,19 @@
  */
 
 /**
- * @defgroup      bsp_mkl16_uart_Private_FunctionPrototypes 
+ * @defgroup      bsp_uart_Private_FunctionPrototypes 
  * @brief         
  * @{  
  */
-static void bsp_mkl16_uart0_init(void);
-static void bsp_mkl16_uart1_init(void);
-static void bsp_mkl16_uart2_init(void);
+static void bsp_uart0_init(void);
+static void bsp_uart1_init(void);
+static void bsp_uart2_init(void);
 /**
  * @}
  */
 
 /**
- * @defgroup      bsp_mkl16_uart_Functions 
+ * @defgroup      bsp_uart_Functions 
  * @brief         
  * @{  
  */
@@ -110,19 +110,19 @@ PA1 -> RX0	ALT2
 */
 
 
-void BSP_MKL16_UART_Init(uint8_t BSP_UARTX)
+void BSP_UART_Init(uint8_t BSP_UARTX)
 {
 	switch(BSP_UARTX)
 	{
-		case BSP_UART0: bsp_mkl16_uart0_init();break;
-		case BSP_UART1: bsp_mkl16_uart1_init();break;
-		case BSP_UART2: bsp_mkl16_uart2_init();break;
+		case BSP_UART0: bsp_uart0_init();break;
+		case BSP_UART1: bsp_uart1_init();break;
+		case BSP_UART2: bsp_uart2_init();break;
 		default:break;
 	}
 }
 
 
-static void bsp_mkl16_uart0_init(void)
+static void bsp_uart0_init(void)
 {
 	// -------gpio init ------
 	CLOCK_EnableClock(kCLOCK_PortA);
@@ -168,12 +168,12 @@ static void bsp_mkl16_uart0_init(void)
 	
 }
 
-static void bsp_mkl16_uart1_init(void)
+static void bsp_uart1_init(void)
 {
 	
 }
 
-static void bsp_mkl16_uart2_init(void)
+static void bsp_uart2_init(void)
 {
 	// -------gpio init ------
 	CLOCK_EnableClock(kCLOCK_PortE);
@@ -188,11 +188,61 @@ static void bsp_mkl16_uart2_init(void)
 	gpio_pin_config.pinDirection = kGPIO_DigitalInput;
 	GPIO_PinInit(GPIOE, 17, &gpio_pin_config);
 	// -----------------------	
+	
+	// -------uart 2 init ----
+	CLOCK_EnableClock(kCLOCK_Uart2);
+	
+	uart_config_t config ;
+	UART_GetDefaultConfig(&config);
+
+/*
+ *   uartConfig->baudRate_Bps = 115200U;
+ *   uartConfig->bitCountPerChar = kUART_8BitsPerChar;
+ *   uartConfig->parityMode = kUART_ParityDisabled;
+ *   uartConfig->stopBitCount = kUART_OneStopBit;
+ *   uartConfig->txFifoWatermark = 0;
+ *   uartConfig->rxFifoWatermark = 1;
+ *   uartConfig->enableTx = false;
+ *   uartConfig->enableRx = false;	
+*/	
+
+	UART_Init(UART2, &config,  CLOCK_GetCoreSysClkFreq());
+	
+	UART_EnableTx(UART2, true);
+	UART_EnableRx(UART2, true);
+	
+	UART_EnableInterrupts(UART_Type *base, uint32_t mask);
+
+
+
+
+// --------------------------------------
+
+
+
+	LPSCI_EnableTx(UART0, true);
+	LPSCI_EnableRx(UART0, true);
+	
+	// -----------------------
+	
+	// --------open irq-------
+	LPSCI_EnableInterrupts( UART0, kLPSCI_RxDataRegFullInterruptEnable);
+	
+	LPSCI_EnableInterrupts( UART0, kLPSCI_TransmissionCompleteInterruptEnable);
+	
+	EnableIRQ(UART0_IRQn);
+	
+	// -----------------------	
+}
+
+void BSP_UART_WriteBytes_(void)
+{
+	
 }
 
 
 // -----------IRQ--------------
-UART0_IRQn
+
 // ----------------------------
 /**
  * @}

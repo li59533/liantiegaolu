@@ -1,6 +1,6 @@
 /**
  **************************************************************************************************
- * @file        bsp_mkl16_rtc.c
+ * @file        bsp_rtc.c
  * @author
  * @version
  * @date        
@@ -11,7 +11,7 @@
  **************************************************************************************************
  */
 
-#include "bsp_mkl16_conf.h"
+#include "bsp_conf.h"
 
 #include "clog.h"
 
@@ -21,12 +21,12 @@
  */
 
 /**
- * @addtogroup    bsp_mkl16_rtc_Modules 
+ * @addtogroup    bsp_rtc_Modules 
  * @{  
  */
 
 /**
- * @defgroup      bsp_mkl16_rtc_IO_Defines 
+ * @defgroup      bsp_rtc_IO_Defines 
  * @brief         
  * @{  
  */
@@ -36,7 +36,7 @@
  */
 
 /**
- * @defgroup       bsp_mkl16_rtc_Macros_Defines 
+ * @defgroup       bsp_rtc_Macros_Defines 
  * @brief         
  * @{  
  */
@@ -46,7 +46,7 @@
  */
 
 /**
- * @defgroup      bsp_mkl16_rtc_Constants_Defines 
+ * @defgroup      bsp_rtc_Constants_Defines 
  * @brief         
  * @{  
  */
@@ -56,7 +56,7 @@
  */
 
 /**
- * @defgroup       bsp_mkl16_rtc_Private_Types
+ * @defgroup       bsp_rtc_Private_Types
  * @brief         
  * @{  
  */
@@ -66,7 +66,7 @@
  */
 
 /**
- * @defgroup      bsp_mkl16_rtc_Private_Variables 
+ * @defgroup      bsp_rtc_Private_Variables 
  * @brief         
  * @{  
  */
@@ -76,7 +76,7 @@
  */
 
 /**
- * @defgroup      bsp_mkl16_rtc_Public_Variables 
+ * @defgroup      bsp_rtc_Public_Variables 
  * @brief         
  * @{  
  */
@@ -86,7 +86,7 @@
  */
 
 /**
- * @defgroup      bsp_mkl16_rtc_Private_FunctionPrototypes 
+ * @defgroup      bsp_rtc_Private_FunctionPrototypes 
  * @brief         
  * @{  
  */
@@ -96,11 +96,11 @@
  */
 
 /**
- * @defgroup      bsp_mkl16_rtc_Functions 
+ * @defgroup      bsp_rtc_Functions 
  * @brief         
  * @{  
  */
-void BSP_MKL16_RTC_Init(void)
+void BSP_RTC_Init(void)
 {
 	rtc_config_t config = { 0 };
 	rtc_datetime_t datetime = { 0 };
@@ -137,7 +137,7 @@ void BSP_MKL16_RTC_Init(void)
 }
 
 
-void BSP_MKL16_ShowDate(void)
+void BSP_ShowDate(void)
 {
 	rtc_datetime_t datetime = { 0 } ;
 	RTC_GetDatetime(RTC , &datetime);

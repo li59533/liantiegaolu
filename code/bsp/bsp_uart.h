@@ -1,6 +1,6 @@
 /**
  **************************************************************************************************
- * @file        bsp_mkl16_adc.h
+ * @file        bsp_uart.h
  * @author
  * @version
  * @date        
@@ -10,8 +10,8 @@
  *
  **************************************************************************************************
  */
-#ifndef _BSP_MKL16_ADC_H_
-#define _BSP_MKL16_ADC_H_
+#ifndef _BSP_UART_H_
+#define _BSP_UART_H_
 
 /**
  * @addtogroup    XXX 
@@ -19,40 +19,27 @@
  */
 #include "self_def.h"
 /**
- * @addtogroup    bsp_mkl16_adc_Modules 
+ * @addtogroup    bsp_uart_Modules 
  * @{  
  */
 
 /**
- * @defgroup      bsp_mkl16_adc_Exported_Macros 
+ * @defgroup      bsp_uart_Exported_Macros 
  * @{  
  */
+#define BSP_UART0   0
+#define BSP_UART1   1
+#define BSP_UART2   2
 
 
+#define BSP_UART_E32	BSP_UART2
+#define BSP_UART_CONF	BSP_UART0
 /**
  * @}
  */
 
 /**
- * @defgroup      bsp_mkl16_adc_Exported_Constants
- * @{  
- */
-
-/**
- * @}
- */
-
-/**
- * @defgroup      bsp_mkl16_adc_Exported_Types 
- * @{  
- */
-
-/**
- * @}
- */
-
-/**
- * @defgroup      bsp_mkl16_adc_Exported_Variables 
+ * @defgroup      bsp_uart_Exported_Constants
  * @{  
  */
 
@@ -61,13 +48,27 @@
  */
 
 /**
- * @defgroup      bsp_mkl16_adc_Exported_Functions 
+ * @defgroup      bsp_uart_Exported_Types 
  * @{  
  */
-void BSP_MKL16_ADC_Init(void);
-uint32_t BSP_MKL16_ADC_GetValue(uint8_t channel);
 
-void BSP_MKL16_ADC_ShowValue(void);
+/**
+ * @}
+ */
+
+/**
+ * @defgroup      bsp_uart_Exported_Variables 
+ * @{  
+ */
+
+/**
+ * @}
+ */
+
+/**
+ * @defgroup      bsp_uart_Exported_Functions 
+ * @{  
+ */
 
 /**
  * @}

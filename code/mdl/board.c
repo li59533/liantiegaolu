@@ -12,12 +12,12 @@
  */
 
 #include "board.h"
-#include "bsp_mkl16_clock.h"
+#include "bsp_clock.h"
 
 #include "bsp_led.h"
-#include "bsp_mkl16_tim.h"
-#include "bsp_mkl16_rtc.h"
-#include "bsp_mkl16_adc.h"
+#include "bsp_tim.h"
+#include "bsp_rtc.h"
+#include "bsp_adc.h"
 /**
  * @addtogroup    XXX 
  * @{  
@@ -105,19 +105,19 @@
  */
 void Board_Init_ClockRUN(void)
 {
-	BSP_MKL16_SystemClockInit();
-	BSP_MKL16_ShowClock();
+	BSP_SystemClockInit();
+	BSP_ShowClock();
 }
 
 void Board_Init_BSP(void)
 {
 	BSP_LED_Init();
 	
-	//BSP_MKL16_Clock_Init(BSP_CLOCK0);
+	//BSP_Clock_Init(BSP_CLOCK0);
 	
-	BSP_MKL16_Clock_Init(BSP_CLOCK1);
-	BSP_MKL16_RTC_Init();
-	BSP_MKL16_ADC_Init();
+	BSP_Clock_Init(BSP_CLOCK1);
+	BSP_RTC_Init();
+	BSP_ADC_Init();
 }
 
 

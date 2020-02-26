@@ -1,6 +1,6 @@
 /**
  **************************************************************************************************
- * @file        bsp_mkl16_conf.h
+ * @file        bsp_conf.h
  * @author
  * @version
  * @date        
@@ -10,8 +10,8 @@
  *
  **************************************************************************************************
  */
-#ifndef _BSP_MKL16_CONF_H_
-#define _BSP_MKL16_CONF_H_
+#ifndef _BSP_CONF_H_
+#define _BSP_CONF_H_
 
 /**
  * @addtogroup    XXX 
@@ -22,12 +22,12 @@
 
 
 /**
- * @addtogroup    bsp_mkl16_conf_Modules 
+ * @addtogroup    bsp_conf_Modules 
  * @{  
  */
 
 /**
- * @defgroup      bsp_mkl16_conf_Exported_Macros 
+ * @defgroup      bsp_conf_Exported_Macros 
  * @{  
  */
 // -----------Lib Active list --------------------
@@ -100,7 +100,7 @@
  */
 
 /**
- * @defgroup      bsp_mkl16_conf_Exported_Constants
+ * @defgroup      bsp_conf_Exported_Constants
  * @{  
  */
 
@@ -109,7 +109,7 @@
  */
 
 /**
- * @defgroup      bsp_mkl16_conf_Exported_Types 
+ * @defgroup      bsp_conf_Exported_Types 
  * @{  
  */
 
@@ -118,7 +118,7 @@
  */
 
 /**
- * @defgroup      bsp_mkl16_conf_Exported_Variables 
+ * @defgroup      bsp_conf_Exported_Variables 
  * @{  
  */
 
@@ -127,7 +127,7 @@
  */
 
 /**
- * @defgroup      bsp_mkl16_conf_Exported_Functions 
+ * @defgroup      bsp_conf_Exported_Functions 
  * @{  
  */
 

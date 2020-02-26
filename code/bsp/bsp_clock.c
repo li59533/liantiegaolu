@@ -1,6 +1,6 @@
 /**
  **************************************************************************************************
- * @file        bsp_mkl16_clock.c
+ * @file        bsp_clock.c
  * @author
  * @version
  * @date        
@@ -11,7 +11,7 @@
  **************************************************************************************************
  */
 
-#include "bsp_mkl16_clock.h"
+#include "bsp_clock.h"
 #include "clog.h"
 /**
  * @addtogroup    XXX 
@@ -19,12 +19,12 @@
  */
 
 /**
- * @addtogroup    bsp_mkl16_clock_Modules 
+ * @addtogroup    bsp_clock_Modules 
  * @{  
  */
 
 /**
- * @defgroup      bsp_mkl16_clock_IO_Defines 
+ * @defgroup      bsp_clock_IO_Defines 
  * @brief         
  * @{  
  */
@@ -34,7 +34,7 @@
  */
 
 /**
- * @defgroup       bsp_mkl16_clock_Macros_Defines 
+ * @defgroup       bsp_clock_Macros_Defines 
  * @brief         
  * @{  
  */
@@ -52,7 +52,7 @@ extern uint32_t SystemCoreClock;
  */
 
 /**
- * @defgroup      bsp_mkl16_clock_Constants_Defines 
+ * @defgroup      bsp_clock_Constants_Defines 
  * @brief         
  * @{  
  */
@@ -62,7 +62,7 @@ extern uint32_t SystemCoreClock;
  */
 
 /**
- * @defgroup       bsp_mkl16_clock_Private_Types
+ * @defgroup       bsp_clock_Private_Types
  * @brief         
  * @{  
  */
@@ -72,7 +72,7 @@ extern uint32_t SystemCoreClock;
  */
 
 /**
- * @defgroup      bsp_mkl16_clock_Private_Variables 
+ * @defgroup      bsp_clock_Private_Variables 
  * @brief         
  * @{  
  */
@@ -82,7 +82,7 @@ extern uint32_t SystemCoreClock;
  */
 
 /**
- * @defgroup      bsp_mkl16_clock_Public_Variables 
+ * @defgroup      bsp_clock_Public_Variables 
  * @brief         
  * @{  
  */
@@ -92,7 +92,7 @@ extern uint32_t SystemCoreClock;
  */
 
 /**
- * @defgroup      bsp_mkl16_clock_Private_FunctionPrototypes 
+ * @defgroup      bsp_clock_Private_FunctionPrototypes 
  * @brief         
  * @{  
  */
@@ -105,7 +105,7 @@ static void CLOCK_CONFIG_SetFllExtRefDiv(uint8_t frdiv)
  */
 
 /**
- * @defgroup      bsp_mkl16_clock_Functions 
+ * @defgroup      bsp_clock_Functions 
  * @brief         
  * @{  
  */
@@ -185,7 +185,7 @@ const osc_config_t oscConfig_BOARD_BootClockRUN =
             }
     };
 
-void BSP_MKL16_SystemClockInit(void)
+void BSP_SystemClockInit(void)
 {
 	/* Set the system clock dividers in SIM to safe value. */
 	CLOCK_SetSimSafeDivs();
@@ -302,7 +302,7 @@ void BOARD_BootClockVLPR(void)
 }
 
 
-void BSP_MKL16_ShowClock(void)
+void BSP_ShowClock(void)
 {
 	DEBUG("kCLOCK_CoreSysClk:%d\r\n", CLOCK_GetFreq(kCLOCK_CoreSysClk));
 	DEBUG("kCLOCK_PlatClk:%d\r\n", CLOCK_GetFreq(kCLOCK_PlatClk));

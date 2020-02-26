@@ -12,7 +12,7 @@
  */
 
 #include "bsp_led.h"
-#include "bsp_mkl16_conf.h"
+#include "bsp_conf.h"
 
 /**
  * @addtogroup    XXX 

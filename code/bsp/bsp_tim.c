@@ -1,6 +1,6 @@
 /**
  **************************************************************************************************
- * @file        bsp_mkl16_tim.c
+ * @file        bsp_tim.c
  * @author
  * @version
  * @date        
@@ -10,10 +10,10 @@
  *
  **************************************************************************************************
  */
-#include "bsp_mkl16_conf.h"
-#include "bsp_mkl16_tim.h"
+#include "bsp_conf.h"
+#include "bsp_tim.h"
 
-#include "bsp_mkl16_clock.h"
+#include "bsp_clock.h"
 
 #include "clog.h"
 /**
@@ -22,12 +22,12 @@
  */
 #include "bsp_led.h"
 /**
- * @addtogroup    bsp_mkl16_tim_Modules 
+ * @addtogroup    bsp_tim_Modules 
  * @{  
  */
 
 /**
- * @defgroup      bsp_mkl16_tim_IO_Defines 
+ * @defgroup      bsp_tim_IO_Defines 
  * @brief         
  * @{  
  */
@@ -37,7 +37,7 @@
  */
 
 /**
- * @defgroup       bsp_mkl16_tim_Macros_Defines 
+ * @defgroup       bsp_tim_Macros_Defines 
  * @brief         
  * @{  
  */
@@ -47,7 +47,7 @@
  */
 
 /**
- * @defgroup      bsp_mkl16_tim_Constants_Defines 
+ * @defgroup      bsp_tim_Constants_Defines 
  * @brief         
  * @{  
  */
@@ -57,7 +57,7 @@
  */
 
 /**
- * @defgroup       bsp_mkl16_tim_Private_Types
+ * @defgroup       bsp_tim_Private_Types
  * @brief         
  * @{  
  */
@@ -67,7 +67,7 @@
  */
 
 /**
- * @defgroup      bsp_mkl16_tim_Private_Variables 
+ * @defgroup      bsp_tim_Private_Variables 
  * @brief         
  * @{  
  */
@@ -77,7 +77,7 @@
  */
 
 /**
- * @defgroup      bsp_mkl16_tim_Public_Variables 
+ * @defgroup      bsp_tim_Public_Variables 
  * @brief         
  * @{  
  */
@@ -87,35 +87,35 @@
  */
 
 /**
- * @defgroup      bsp_mkl16_tim_Private_FunctionPrototypes 
+ * @defgroup      bsp_tim_Private_FunctionPrototypes 
  * @brief         
  * @{  
  */
-static void bsp_mkl16_lptmr_init(void);
+static void bsp_lptmr_init(void);
 
-static void bsp_mkl16_tmp0_init(void);
+static void bsp_tmp0_init(void);
 /**
  * @}
  */
 
 /**
- * @defgroup      bsp_mkl16_tim_Functions 
+ * @defgroup      bsp_tim_Functions 
  * @brief         
  * @{  
  */
 
  
-void BSP_MKL16_Clock_Init(uint8_t BSP_CLOCKx)
+void BSP_Clock_Init(uint8_t BSP_CLOCKx)
 {
 	switch (BSP_CLOCKx)
 	{
-		case BSP_CLOCK0 :bsp_mkl16_lptmr_init();break;
-		case BSP_CLOCK1 : bsp_mkl16_tmp0_init();break;
+		case BSP_CLOCK0 :bsp_lptmr_init();break;
+		case BSP_CLOCK1 : bsp_tmp0_init();break;
 		default :break;
 	}
 }
 
-static void bsp_mkl16_tmp0_init(void)
+static void bsp_tmp0_init(void)
 {
 	tpm_config_t config = { 0 };
 	
@@ -145,7 +145,7 @@ static void bsp_mkl16_tmp0_init(void)
 }
 
 
-static void bsp_mkl16_lptmr_init(void)
+static void bsp_lptmr_init(void)
 {
 	lptmr_config_t lptmrConfig;
 
@@ -173,7 +173,7 @@ static void bsp_mkl16_lptmr_init(void)
 
 
 
-uint32_t BSP_MKL16_GetTimrCurCount(uint8_t BSP_CLOCKx)
+uint32_t BSP_GetTimrCurCount(uint8_t BSP_CLOCKx)
 {
 	uint32_t count = 0;
 	switch(BSP_CLOCKx)
@@ -189,7 +189,7 @@ uint32_t BSP_MKL16_GetTimrCurCount(uint8_t BSP_CLOCKx)
 void LPTMR0_IRQHandler(void)
 {
 	DEBUG("LPTMR0_IRQHandler\r\n");
-	DEBUG("Time Count : %d\r\n" , BSP_MKL16_GetTimrCurCount(BSP_CLOCK0));
+	DEBUG("Time Count : %d\r\n" , BSP_GetTimrCurCount(BSP_CLOCK0));
 	
 	LPTMR_ClearStatusFlags(LPTMR0,LPTMR_CSR_TCF_MASK);
 
@@ -202,7 +202,7 @@ void LPTMR0_IRQHandler(void)
 void TPM0_IRQHandler(void)
 {
 	DEBUG("TPM0_IRQHandler\r\n");
-	//DEBUG("Time Count : %d\r\n" , BSP_MKL16_GetTimrCurCount(BSP_CLOCK1));
+	//DEBUG("Time Count : %d\r\n" , BSP_GetTimrCurCount(BSP_CLOCK1));
 	
 	TPM_ClearStatusFlags( TPM0 ,kTPM_TimeOverflowFlag);
 	BSP_LED_Toggle(BSP_LED1);

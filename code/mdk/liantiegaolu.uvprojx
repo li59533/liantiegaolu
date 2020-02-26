@@ -583,39 +583,39 @@
           <GroupName>bsp</GroupName>
           <Files>
             <File>
-              <FileName>bsp_mkl16_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\bsp\bsp_mkl16_conf.h</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_mkl16_rtc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\bsp\bsp_mkl16_rtc.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_mkl16_clock.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\bsp\bsp_mkl16_clock.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_mkl16_tim.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\bsp\bsp_mkl16_tim.c</FilePath>
-            </File>
-            <File>
               <FileName>bsp_led.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\bsp\bsp_led.c</FilePath>
             </File>
             <File>
-              <FileName>bsp_mkl16_adc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\bsp\bsp_mkl16_adc.c</FilePath>
+              <FileName>bsp_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\bsp\bsp_conf.h</FilePath>
             </File>
             <File>
-              <FileName>bsp_mkl16_uart.c</FileName>
+              <FileName>bsp_uart.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\bsp\bsp_mkl16_uart.c</FilePath>
+              <FilePath>..\bsp\bsp_uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\bsp\bsp_tim.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_rtc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\bsp\bsp_rtc.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_adc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\bsp\bsp_adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\bsp\bsp_clock.c</FilePath>
             </File>
           </Files>
         </Group>

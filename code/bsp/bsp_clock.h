@@ -1,6 +1,6 @@
 /**
  **************************************************************************************************
- * @file        bsp_mkl16_clock.h
+ * @file        bsp_clock.h
  * @author
  * @version
  * @date        
@@ -10,16 +10,16 @@
  *
  **************************************************************************************************
  */
-#ifndef _BSP_MKL16_CLOCK_H_
-#define _BSP_MKL16_CLOCK_H_
+#ifndef _BSP_CLOCK_H_
+#define _BSP_CLOCK_H_
 
 /**
  * @addtogroup    XXX 
  * @{ 
  */
-#include "bsp_mkl16_conf.h"
+#include "bsp_conf.h"
 /**
- * @addtogroup    bsp_mkl16_clock_Modules 
+ * @addtogroup    bsp_clock_Modules 
  * @{  
  */
 /*
@@ -39,7 +39,7 @@
 
 */
 /**
- * @defgroup      bsp_mkl16_clock_Exported_Macros 
+ * @defgroup      bsp_clock_Exported_Macros 
  * @{  
  */
 #define BOARD_XTAL0_CLK_HZ                          8000000U  /*!< Board xtal0 frequency in Hz */
@@ -58,7 +58,7 @@
  */
 
 /**
- * @defgroup      bsp_mkl16_clock_Exported_Constants
+ * @defgroup      bsp_clock_Exported_Constants
  * @{  
  */
  
@@ -87,7 +87,7 @@ extern const osc_config_t oscConfig_BOARD_BootClockVLPR;
  */
 
 /**
- * @defgroup      bsp_mkl16_clock_Exported_Types 
+ * @defgroup      bsp_clock_Exported_Types 
  * @{  
  */
 
@@ -96,7 +96,7 @@ extern const osc_config_t oscConfig_BOARD_BootClockVLPR;
  */
 
 /**
- * @defgroup      bsp_mkl16_clock_Exported_Variables 
+ * @defgroup      bsp_clock_Exported_Variables 
  * @{  
  */
 
@@ -105,11 +105,11 @@ extern const osc_config_t oscConfig_BOARD_BootClockVLPR;
  */
 
 /**
- * @defgroup      bsp_mkl16_clock_Exported_Functions 
+ * @defgroup      bsp_clock_Exported_Functions 
  * @{  
  */
-void BSP_MKL16_SystemClockInit(void);
-void BSP_MKL16_ShowClock(void);
+void BSP_SystemClockInit(void);
+void BSP_ShowClock(void);
 /**
  * @}
  */
