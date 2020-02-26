@@ -18,6 +18,7 @@
 #include "bsp_tim.h"
 #include "bsp_rtc.h"
 #include "bsp_adc.h"
+#include "bsp_uart.h"
 /**
  * @addtogroup    XXX 
  * @{  
@@ -118,6 +119,9 @@ void Board_Init_BSP(void)
 	BSP_Clock_Init(BSP_CLOCK1);
 	BSP_RTC_Init();
 	BSP_ADC_Init();
+	
+	BSP_UART_Init( BSP_UART2 );
+	
 }
 
 

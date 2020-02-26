@@ -91,6 +91,8 @@
 static void bsp_uart0_init(void);
 static void bsp_uart1_init(void);
 static void bsp_uart2_init(void);
+
+static void bsp_uart2_dma_init(void);
 /**
  * @}
  */
@@ -206,44 +208,135 @@ static void bsp_uart2_init(void)
  *   uartConfig->enableRx = false;	
 */	
 
-	UART_Init(UART2, &config,  CLOCK_GetCoreSysClkFreq());
+	UART_Init(UART2, &config,  CLOCK_GetFreq(kCLOCK_BusClk));
 	
 	UART_EnableTx(UART2, true);
 	UART_EnableRx(UART2, true);
 	
-	UART_EnableInterrupts(UART_Type *base, uint32_t mask);
-
 
 
 
 // --------------------------------------
 
-
-
-	LPSCI_EnableTx(UART0, true);
-	LPSCI_EnableRx(UART0, true);
-	
 	// -----------------------
 	
 	// --------open irq-------
-	LPSCI_EnableInterrupts( UART0, kLPSCI_RxDataRegFullInterruptEnable);
+	//UART_EnableInterrupts(UART2, kUART_TransmissionCompleteInterruptEnable);
+	UART_EnableInterrupts(UART2, kUART_RxDataRegFullInterruptEnable);
 	
-	LPSCI_EnableInterrupts( UART0, kLPSCI_TransmissionCompleteInterruptEnable);
-	
-	EnableIRQ(UART0_IRQn);
+	NVIC_EnableIRQ(UART2_IRQn);
 	
 	// -----------------------	
-}
-
-void BSP_UART_WriteBytes_(void)
-{
 	
+	
+// -----------DMA ------------------------
+
+	//bsp_uart2_dma_init();
+	
+
+// ---------------------------------------
 }
 
+static void bsp_uart2_dma_init(void)
+{
+//	UART_EnableTxDMA(UART2, true);
+//	/* Configure DMAMUX */
+//    DMAMUX_Init(DMAMUX0);
+//	
+//    DMAMUX_SetSource(DMAMUX0, 0, kDmaRequestMux0ADC0); /* Map ADC source to channel 0 */
+//    DMAMUX_EnableChannel(DMAMUX0, 0);
+
+//    DMA_Init(DMA0);
+//	
+//	
+//    DMA_CreateHandle(&dma_handle, DMA0, 0);
+//	
+//	
+//	
+//    /* Setup transfer */
+//	
+//    DMA_PrepareTransfer(&transferConfig, (void *)ADC16_RESULT_REG_ADDR, sizeof(uint32_t),
+//                        (void *)bsp_adc_DataArray, sizeof(uint32_t), sizeof(bsp_adc_DataArray),
+//                        kDMA_PeripheralToMemory);
+//						
+//    DMA_SetTransferConfig(DMA0, 0, &transferConfig);
+//    /* Enable interrupt when transfer is done. */
+//    DMA_EnableInterrupts(DMA0, 0);
+//    /* Enable async DMA request. */
+//    DMA_EnableAsyncRequest(DMA0, 0, true);
+//    /* Forces a single read/write transfer per request. */
+//    DMA_EnableCycleSteal(DMA0, 0, true);
+//    /* Enable transfer. */
+//    DMA_StartTransfer(&dma_handle);
+//    /* Enable IRQ. */
+//    NVIC_EnableIRQ(DMA0_IRQn);	
+}
+
+
+
+
+// --------Function -------------
+
+		// ----Send ----
+
+void BSP_UART_WriteBytes_Blocking(uint8_t BSP_UARTX , uint8_t *buf, uint16_t len)
+{
+	switch(BSP_UARTX)
+	{
+		case BSP_UART0 :break;
+		case BSP_UART1 :UART_WriteBlocking(UART1, buf, len);break;
+		case BSP_UART2 :UART_WriteBlocking(UART2, buf, len);break;
+		default:break;
+	}
+}
+
+
+
+		// -------------
+		// ---Rev-------
+
+		// -------------
+
+
+// ------------------------------
 
 // -----------IRQ--------------
 
+void UART2_IRQHandler(void)
+{
+	DEBUG("UART2_IRQHandler\r\n");
+	
+	if((UART_GetStatusFlags(UART2) & kUART_RxDataRegFullFlag )== kUART_RxDataRegFullFlag)
+	{
+		UART_ClearStatusFlags(UART2, kUART_RxDataRegFullFlag);
+		
+		uint8_t c = 0;
+		c = UART_ReadByte(UART2);
+		DEBUG("Uart R:%X\r\n" , c);
+	}
+	
+}
+
 // ----------------------------
+
+
+// ------------Test-------------
+void BSP_Uart_Test_Send(void)
+{
+	DEBUG("BSP_Uart_Test_Send\r\n");
+	uint32_t flag = 0;
+	flag = UART_GetStatusFlags(UART2);
+	
+	//while((flag & kUART_TxDataRegEmptyFlag ) == 0);
+	//UART_WriteByte(UART2, 0xf7);
+	
+	uint8_t test_bud[] = {0x00,0x12,0x32,0xff,0x00,0x11,0xcd,0x45};
+	BSP_UART_WriteBytes_Blocking(BSP_UART2 , test_bud, sizeof(test_bud));	
+}
+
+
+// -----------------------------
+
 /**
  * @}
  */
