@@ -21,10 +21,6 @@
  * @addtogroup    XXX 
  * @{  
  */
-#include "bsp_tim.h"
-#include "bsp_rtc.h"
-#include "bsp_adc.h"
-#include "bsp_uart.h"
 #include "bsp_systick.h"
 /**	
  * @addtogroup    main_Modules 
@@ -119,15 +115,7 @@ int main(void)
 	
 	while(1)
 	{
-		//DEBUG("Time Count : %d\r\n" , BSP_MKL16_GetTimrCurCount(BSP_CLOCK1));
-		BSP_Test_Delay(10000);
-		
-		//BSP_Uart_Test_Send();
-		
-		//BSP_MKL16_ShowDate();
-		//BSP_MKL16_ADC_ShowValue();
-		//BSP_LED_Toggle(BSP_LED1);
-		//DEBUG("Time Count : %d\r\n" , BSP_MKL16_GetTimrCurCount(BSP_CLOCK1));
+		DEBUG("MAIN Some Err\r\n");
 	}
 }
 

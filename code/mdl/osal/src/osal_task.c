@@ -22,7 +22,7 @@
  * @addtogroup    XXX 
  * @{  
  */
-
+#include "net_task.h"
 /**
  * @addtogroup    osal_task_Modules 
  * @{  
@@ -67,6 +67,7 @@ const pTaskEventHandlerFn g_TasksFnArr[OSAL_TASK_COUNT] =
 {
     HalTask_Process,
     UserTask_Process,
+	NetTask_Process,
 };
 
 uint32_t g_TasksEvents[OSAL_TASK_COUNT];
@@ -114,6 +115,7 @@ void OS_Task_Init(void)
     uint8_t task_id = 0;
     HalTask_Init(task_id++);
     UserTask_Init(task_id++);
+	NetTask_Init(task_id++);
 }   
 
 /**

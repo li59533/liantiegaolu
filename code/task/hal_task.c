@@ -18,7 +18,7 @@
  * @addtogroup    XXX 
  * @{  
  */
-
+#include "bsp_led.h"
 /**
  * @addtogroup    hal_task_Modules 
  * @{  
@@ -102,12 +102,15 @@ uint8_t g_HalTask_Id = 0;
 void HalTask_Init(uint8_t taskId)
 {
     g_HalTask_Id = taskId;
+	
+	BSP_LED_Init();
 }
 
 osal_event_t HalTask_Process(uint8_t taskid,osal_event_t events)
 {
 	if (events & HAL_TASK_LED_BLINK_EVENT)
     {			
+		BSP_LED_Update();
         return events ^ HAL_TASK_LED_BLINK_EVENT;
     }
 	if (events & HAL_TASK_ADC_CALC_EVENT)

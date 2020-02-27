@@ -1,6 +1,6 @@
 /**
  **************************************************************************************************
- * @file        user_task.h
+ * @file        net_task.h
  * @author
  * @version    v0.1.0
  * @date        
@@ -10,8 +10,8 @@
  *
  **************************************************************************************************
  */
-#ifndef _USER_TASK_H_
-#define _USER_TASK_H_
+#ifndef _NET_TASK_H_
+#define _NET_TASK_H_
 
 /**
  * @addtogroup    XXX 
@@ -19,32 +19,23 @@
  */
 #include "osal.h"
 /**
- * @addtogroup    user_task_Modules 
+ * @addtogroup    net_task_Modules 
  * @{  
  */
 
 /**
- * @defgroup      user_task_Exported_Macros 
+ * @defgroup      net_task_Exported_Macros 
  * @{  
  */
 
-#define USER_TASK_LOOP_EVENT            0x0001
+#define NET_TASK_LOOP_EVENT            0x0001
 
 /**
  * @}
  */
 
 /**
- * @defgroup      user_task_Exported_Constants
- * @{  
- */
-
-/**
- * @}
- */
-
-/**
- * @defgroup      user_task_Exported_Types 
+ * @defgroup      net_task_Exported_Constants
  * @{  
  */
 
@@ -53,7 +44,7 @@
  */
 
 /**
- * @defgroup      user_task_Exported_Variables 
+ * @defgroup      net_task_Exported_Types 
  * @{  
  */
 
@@ -62,13 +53,22 @@
  */
 
 /**
- * @defgroup      user_task_Exported_Functions 
+ * @defgroup      net_task_Exported_Variables 
  * @{  
  */
-void UserTask_Init(uint8_t taskId);
-osal_event_t UserTask_Process(uint8_t taskid,osal_event_t events);
-void UserTask_Send_Event(osal_event_t events);
-void UserTask_Timer_Start_Event(osal_event_t event_flag,uint32_t timeout);
+
+/**
+ * @}
+ */
+
+/**
+ * @defgroup      net_task_Exported_Functions 
+ * @{  
+ */
+void NetTask_Init(uint8_t taskId);
+osal_event_t NetTask_Process(uint8_t taskid,osal_event_t events);
+void NetTask_Send_Event(osal_event_t events);
+void NetTask_Timer_Start_Event(osal_event_t event_flag,uint32_t timeout);
 /**
  * @}
  */

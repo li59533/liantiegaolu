@@ -28,10 +28,14 @@
  * @{  
  */
 
-#define BSP_LED1   0 
-#define BSP_LED2   1
+#define BSP_LED1        0
+#define BSP_LED2        1
+#define BSP_LED3        2
 
-#define BSP_LED_COUNT  1
+
+#define BSP_LEDCOUNT    1
+
+#define BSP_LED_BLINK_ENABLE   TRUE
 
 
 
@@ -73,13 +77,13 @@
  * @defgroup      bsp_led_Exported_Functions 
  * @{  
  */
+
 void BSP_LED_Init(void);
-
 void BSP_LED_Open(uint8_t BSP_LEDx);
-
 void BSP_LED_Close(uint8_t BSP_LEDx);
-
 void BSP_LED_Toggle(uint8_t BSP_LEDx);
+void BSP_LED_Blink(uint8_t BSP_LEDx, uint8_t numBlinks, uint8_t percent, uint16_t period);
+void BSP_LED_Update(void);
 
 /**
  * @}

@@ -112,7 +112,7 @@ void Board_Init_ClockRUN(void)
 
 void Board_Init_BSP(void)
 {
-	BSP_LED_Init();
+	
 	
 	//BSP_Clock_Init(BSP_CLOCK0);
 	

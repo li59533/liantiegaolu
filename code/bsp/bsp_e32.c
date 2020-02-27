@@ -197,25 +197,19 @@ void BSP_E32_SetMode(E32_Mode_e mode)  // after change mode ,the module need 1ms
 	}
 }
 
-
-
-
-
-
-
 static uint8_t BSP_E32_SetConfCMD_Save[6]	 = {0xC0 ,} ;
 static uint8_t BSP_E32_GetConfCMD[3]		 = {0xC1 ,0xC1 , 0xC1} ;
 static uint8_t BSP_E32_SetConfCMD_NoSave[6]	 = {0xC2 ,};
 static uint8_t BSP_E32_GetVersionCMD[3]		 = {0xC3 , 0xC3 , 0xC3};
 static uint8_t BSP_E32_RestCMD[3]			 = {0xC4 , 0xC4 ,0xC4};
 
-
-
-
 void BSP_E32_WriteBytes(uint8_t *buf , uint16_t len)
 {
 	
 }
+
+
+
 
 /**
  * @}

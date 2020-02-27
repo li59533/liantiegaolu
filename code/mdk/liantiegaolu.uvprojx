@@ -718,6 +718,11 @@
               <FileType>1</FileType>
               <FilePath>..\task\user_task.c</FilePath>
             </File>
+            <File>
+              <FileName>net_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\task\net_task.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
