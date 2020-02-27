@@ -93,6 +93,7 @@
 #if BSP_USART_MODULE_ENABLE == 1	
 	#include "fsl_uart.h"
 	#include "fsl_lpsci.h"
+	#include "fsl_lpsci_dma.h"
 	#include "fsl_uart_dma.h"
 #endif	
 

@@ -17,7 +17,7 @@
  * @addtogroup    XXX 
  * @{  
  */
-
+#include "bsp_led.h"
 /**
  * @addtogroup    bsp_clock_Modules 
  * @{  
@@ -317,6 +317,10 @@ void BSP_ShowClock(void)
 	DEBUG("kCLOCK_LpoClk:%d\r\n", CLOCK_GetFreq(kCLOCK_LpoClk));
 	DEBUG("kCLOCK_Osc0ErClk:%d\r\n", CLOCK_GetFreq(kCLOCK_Osc0ErClk));	
 }
+
+
+
+
 
 
 /**

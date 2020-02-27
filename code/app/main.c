@@ -23,6 +23,7 @@
 #include "bsp_rtc.h"
 #include "bsp_adc.h"
 #include "bsp_uart.h"
+#include "bsp_systick.h"
 /**	
  * @addtogroup    main_Modules 
  * @{  
@@ -107,6 +108,7 @@ int main(void)
 {
 	Board_Init_ClockRUN();
 	
+	BSP_SysTick_Init();
 	Board_Init_BSP();
 	
 	while(1)
@@ -114,7 +116,7 @@ int main(void)
 		//DEBUG("Time Count : %d\r\n" , BSP_MKL16_GetTimrCurCount(BSP_CLOCK1));
 		BSP_Test_Delay(10000);
 		
-		BSP_Uart_Test_Send();
+		//BSP_Uart_Test_Send();
 		
 		//BSP_MKL16_ShowDate();
 		//BSP_MKL16_ADC_ShowValue();
