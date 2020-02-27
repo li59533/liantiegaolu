@@ -1,8 +1,8 @@
 /**
  **************************************************************************************************
- * @file        bsp_systick.c
+ * @file        osal_task.c
  * @author
- * @version
+ * @version     V1.0.0
  * @date        
  * @brief
  **************************************************************************************************
@@ -10,23 +10,26 @@
  *
  **************************************************************************************************
  */
-
-#include "bsp_systick.h"
-#include "bsp_conf.h"
 #include "osal.h"
+#include "osal_cpu.h"
+#include "osal_cfg.h"
+#include "osal_core.h"
+#include "hal_task.h"
+#include "user_task.h"
+#include "osal_task.h"
+
 /**
  * @addtogroup    XXX 
  * @{  
  */
-#include "clog.h"
-#include "bsp_led.h"
+
 /**
- * @addtogroup    bsp_systick_Modules 
+ * @addtogroup    osal_task_Modules 
  * @{  
  */
 
 /**
- * @defgroup      bsp_systick_IO_Defines 
+ * @defgroup      osal_task_IO_Defines 
  * @brief         
  * @{  
  */
@@ -36,7 +39,7 @@
  */
 
 /**
- * @defgroup       bsp_systick_Macros_Defines 
+ * @defgroup       osal_task_Macros_Defines 
  * @brief         
  * @{  
  */
@@ -46,7 +49,7 @@
  */
 
 /**
- * @defgroup      bsp_systick_Constants_Defines 
+ * @defgroup      osal_task_Constants_Defines 
  * @brief         
  * @{  
  */
@@ -56,65 +59,62 @@
  */
 
 /**
- * @defgroup       bsp_systick_Private_Types
+ * @defgroup       osal_task_Private_Types
  * @brief         
  * @{  
  */
-
-/**
- * @}
- */
-
-/**
- * @defgroup      bsp_systick_Private_Variables 
- * @brief         
- * @{  
- */
-
-/**
- * @}
- */
-
-/**
- * @defgroup      bsp_systick_Public_Variables 
- * @brief         
- * @{  
- */
-
-/**
- * @}
- */
-
-/**
- * @defgroup      bsp_systick_Private_FunctionPrototypes 
- * @brief         
- * @{  
- */
-
-/**
- * @}
- */
-
-/**
- * @defgroup      bsp_systick_Functions 
- * @brief         
- * @{  
- */
-void BSP_SysTick_Init(void)
+const pTaskEventHandlerFn g_TasksFnArr[OSAL_TASK_COUNT] =
 {
-	SysTick_Config(CLOCK_GetFreq(kCLOCK_CoreSysClk) / 1000);
-}
+    HalTask_Process,
+    UserTask_Process,
+};
 
+uint32_t g_TasksEvents[OSAL_TASK_COUNT];
+/**
+ * @}
+ */
 
-void SysTick_Handler(void)
+/**
+ * @defgroup      osal_task_Private_Variables 
+ * @brief         
+ * @{  
+ */
+
+/**
+ * @}
+ */
+
+/**
+ * @defgroup      osal_task_Public_Variables 
+ * @brief         
+ * @{  
+ */
+
+/**
+ * @}
+ */
+
+/**
+ * @defgroup      osal_task_Private_FunctionPrototypes 
+ * @brief         
+ * @{  
+ */
+
+/**
+ * @}
+ */
+
+/**
+ * @defgroup      osal_task_Functions 
+ * @brief         
+ * @{  
+ */
+void OS_Task_Init(void)
 {
-	
-	OS_Timer_Update(1);
-	OS_Clock_Update(1);
-	
-	//DEBUG("SysTick_Handler\r\n");
-	//BSP_LED_Toggle(BSP_LED_TEST);
-}
+    uint8_t task_id = 0;
+    HalTask_Init(task_id++);
+    UserTask_Init(task_id++);
+}   
 
 /**
  * @}

@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>CPU_MKL16Z64VFM4</Define>
               <Undefine></Undefine>
-              <IncludePath>..\components\MKL16Z4\drivers;..\components\MKL16Z4;..\components\MKL16Z4\arm;..\mdl;..\bsp;..\components\MKL16Z4\utilities;..\components\CMSIS\Include;..\mdl\rttviewer</IncludePath>
+              <IncludePath>..\components\MKL16Z4\drivers;..\components\MKL16Z4;..\components\MKL16Z4\arm;..\mdl;..\bsp;..\components\MKL16Z4\utilities;..\components\CMSIS\Include;..\mdl\rttviewer;..\mdl\osal\ports;..\mdl\osal\src;..\task</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -662,6 +662,61 @@
               <FileName>self_def.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\mdl\self_def.h</FilePath>
+            </File>
+            <File>
+              <FileName>osal.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\mdl\osal\src\osal.c</FilePath>
+            </File>
+            <File>
+              <FileName>osal_cfg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\mdl\osal\src\osal_cfg.c</FilePath>
+            </File>
+            <File>
+              <FileName>osal_clock.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\mdl\osal\src\osal_clock.c</FilePath>
+            </File>
+            <File>
+              <FileName>osal_core.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\mdl\osal\src\osal_core.c</FilePath>
+            </File>
+            <File>
+              <FileName>osal_msg.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\mdl\osal\src\osal_msg.c</FilePath>
+            </File>
+            <File>
+              <FileName>osal_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\mdl\osal\src\osal_task.c</FilePath>
+            </File>
+            <File>
+              <FileName>osal_timeout.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\mdl\osal\src\osal_timeout.c</FilePath>
+            </File>
+            <File>
+              <FileName>osal_timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\mdl\osal\src\osal_timer.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>task</GroupName>
+          <Files>
+            <File>
+              <FileName>hal_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\task\hal_task.c</FilePath>
+            </File>
+            <File>
+              <FileName>user_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\task\user_task.c</FilePath>
             </File>
           </Files>
         </Group>

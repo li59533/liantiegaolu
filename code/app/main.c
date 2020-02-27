@@ -14,6 +14,8 @@
 #include "main.h"
 #include "board.h"
 #include "clog.h"
+#include "osal.h"
+
 #include "bsp_led.h"
 /**
  * @addtogroup    XXX 
@@ -110,6 +112,10 @@ int main(void)
 	
 	BSP_SysTick_Init();
 	Board_Init_BSP();
+	
+	OS_Init(); // init osal
+    
+    OS_Start(); // while(1)
 	
 	while(1)
 	{
