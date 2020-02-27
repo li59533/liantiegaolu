@@ -19,6 +19,7 @@
 #include "bsp_rtc.h"
 #include "bsp_adc.h"
 #include "bsp_uart.h"
+#include "bsp_flash.h"
 /**
  * @addtogroup    XXX 
  * @{  
@@ -124,7 +125,7 @@ void Board_Init_BSP(void)
 //	BSP_UART_Init( BSP_UART0 );
 //	BSP_UART_Init( BSP_UART2 );
 // ------------------------------
-	
+	BSP_Flash_Init();
 }
 
 

@@ -41,12 +41,12 @@
 #define BSP_ADC_MODULE_ENABLE			1
 #define BSP_DMA_MODULE_ENABLE			1
 #define BSP_USART_MODULE_ENABLE			1
-
+#define BSP_FLASH_MODULE_ENABLE			1
 
 #define BSP_CAN_MODULE_ENABLE 			0
 #define BSP_DAC_MODULE_ENABLE			0
 #define BSP_EXTI_MODULE_ENABLE 			0
-#define BSP_FLASH_MODULE_ENABLE			0
+
 #define BSP_IIC_MODULE_ENABLE			0
 #define BSP_SPI_MODULE_ENABLE			0
 #define BSP_WDG_MODULE_ENABLE			0
@@ -96,6 +96,12 @@
 	#include "fsl_lpsci_dma.h"
 	#include "fsl_uart_dma.h"
 #endif	
+
+#if BSP_FLASH_MODULE_ENABLE == 1	
+	#include "fsl_flash.h"
+#endif	
+
+
 
 /**
  * @}
