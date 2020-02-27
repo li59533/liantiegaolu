@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>CPU_MKL16Z64VFM4</Define>
               <Undefine></Undefine>
-              <IncludePath>..\components\MKL16Z4\drivers;..\components\MKL16Z4;..\components\MKL16Z4\arm;..\mdl;..\bsp;..\components\MKL16Z4\utilities;..\components\CMSIS\Include;..\mdl\rttviewer;..\mdl\osal\ports;..\mdl\osal\src;..\task</IncludePath>
+              <IncludePath>..\components\MKL16Z4\drivers;..\components\MKL16Z4;..\components\MKL16Z4\arm;..\mdl;..\bsp;..\components\MKL16Z4\utilities;..\components\CMSIS\Include;..\mdl\rttviewer;..\mdl\osal\ports;..\mdl\osal\src;..\task;..\fml;..\Utilities</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -636,6 +636,13 @@
         </Group>
         <Group>
           <GroupName>fml</GroupName>
+          <Files>
+            <File>
+              <FileName>system_param.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\fml\system_param.c</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>mdk</GroupName>
@@ -727,6 +734,16 @@
               <FileName>net_task.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\task\net_task.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utilities</GroupName>
+          <Files>
+            <File>
+              <FileName>crc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Utilities\crc.c</FilePath>
             </File>
           </Files>
         </Group>
