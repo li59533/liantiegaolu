@@ -21,6 +21,7 @@
  * @{  
  */
 #include "bsp_led.h"
+#include "bsp_e32.h"
 /**
  * @addtogroup    net_task_Modules 
  * @{  
@@ -104,9 +105,8 @@ uint8_t g_NetTask_Id = 0;
 void NetTask_Init(uint8_t taskId)
 {
     g_NetTask_Id = taskId;
-    NetTask_Send_Event(NET_TASK_LOOP_EVENT);	
-	
-	
+    //NetTask_Send_Event(NET_TASK_LOOP_EVENT);	
+	NetTask_Send_Event(NET_TASK_MODULE_INIT_EVENT);
 }
 
 osal_event_t NetTask_Process(uint8_t taskid,osal_event_t events)
@@ -117,6 +117,28 @@ osal_event_t NetTask_Process(uint8_t taskid,osal_event_t events)
 		OS_Timer_Start(g_NetTask_Id, NET_TASK_LOOP_EVENT,500);			
         return events ^ NET_TASK_LOOP_EVENT;
     }
+	
+    if (events & NET_TASK_MODULE_INIT_EVENT)
+    {
+		DEBUG("NET_TASK_MODULET\r\n");	
+		BSP_E32_Init();
+        return events ^ NET_TASK_MODULE_INIT_EVENT;
+    }
+
+    if (events & NET_TASK_CORE_LOOP_EVENT)
+    {
+		//DEBUG("NET_TASK_CORE_LOOP_EVENT\r\n");	
+		BSP_E32_CoreLoop();
+		NetTask_Timer_Start_Event(NET_TASK_CORE_LOOP_EVENT,20);
+        return events ^ NET_TASK_CORE_LOOP_EVENT;
+    }	
+	if (events & NET_TASK_REV_EVENT)
+    {
+		DEBUG("NET_TASK_REV_EVENT\r\n");	
+		BSP_E32_Rev();
+        return events ^ NET_TASK_REV_EVENT;
+    }	
+	
 	
     return 0;
 }
@@ -130,7 +152,6 @@ void NetTask_Timer_Start_Event(osal_event_t event_flag,uint32_t timeout)
 {
 	OS_Timer_Start(g_NetTask_Id, event_flag,timeout);	
 }
-
 
 void NetTask_Clear_Event(osal_event_t events)
 {

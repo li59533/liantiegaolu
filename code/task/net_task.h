@@ -28,7 +28,11 @@
  * @{  
  */
 
-#define NET_TASK_LOOP_EVENT            0x0001
+#define NET_TASK_LOOP_EVENT            	0x0001
+#define NET_TASK_MODULE_INIT_EVENT		0x0002
+#define NET_TASK_CORE_LOOP_EVENT		0X0004
+#define NET_TASK_REV_EVENT				0X0008
+
 
 /**
  * @}

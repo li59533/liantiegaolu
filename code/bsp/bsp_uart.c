@@ -18,6 +18,7 @@
  * @{  
  */
 #include "bsp_led.h"
+#include "bsp_e32.h"
 /**
  * @addtogroup    bsp_uart_Modules 
  * @{  
@@ -136,6 +137,18 @@ void BSP_UART_Init(uint8_t BSP_UARTX)
 	}
 }
 
+void BSP_UART_SetBaudRate(uint8_t BSP_UARTX , uint32_t buadrate)
+{
+	switch(BSP_UARTX)
+	{
+		case BSP_UART0: LPSCI_SetBaudRate(UART0, buadrate, CLOCK_GetFreq(kCLOCK_CoreSysClk));break;
+		case BSP_UART1: bsp_uart1_init();break;
+		case BSP_UART2: bsp_uart2_init();break;
+		default:break;
+	}
+}
+	 
+
 
 static void bsp_uart0_init(void)
 {
@@ -159,6 +172,7 @@ static void bsp_uart0_init(void)
 	
 	lpsci_config_t config;
 	LPSCI_GetDefaultConfig( &config );
+	config.baudRate_Bps = 9600U;
 /*
  *   lpsciConfig->baudRate_Bps = 115200U;
  *   lpsciConfig->parityMode = kLPSCI_ParityDisabled;
@@ -173,11 +187,11 @@ static void bsp_uart0_init(void)
 	// -----------------------
 	
 	// --------open irq-------
-	//LPSCI_EnableInterrupts( UART0, kLPSCI_RxDataRegFullInterruptEnable);
+	LPSCI_EnableInterrupts( UART0, kLPSCI_RxDataRegFullInterruptEnable);
 	
 	//LPSCI_EnableInterrupts( UART0, kLPSCI_TransmissionCompleteInterruptEnable);
 	
-	//EnableIRQ(UART0_IRQn);
+	EnableIRQ(UART0_IRQn);
 	
 	// -----------------------
 	
@@ -186,6 +200,7 @@ static void bsp_uart0_init(void)
 // ---------------------------------------	
 	
 }
+
 
 
 
@@ -347,7 +362,7 @@ static void uart_dma_transfer_callback(UART_Type *base,
                                              status_t status,
                                              void *userData)
 {
-	DEBUG("Enter this func?\r\n");
+	DEBUG("uart_dma_transfer_callback?\r\n");
 }
 
 
@@ -356,7 +371,7 @@ static void lpsci_dma_transfer_callback(UART0_Type *base,
                                               status_t status,
                                               void *userData)
 {
-	DEBUG("Enter this func?\r\n");
+	DEBUG("lpsci_dma_transfer_callback?\r\n");
 }
 
 
@@ -418,22 +433,23 @@ void UART2_IRQHandler(void)
 
 void UART0_IRQHandler(void)
 {
-	DEBUG("UART0_IRQHandler\r\n");
+	//DEBUG("UART0_IRQHandler\r\n");
 	
 	if((LPSCI_GetStatusFlags(UART0) & kLPSCI_RxDataRegFullFlag )== kLPSCI_RxDataRegFullFlag)
 	{
 		LPSCI_ClearStatusFlags(UART0, kLPSCI_RxDataRegFullFlag);
 		
-		uint8_t c = 0;
-		c = LPSCI_ReadByte(UART0);
-		DEBUG("Uart R:%X\r\n" , c);
+//		uint8_t c = 0;
+//		c = LPSCI_ReadByte(UART0);
+
+		BSP_E32_RevByteOneByte(LPSCI_ReadByte(UART0));
+
+		//DEBUG("Uart R:%X\r\n" , c);
 	}
 
 	if((LPSCI_GetStatusFlags(UART0) & kLPSCI_TxDataRegEmptyFlag )== kLPSCI_TxDataRegEmptyFlag)
 	{
 		LPSCI_ClearStatusFlags(UART0, kLPSCI_TxDataRegEmptyFlag);
-		
-
 	}	
 }
 

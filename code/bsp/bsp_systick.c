@@ -70,7 +70,7 @@
  * @brief         
  * @{  
  */
-
+static uint32_t s_Systick_Ticks = 0;
 /**
  * @}
  */
@@ -106,12 +106,33 @@ void BSP_SysTick_Init(void)
 }
 
 
+void BSP_SYSTICK_IncTick(void)
+{
+    s_Systick_Ticks++;
+}
+
+uint32_t BSP_SYSTICK_GetTick(void)
+{
+    return s_Systick_Ticks;
+}
+
+
+void BSP_Systick_Delayms(uint32_t ticks) // block delay
+{
+    uint32_t tickstart = 0;
+    tickstart = BSP_SYSTICK_GetTick();
+    while ((BSP_SYSTICK_GetTick() - tickstart) < ticks) 
+    {
+    }
+}
+
+
 void SysTick_Handler(void)
 {
 	
 	OS_Timer_Update(1);
 	OS_Clock_Update(1);
-	
+	BSP_SYSTICK_IncTick();
 	//DEBUG("SysTick_Handler\r\n");
 	//BSP_LED_Toggle(BSP_LED_TEST);
 }

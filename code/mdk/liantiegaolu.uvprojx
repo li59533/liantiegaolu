@@ -613,6 +613,16 @@
               <FilePath>..\bsp\bsp_adc.c</FilePath>
             </File>
             <File>
+              <FileName>bsp_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\bsp\bsp_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_systick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\bsp\bsp_systick.c</FilePath>
+            </File>
+            <File>
               <FileName>bsp_clock.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\bsp\bsp_clock.c</FilePath>
@@ -621,16 +631,6 @@
               <FileName>bsp_e32.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\bsp\bsp_e32.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_systick.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\bsp\bsp_systick.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_flash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\bsp\bsp_flash.c</FilePath>
             </File>
           </Files>
         </Group>

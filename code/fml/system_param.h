@@ -55,6 +55,20 @@
 #pragma pack(1)
 typedef struct
 {
+	uint8_t 	SNcode[8];
+	
+	uint16_t  module_source_addr;
+	uint16_t  module_destination_addr;
+	uint8_t   module_datacheck;//0:8N1; 1:8o1;  2:8E1;  3:8N1;
+	uint8_t   module_baudrate;//0:1200; 1:2400;  2:4800;  3:9600; 4:19200;  5:38400;  6:57600; 7:115200;
+	uint8_t   module_airspeed;//0:0.3K 1:1.2K 2:2.4k 3:4.8K 4:9.6K 5:19.2K
+	uint8_t   module_channel; //00H-1FH,频率 410~441MHz ；410MHz+CHAN * 1MHz
+	uint8_t   module_transmission_mode;//0:定点传输 1：透明传输
+	uint8_t   module_IO_workstyle; //0:推挽输出 1：开路输出
+	uint8_t   module_wakeup_time;//0:250ms 1;500ms 2：750ms 3?1000  4：1250   5：1500 56:1750  72000
+	uint8_t   module_FEC;   //0:关闭 1：开启
+	uint8_t   module_power; //0:20dB 1:17dB 2:14dB 3:10dB
+	
 	float Test;
     uint16_t crc;           /*!< 所有的参数结构体必须按字节对其。且最后一个必须包
                                  含一个uint16_t类型的数据，该数据用于内部存储时的
@@ -84,7 +98,7 @@ int16_t SystemParam_Read(uint8_t handle);
 
 void SystemParam_Save(void);
 
-void SystemParam_Reset(uint8_t handle);
+void SystemParam_Reset(void);
 
 void SystemParam_Apply(uint8_t handle);
 /**

@@ -104,7 +104,7 @@ uint8_t g_UserTask_Id = 0;
 void UserTask_Init(uint8_t taskId)
 {
     g_UserTask_Id = taskId;
-    UserTask_Send_Event(USER_TASK_LOOP_EVENT);	
+    //UserTask_Send_Event(USER_TASK_LOOP_EVENT);	
 	
 	BSP_LED_Blink( BSP_LED_TEST , 0 , 10, 1000);
 	
