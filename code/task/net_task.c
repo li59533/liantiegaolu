@@ -106,6 +106,7 @@ void NetTask_Init(uint8_t taskId)
 {
     g_NetTask_Id = taskId;
     //NetTask_Send_Event(NET_TASK_LOOP_EVENT);	
+	OS_Timer_Start(g_NetTask_Id, NET_TASK_LOOP_EVENT,5000);	
 	NetTask_Send_Event(NET_TASK_MODULE_INIT_EVENT);
 }
 
@@ -114,7 +115,11 @@ osal_event_t NetTask_Process(uint8_t taskid,osal_event_t events)
     if (events & NET_TASK_LOOP_EVENT)
     {
 		DEBUG("NET_TASK_LOOP_EVENT\r\n");
-		OS_Timer_Start(g_NetTask_Id, NET_TASK_LOOP_EVENT,500);			
+		
+		uint8_t databuf[3] = {0x7e,0x88,0x11};
+		BSP_E32_SendData(0x0B00 , 0x0F, databuf , 3);
+		
+		OS_Timer_Start(g_NetTask_Id, NET_TASK_LOOP_EVENT,5000);			
         return events ^ NET_TASK_LOOP_EVENT;
     }
 	

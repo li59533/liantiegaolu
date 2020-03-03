@@ -111,21 +111,23 @@ typedef struct
  */
 //-------User using -----
 void BSP_E32_Init(void);
-void BSP_E32_SetMode(E32_Mode_e mode);
-void BSP_E32_CoreLoop(void);
-void BSP_E32_AddSendBuf(uint8_t *buf , uint16_t len);
+void BSP_E32_ConfChange(void); // first change g_SystemParam_Config.E32_conf;
+void BSP_E32_SendData(uint16_t destaddr , uint8_t channel, uint8_t *buf , uint16_t len);
+
 void BSP_E32_Power_ON(void);
 void BSP_E32_Power_OFF(void);
-
+void BSP_E32_Rev(void);
+void BSP_E32_RevByteOneByte(uint8_t value);
 
 //-----------------------
-
+void BSP_E32_CoreLoop(void);
+void BSP_E32_AddSendBuf(uint8_t *buf , uint16_t len);
+void BSP_E32_SetMode(E32_Mode_e mode);
 uint8_t BSP_E32_GetAUX_Status(void);
 void BSP_E32_AddCmd(BSP_E32_CMD_e cmd , uint32_t delay_ms);
 uint8_t BSP_E32_LoadCmd(void);
 uint8_t BSP_E32_GetCmdCount(void);
-void BSP_E32_Rev(void);
-void BSP_E32_RevByteOneByte(uint8_t value);
+
 /**
  * @}
  */

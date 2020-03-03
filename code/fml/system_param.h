@@ -53,10 +53,9 @@
  * @{  
  */
 #pragma pack(1)
+
 typedef struct
 {
-	uint8_t 	SNcode[8];
-	
 	uint16_t  module_source_addr;
 	uint16_t  module_destination_addr;
 	uint8_t   module_datacheck;//0:8N1; 1:8o1;  2:8E1;  3:8N1;
@@ -68,7 +67,12 @@ typedef struct
 	uint8_t   module_wakeup_time;//0:250ms 1;500ms 2：750ms 3?1000  4：1250   5：1500 56:1750  72000
 	uint8_t   module_FEC;   //0:关闭 1：开启
 	uint8_t   module_power; //0:20dB 1:17dB 2:14dB 3:10dB
+}E32_conf_t;
 
+typedef struct
+{
+	uint8_t 	SNcode[8];
+	E32_conf_t E32_conf;
     uint16_t crc;           /*!< 所有的参数结构体必须按字节对其。且最后一个必须包
                                  含一个uint16_t类型的数据，该数据用于内部存储时的
                                  crc校验和存储，用户在保存参数时不用关心该值数值。*/

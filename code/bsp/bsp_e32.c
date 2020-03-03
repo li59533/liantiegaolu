@@ -54,6 +54,9 @@
 
 #define E32_POWER_ON	GPIO_WritePinOutput(GPIOE, 19, 0)
 #define E32_POWER_OFF	GPIO_WritePinOutput(GPIOE, 19, 1)
+
+
+#define BSP_E32_SENDBUF_LEN 100 
 /**
  * @}
  */
@@ -75,9 +78,18 @@
  * @brief         
  * @{  
  */
+#pragma pack(1)
+typedef struct
+{
+	uint16_t destaddr;
+	uint8_t channel;
+	uint8_t * payload;
+}bsp_e32_senddata_t ;
+#pragma pack()
+
 typedef struct 
 {
-	uint8_t buf[100] ;
+	uint8_t buf[BSP_E32_SENDBUF_LEN] ;
 	uint8_t len ;
 }bsp_e32_databuf_t;	
  
@@ -115,7 +127,11 @@ static uint8_t BSP_E32_GetVersionCMD[3]		 = {0xC3 , 0xC3 , 0xC3};
 static uint8_t BSP_E32_RestCMD[3]			 = {0xC4 , 0xC4 ,0xC4};
 
 static uint8_t rev_flag = 0;
+static uint8_t BSP_E32_CurrentStatus = 0;
 
+
+
+static uint8_t bsp_e32_senddatabuf[BSP_E32_SENDBUF_LEN] = { 0 }; 
 
 static BSP_E32_CmdQueue_t BSP_E32_CmdQueue = 
 {
@@ -243,27 +259,31 @@ void BSP_E32_SetMode(E32_Mode_e mode)  // after change mode ,the module need 1ms
 			DEBUG("E32 Enter Normal Mode\r\n");
 			E32_M0_DOWN;
 			E32_M1_DOWN;
+			BSP_E32_CurrentStatus = E32_MODE_NORMAL;
 		}
 		break;
 		case E32_MODE_WAKEUP:
 		{
 			DEBUG("E32 Enter Wakeup Mode\r\n");
 			E32_M0_UP;
-			E32_M1_DOWN;			
+			E32_M1_DOWN;		
+			BSP_E32_CurrentStatus = E32_MODE_WAKEUP;
 		}
 		break;
 		case E32_MODE_LOWPOWER:
 		{
 			DEBUG("E32 Enter Lowpower Mode\r\n");
 			E32_M0_DOWN;
-			E32_M1_UP;			
+			E32_M1_UP;	
+			BSP_E32_CurrentStatus = E32_MODE_LOWPOWER;
 		}
 		break;
 		case E32_MODE_SLEEP:
 		{
 			DEBUG("E32 Enter Sleep Mode\r\n");
 			E32_M0_UP;
-			E32_M1_UP;			
+			E32_M1_UP;		
+			BSP_E32_CurrentStatus = E32_MODE_SLEEP;			
 		}
 		break;
 		default:
@@ -271,9 +291,23 @@ void BSP_E32_SetMode(E32_Mode_e mode)  // after change mode ,the module need 1ms
 	}
 }
 
+
 void BSP_E32_WriteBytes(uint8_t *buf , uint16_t len)
 {
 	BSP_UART_WriteBytes_DMA( BSP_UART0 , buf,  len);
+}
+
+
+
+void BSP_E32_SendData(uint16_t destaddr , uint8_t channel, uint8_t *buf , uint16_t len)
+{
+	
+	bsp_e32_senddata_t * sendbuf = (bsp_e32_senddata_t *) &bsp_e32_senddatabuf;
+	sendbuf->destaddr = destaddr ;
+	sendbuf->channel = channel;
+	memcpy( &sendbuf->payload , buf , len);
+	
+	BSP_E32_AddSendBuf( (uint8_t *)sendbuf , len  + 3);
 }
 
 void BSP_E32_AddSendBuf(uint8_t *buf , uint16_t len)
@@ -439,11 +473,17 @@ static void bsp_e32_getconf(void)
 static void bsp_e32_setconf(void)
 {
 	BSP_E32_SetConfCMD_Save[0]=0xC0;  //µôµç±£´æ
-	BSP_E32_SetConfCMD_Save[1]=g_SystemParam_Config.module_source_addr>>8;
-	BSP_E32_SetConfCMD_Save[2]=g_SystemParam_Config.module_source_addr;
-	BSP_E32_SetConfCMD_Save[3]=g_SystemParam_Config.module_airspeed|(g_SystemParam_Config.module_baudrate<<3)|(g_SystemParam_Config.module_datacheck<<6);
-	BSP_E32_SetConfCMD_Save[4]=g_SystemParam_Config.module_channel;
-	BSP_E32_SetConfCMD_Save[5]=g_SystemParam_Config.module_power|(g_SystemParam_Config.module_FEC<<2)|(g_SystemParam_Config.module_wakeup_time<<3)|(g_SystemParam_Config.module_IO_workstyle<<6)|(g_SystemParam_Config.module_transmission_mode<<7);
+	BSP_E32_SetConfCMD_Save[1]=g_SystemParam_Config.E32_conf.module_source_addr>>8;
+	BSP_E32_SetConfCMD_Save[2]=g_SystemParam_Config.E32_conf.module_source_addr;
+	BSP_E32_SetConfCMD_Save[3]=g_SystemParam_Config.E32_conf.module_airspeed|\
+								(g_SystemParam_Config.E32_conf.module_baudrate<<3)|\
+								(g_SystemParam_Config.E32_conf.module_datacheck<<6);
+	BSP_E32_SetConfCMD_Save[4]=g_SystemParam_Config.E32_conf.module_channel;
+	BSP_E32_SetConfCMD_Save[5]=g_SystemParam_Config.E32_conf.module_power|\
+								(g_SystemParam_Config.E32_conf.module_FEC<<2)|\
+								(g_SystemParam_Config.E32_conf.module_wakeup_time<<3)|\
+								(g_SystemParam_Config.E32_conf.module_IO_workstyle<<6)|\
+								(g_SystemParam_Config.E32_conf.module_transmission_mode<<7);
 	BSP_E32_AddSendBuf(BSP_E32_SetConfCMD_Save , sizeof(BSP_E32_SetConfCMD_Save));
 }
 
@@ -484,7 +524,7 @@ void BSP_E32_Rev(void)
 	}
 	else
 	{
-		
+		BSP_LED_Blink( BSP_LED_TEST , 3 , 10, 150);
 	}
 }
 
@@ -512,16 +552,16 @@ static void BSP_E32_ModlueRevAnalysis(uint8_t * buf, uint8_t len )
 	module_FEC = (buf[5] & 0x04) >> 2;
 	module_power = (buf[5] & 0x03);
 	
-	if(module_localaddr != g_SystemParam_Config.module_source_addr || \
-		module_TTLcheck != g_SystemParam_Config.module_datacheck || \
-		module_TTLbaudrate != g_SystemParam_Config.module_baudrate || \
-		module_Airbaudrate != g_SystemParam_Config.module_airspeed || \
-		module_chan != g_SystemParam_Config.module_channel ||\
-		module_transmission_mode != g_SystemParam_Config.module_transmission_mode || \
-		module_IO_workstyle != g_SystemParam_Config.module_IO_workstyle || \
-		module_wakeup_time != g_SystemParam_Config.module_wakeup_time || \
-		module_FEC != g_SystemParam_Config.module_FEC || \
-		module_power != g_SystemParam_Config.module_power
+	if(module_localaddr != g_SystemParam_Config.E32_conf.module_source_addr || \
+		module_TTLcheck != g_SystemParam_Config.E32_conf.module_datacheck || \
+		module_TTLbaudrate != g_SystemParam_Config.E32_conf.module_baudrate || \
+		module_Airbaudrate != g_SystemParam_Config.E32_conf.module_airspeed || \
+		module_chan != g_SystemParam_Config.E32_conf.module_channel ||\
+		module_transmission_mode != g_SystemParam_Config.E32_conf.module_transmission_mode || \
+		module_IO_workstyle != g_SystemParam_Config.E32_conf.module_IO_workstyle || \
+		module_wakeup_time != g_SystemParam_Config.E32_conf.module_wakeup_time || \
+		module_FEC != g_SystemParam_Config.E32_conf.module_FEC || \
+		module_power != g_SystemParam_Config.E32_conf.module_power
 		)
 	{
 		DEBUG("E32 has Some different\r\n");
@@ -548,7 +588,7 @@ static void BSP_E32_ModlueRevAnalysis(uint8_t * buf, uint8_t len )
 //	
 //	DEBUG("-------------------------------\r\n");
 //	//BSP_Systick_Delayms(100);
-	DEBUG("g_LocalAddr:%04X\r\n" , g_SystemParam_Config.module_source_addr);
+	DEBUG("g_LocalAddr:%04X\r\n" , g_SystemParam_Config.E32_conf.module_source_addr);
 //	DEBUG("g_module_TTLcheck:%X\r\n" , g_SystemParam_Config.module_datacheck);
 //	DEBUG("g_module_TTLbaudrate:%X\r\n" , g_SystemParam_Config.module_baudrate);
 //	DEBUG("g_module_Airbaudrate:%X\r\n" , g_SystemParam_Config.module_airspeed );
@@ -561,14 +601,16 @@ static void BSP_E32_ModlueRevAnalysis(uint8_t * buf, uint8_t len )
 		
 }
 
+void BSP_E32_ConfChange(void)
+{
+	BSP_E32_AddCmd( E32_CMD_SETCONF_Req , 0);
+}
 
 
 void BSP_E32_RevByteOneByte(uint8_t value)
 {
-	
 	bsp_e32_revbuf.buf[bsp_e32_revbuf.len ++] = value;
 	bsp_e32_revbuf.len %= sizeof(bsp_e32_revbuf.buf) /  sizeof(bsp_e32_revbuf.buf[0]);
-
 	if(rev_flag == 0)
 	{
 		NetTask_Timer_Start_Event(NET_TASK_REV_EVENT,10);

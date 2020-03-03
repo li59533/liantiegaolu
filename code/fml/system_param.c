@@ -71,20 +71,18 @@
  */
 const SystemParam_Config_t SystemParam_Config_Default = 
 {
-
 	.SNcode ={ 0x12 , 0x34 ,0x56 , 0x78 , 0x90, 0xA0, 0xAB ,0x4F} ,
-	
-	.module_source_addr = 0xA111 , 
-	.module_destination_addr = 0xAABB , 
-	.module_datacheck = 0 ,//0:8N1; 1:8o1;  2:8E1;  3:8N1;
-	.module_baudrate = 7 , //0:1200; 1:2400;  2:4800;  3:9600; 4:19200;  5:38400;  6:57600; 7:115200;
-	.module_airspeed = 4 ,//0:0.3K 1:1.2K 2:2.4k 3:4.8K 4:9.6K 5:19.2K
-	.module_channel = 0x10 , //00H-1FH,频率 410~441MHz ；410MHz+CHAN * 1MHz
-	.module_transmission_mode = 0 ,//0:定点传输 1：透明传输
-	.module_IO_workstyle = 0 , //0:推挽输出 1：开路输出
-	.module_wakeup_time = 0,//0:250ms 1;500ms 2：750ms 3?1000  4：1250   5：1500 56:1750  72000
-	.module_FEC = 1,   //0:关闭 1：开启
-	.module_power = 0, //0:20dB 1:17dB 2:14dB 3:10dB
+	.E32_conf.module_source_addr = 0x000A , 
+	.E32_conf.module_destination_addr = 0x000B , 
+	.E32_conf.module_datacheck = 0 ,//0:8N1; 1:8o1;  2:8E1;  3:8N1;
+	.E32_conf.module_baudrate = 7 , //0:1200; 1:2400;  2:4800;  3:9600; 4:19200;  5:38400;  6:57600; 7:115200;
+	.E32_conf.module_airspeed = 4 ,//0:0.3K 1:1.2K 2:2.4k 3:4.8K 4:9.6K 5:19.2K
+	.E32_conf.module_channel = 0x0F , //00H-1FH,频率 410~441MHz ；410MHz+CHAN * 1MHz
+	.E32_conf.module_transmission_mode = 1 ,//0:透明传输 1：定点传输
+	.E32_conf.module_IO_workstyle = 1 , //0:推挽输出 1：开路输出
+	.E32_conf.module_wakeup_time = 0,//0:250ms 1;500ms 2：750ms 3?1000  4：1250   5：1500 56:1750  72000
+	.E32_conf.module_FEC = 1,   //0:关闭 1：开启
+	.E32_conf.module_power = 0, //0:20dB 1:17dB 2:14dB 3:10dB
 		
 };
 /**
@@ -158,7 +156,6 @@ void SystemParam_Save(void)
 
 void SystemParam_Reset(void)
 {
-
 	g_SystemParam_Config = SystemParam_Config_Default;
 	SystemParam_Save();
 	DEBUG("SystemParam_Reset Load DefaultConf\r\n");
