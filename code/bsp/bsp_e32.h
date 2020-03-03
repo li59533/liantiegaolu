@@ -54,8 +54,10 @@ typedef enum
 	E32_CMD_GETCONF_Resp , 
 	E32_CMD_SETCONF_Req ,
 	E32_CMD_SETCONF_Resp , 
+	E32_CMD_CONF_OK,
 	E32_CMD_CONF_Resp,
 	E32_CMD_SEND ,
+	
 }BSP_E32_CMD_e; 
 
 typedef struct

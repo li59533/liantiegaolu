@@ -74,7 +74,7 @@ const SystemParam_Config_t SystemParam_Config_Default =
 
 	.SNcode ={ 0x12 , 0x34 ,0x56 , 0x78 , 0x90, 0xA0, 0xAB ,0x4F} ,
 	
-	.module_source_addr = 0x1234 , 
+	.module_source_addr = 0xA111 , 
 	.module_destination_addr = 0xAABB , 
 	.module_datacheck = 0 ,//0:8N1; 1:8o1;  2:8E1;  3:8N1;
 	.module_baudrate = 7 , //0:1200; 1:2400;  2:4800;  3:9600; 4:19200;  5:38400;  6:57600; 7:115200;

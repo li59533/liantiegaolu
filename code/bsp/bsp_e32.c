@@ -23,6 +23,9 @@
 #include "net_task.h"
 #include "bsp_systick.h"
 #include "system_param.h"
+#include "bsp_led.h"
+
+
 /**
  * @addtogroup    bsp_e32_Modules 
  * @{  
@@ -310,7 +313,7 @@ void BSP_E32_AddCmd(BSP_E32_CMD_e cmd , uint32_t delay_ms)
 	
 	if(delay_ms > 0)
 	{
-		NetTask_Timer_Start_Event(NET_TASK_REV_EVENT,10);
+		NetTask_Timer_Start_Event(NET_TASK_CORE_LOOP_EVENT,10);
 	}
 	else
 	{
@@ -346,6 +349,17 @@ void BSP_E32_CoreLoop(void)
 	uint8_t currnt_cmd = 0;
 	uint32_t time_cout = 0;
 	
+	
+	if(E32_AUX_STATUS == 1)
+	{
+		
+	}
+	else
+	{
+		DEBUG("E32_AUX_STATUS : 0\r\n");
+		return;
+	}
+	
 	currnt_cmd = BSP_E32_LoadCmd();
 
 	switch(currnt_cmd)
@@ -358,6 +372,7 @@ void BSP_E32_CoreLoop(void)
 		case E32_CMD_GETCONF_Req : 
 			{
 				DEBUG("E32_CMD_GETCONF_Req\r\n");
+				//BSP_LED_Blink( BSP_LED_TEST , 0 , 20, 500); // 
 				BSP_UART_SetBaudRate(BSP_UART0 , 9600);
 				bsp_e32_getconf();
 				BSP_E32_AddCmd( E32_CMD_GETCONF_Resp , 20);
@@ -389,12 +404,22 @@ void BSP_E32_CoreLoop(void)
 			{
 				DEBUG("E32_CMD_SETCONF_Req\r\n");
 				bsp_e32_setconf();
-				//BSP_E32_AddCmd( E32_CMD_GETCONF_Resp , 20);
+				BSP_E32_AddCmd( E32_CMD_GETCONF_Resp , 20);
 			}
 			break;	
+		case E32_CMD_CONF_OK:
+			{
+				DEBUG("E32_CMD_CONF_OK\r\n");
+				BSP_E32_SetMode(E32_MODE_NORMAL);
+				BSP_UART_SetBaudRate(BSP_UART0 , 115200);
+				
+				BSP_LED_Blink( BSP_LED_TEST , 3 , 50, 1000); // 
+			}
+			break;
 		case E32_CMD_SEND : 
 			{
 				DEBUG("E32_CMD_SEND\r\n");
+				BSP_LED_Blink( BSP_LED_TEST , 2 , 50, 100);
 				bsp_e32_sendtask();
 			}	
 			break;
@@ -484,8 +509,8 @@ static void BSP_E32_ModlueRevAnalysis(uint8_t * buf, uint8_t len )
 	module_transmission_mode = (buf[5] & 0x80) >> 7;
 	module_IO_workstyle = (buf[5] & 0x40) >> 6;
 	module_wakeup_time = (buf[5] & 0x38) >> 3;
-	module_FEC = (buf[5] & 0x02) >> 1;
-	module_power = (buf[5] & 0x01);
+	module_FEC = (buf[5] & 0x04) >> 2;
+	module_power = (buf[5] & 0x03);
 	
 	if(module_localaddr != g_SystemParam_Config.module_source_addr || \
 		module_TTLcheck != g_SystemParam_Config.module_datacheck || \
@@ -503,32 +528,36 @@ static void BSP_E32_ModlueRevAnalysis(uint8_t * buf, uint8_t len )
 		
 		BSP_E32_AddCmd( E32_CMD_SETCONF_Req , 0);
 	}
+	else
+	{
+		BSP_E32_AddCmd( E32_CMD_CONF_OK , 0);
+	}
 	
 	
-	BSP_Systick_Delayms(100);
+//	//BSP_Systick_Delayms(100);
 	DEBUG("LocalAddr:%04X\r\n" , module_localaddr);
-	DEBUG("module_TTLcheck:%X\r\n" , module_TTLcheck);
-	DEBUG("module_TTLbaudrate:%X\r\n" , module_TTLbaudrate);
-	DEBUG("module_Airbaudrate:%X\r\n" , module_Airbaudrate);
-	DEBUG("module_chan:%X\r\n" , module_chan);
-	DEBUG("module_transmission_mode:%X\r\n" , module_transmission_mode);
-	DEBUG("module_IO_workstyle:%X\r\n" , module_IO_workstyle);
-	DEBUG("module_wakeup_time:%X\r\n" , module_wakeup_time);	
-	DEBUG("module_FEC:%X\r\n" , module_FEC);
-	DEBUG("module_power:%X\r\n" , module_power);		
-	
-	DEBUG("-------------------------------\r\n");
-	BSP_Systick_Delayms(100);
+//	DEBUG("module_TTLcheck:%X\r\n" , module_TTLcheck);
+//	DEBUG("module_TTLbaudrate:%X\r\n" , module_TTLbaudrate);
+//	DEBUG("module_Airbaudrate:%X\r\n" , module_Airbaudrate);
+//	DEBUG("module_chan:%X\r\n" , module_chan);
+//	DEBUG("module_transmission_mode:%X\r\n" , module_transmission_mode);
+//	DEBUG("module_IO_workstyle:%X\r\n" , module_IO_workstyle);
+//	DEBUG("module_wakeup_time:%X\r\n" , module_wakeup_time);	
+//	DEBUG("module_FEC:%X\r\n" , module_FEC);
+//	DEBUG("module_power:%X\r\n" , module_power);		
+//	
+//	DEBUG("-------------------------------\r\n");
+//	//BSP_Systick_Delayms(100);
 	DEBUG("g_LocalAddr:%04X\r\n" , g_SystemParam_Config.module_source_addr);
-	DEBUG("g_module_TTLcheck:%X\r\n" , g_SystemParam_Config.module_datacheck);
-	DEBUG("g_module_TTLbaudrate:%X\r\n" , g_SystemParam_Config.module_baudrate);
-	DEBUG("g_module_Airbaudrate:%X\r\n" , g_SystemParam_Config.module_airspeed );
-	DEBUG("g_module_chan:%X\r\n" , g_SystemParam_Config.module_channel);
-	DEBUG("g_module_transmission_mode:%X\r\n" , g_SystemParam_Config.module_transmission_mode );
-	DEBUG("g_module_IO_workstyle:%X\r\n" , g_SystemParam_Config.module_IO_workstyle );
-	DEBUG("g_module_wakeup_time:%X\r\n" , g_SystemParam_Config.module_wakeup_time);	
-	DEBUG("g_module_FEC:%X\r\n" , g_SystemParam_Config.module_FEC);
-	DEBUG("g_module_power:%X\r\n" , g_SystemParam_Config.module_power);
+//	DEBUG("g_module_TTLcheck:%X\r\n" , g_SystemParam_Config.module_datacheck);
+//	DEBUG("g_module_TTLbaudrate:%X\r\n" , g_SystemParam_Config.module_baudrate);
+//	DEBUG("g_module_Airbaudrate:%X\r\n" , g_SystemParam_Config.module_airspeed );
+//	DEBUG("g_module_chan:%X\r\n" , g_SystemParam_Config.module_channel);
+//	DEBUG("g_module_transmission_mode:%X\r\n" , g_SystemParam_Config.module_transmission_mode );
+//	DEBUG("g_module_IO_workstyle:%X\r\n" , g_SystemParam_Config.module_IO_workstyle );
+//	DEBUG("g_module_wakeup_time:%X\r\n" , g_SystemParam_Config.module_wakeup_time);	
+//	DEBUG("g_module_FEC:%X\r\n" , g_SystemParam_Config.module_FEC);
+//	DEBUG("g_module_power:%X\r\n" , g_SystemParam_Config.module_power);
 		
 }
 
