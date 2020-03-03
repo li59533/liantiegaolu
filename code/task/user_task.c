@@ -21,6 +21,7 @@
  * @{  
  */
 #include "bsp_led.h"
+#include "bsp_power.h"
 /**
  * @addtogroup    user_task_Modules 
  * @{  
@@ -105,7 +106,7 @@ void UserTask_Init(uint8_t taskId)
 {
     g_UserTask_Id = taskId;
     //UserTask_Send_Event(USER_TASK_LOOP_EVENT);	
-	
+	OS_Timer_Start(g_UserTask_Id, USER_TASK_LOOP_EVENT,5000);	
 	BSP_LED_Blink( BSP_LED_TEST , 0 , 10, 1000);
 	
 }
@@ -115,8 +116,10 @@ osal_event_t UserTask_Process(uint8_t taskid,osal_event_t events)
     if (events & USER_TASK_LOOP_EVENT)
     {
 		DEBUG("USER_TASK_LOOP_EVENT\r\n");
-		//BSP_LED_Toggle(BSP_LED_TEST);
-		OS_Timer_Start(g_UserTask_Id, USER_TASK_LOOP_EVENT,500);			
+		
+		BSP_Power_ModeTest();
+		
+		//OS_Timer_Start(g_UserTask_Id, USER_TASK_LOOP_EVENT,5000);			
         return events ^ USER_TASK_LOOP_EVENT;
     }
 	

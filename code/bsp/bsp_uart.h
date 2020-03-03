@@ -74,6 +74,9 @@ void BSP_UART_Init(uint8_t BSP_UARTX);
 void BSP_UART_SetBaudRate(uint8_t BSP_UARTX , uint32_t buadrate);
 void BSP_UART_WriteBytes_Blocking(uint8_t BSP_UARTX , uint8_t *buf, uint16_t len);
 void BSP_UART_WriteBytes_DMA(uint8_t BSP_UARTX , uint8_t *buf, uint16_t len);
+
+
+void BSP_Uart0_Close(void);
 // -----------IRQ--------------
 void UART2_IRQHandler(void);
 // ----------------------------

@@ -632,6 +632,11 @@
               <FileType>1</FileType>
               <FilePath>..\bsp\bsp_e32.c</FilePath>
             </File>
+            <File>
+              <FileName>bsp_power.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\bsp\bsp_power.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

@@ -259,12 +259,41 @@ const mcg_config_t mcgConfig_BOARD_BootClockVLPR =
                 .vdiv = 0x0U,                     /* VCO divider: multiplied by 24 */
             },
     };
+	
+const mcg_config_t mcgConfig_BOARD_BootClockVPLS =
+    {
+        .mcgMode = kMCG_ModePBE,                 /* BLPI - Bypassed Low Power Internal */
+        .irclkEnableMode = kMCG_IrclkEnableInStop,      /* MCGIRCLK enabled, MCGIRCLK disabled in STOP mode */
+        .ircs = kMCG_IrcFast,                     /* Fast internal reference clock selected */
+        .fcrdiv = 0x0U,                           /* Fast IRC divider: divided by 1 */
+        .frdiv = 0x0U,                            /* FLL reference clock divider: divided by 32 */
+        .drs = kMCG_DrsLow,                       /* Low frequency range */
+        .dmx32 = kMCG_Dmx32Default,               /* DCO has a default range of 25% */
+        .pll0Config =
+            {
+                .enableMode = MCG_PLL_DISABLE,    /* MCGPLLCLK disabled */
+                .prdiv = 0x0U,                    /* PLL Reference divider: divided by 1 */
+                .vdiv = 0x0U,                     /* VCO divider: multiplied by 24 */
+            },
+    };	
+
+	
+	
 const sim_clock_config_t simConfig_BOARD_BootClockVLPR =
     {
         .pllFllSel = SIM_PLLFLLSEL_MCGFLLCLK_CLK, /* PLLFLL select: MCGFLLCLK clock */
         .er32kSrc = SIM_OSC32KSEL_LPO_CLK,        /* OSC32KSEL select: LPO clock */
         .clkdiv1 = 0x40000U,                      /* SIM_CLKDIV1 - OUTDIV1: /1, OUTDIV4: /5 */
     };
+	
+	
+const sim_clock_config_t simConfig_BOARD_BootClockVPLS =
+    {
+        .pllFllSel = SIM_PLLFLLSEL_MCGFLLCLK_CLK, /* PLLFLL select: MCGFLLCLK clock */
+        .er32kSrc = SIM_OSC32KSEL_LPO_CLK,        /* OSC32KSEL select: LPO clock */
+        .clkdiv1 = 0x40000U,                      /* SIM_CLKDIV1 - OUTDIV1: /1, OUTDIV4: /5 */
+    };	
+	
 const osc_config_t oscConfig_BOARD_BootClockVLPR =
     {
         .freq = 0U,                               /* Oscillator frequency: 0Hz */
@@ -295,6 +324,31 @@ void BOARD_BootClockVLPR(void)
     SMC_SetPowerModeVlpr(SMC);
 #endif
     while (SMC_GetPowerModeState(SMC) != kSMC_PowerStateVlpr)
+    {
+    }
+    /* Set SystemCoreClock variable. */
+    SystemCoreClock = BOARD_BOOTCLOCKVLPR_CORE_CLOCK;
+}
+
+
+void BOARD_BootClockVLPS(void)
+{
+    /* Set the system clock dividers in SIM to safe value. */
+    CLOCK_SetSimSafeDivs();
+    /* Set MCG to BLPI mode. */
+    CLOCK_BootToBlpiMode(mcgConfig_BOARD_BootClockVPLS.fcrdiv,
+                         mcgConfig_BOARD_BootClockVPLS.ircs,
+                         mcgConfig_BOARD_BootClockVPLS.irclkEnableMode);
+    /* Set the clock configuration in SIM module. */
+    CLOCK_SetSimConfig(&simConfig_BOARD_BootClockVPLS);
+    /* Set VLPR power mode. */
+    SMC_SetPowerModeProtection(SMC, kSMC_AllowPowerModeAll);
+#if (defined(FSL_FEATURE_SMC_HAS_LPWUI) && FSL_FEATURE_SMC_HAS_LPWUI)
+    SMC_SetPowerModeVlpr(SMC, false);
+#else
+    SMC_SetPowerModeVlps(SMC);
+#endif
+    while (SMC_GetPowerModeState(SMC) != kSMC_PowerStateVlps)
     {
     }
     /* Set SystemCoreClock variable. */

@@ -42,6 +42,8 @@
 #define BSP_DMA_MODULE_ENABLE			1
 #define BSP_USART_MODULE_ENABLE			1
 #define BSP_FLASH_MODULE_ENABLE			1
+#define BSP_LPV_MODULE_ENABLE			1
+
 
 #define BSP_CAN_MODULE_ENABLE 			0
 #define BSP_DAC_MODULE_ENABLE			0
@@ -100,6 +102,13 @@
 #if BSP_FLASH_MODULE_ENABLE == 1	
 	#include "fsl_flash.h"
 #endif	
+
+#if BSP_LPV_MODULE_ENABLE == 1	
+	#include "fsl_smc.h"
+	#include "fsl_pmc.h"
+#endif	
+
+
 
 
 

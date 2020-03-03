@@ -149,6 +149,26 @@ void BSP_UART_SetBaudRate(uint8_t BSP_UARTX , uint32_t buadrate)
 }
 	 
 
+void BSP_Uart0_Close(void)
+{
+	LPSCI_Deinit(UART0);
+	
+	//CLOCK_EnableClock(kCLOCK_PortA);
+	PORT_SetPinMux(PORTA, 2,kPORT_MuxAsGpio);
+	gpio_pin_config_t gpio_pin_config;
+	gpio_pin_config.outputLogic = 0;
+	gpio_pin_config.pinDirection = kGPIO_DigitalInput;
+	GPIO_PinInit(GPIOA, 2, &gpio_pin_config);
+	
+	PORT_SetPinMux(PORTA, 1,kPORT_MuxAsGpio);
+	gpio_pin_config.outputLogic = 0;
+	gpio_pin_config.pinDirection = kGPIO_DigitalInput;
+	GPIO_PinInit(GPIOA, 1, &gpio_pin_config);
+	// -----------------------		
+	
+	
+}
+
 
 static void bsp_uart0_init(void)
 {
