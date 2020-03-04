@@ -29,7 +29,7 @@
  */
 
 #define USER_TASK_LOOP_EVENT            0x0001
-
+#define USER_TASK_LOOP2_EVENT            0x0002
 /**
  * @}
  */

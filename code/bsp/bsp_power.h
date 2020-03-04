@@ -63,8 +63,14 @@
  * @defgroup      bsp_power_Exported_Functions 
  * @{  
  */
+ 
+void BSP_Power_EnterVLPS(void);
+
+// -------Test Func------------- 
 void BSP_Power_ModeTest(void);
 
+
+// -----------------------------
 /**
  * @}
  */

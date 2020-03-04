@@ -19,6 +19,7 @@
  */
 #include "bsp_e32.h"
 #include "bsp_clock.h"
+#include "bsp_uart.h"
 /**
  * @addtogroup    bsp_power_Modules 
  * @{  
@@ -107,43 +108,46 @@ typedef enum
 }BSP_Power_Mode_e;
 
 
-
-/*
-void SMC_PreEnterStopModes(void);
-
-void SMC_PostExitStopModes(void);
-
-status_t SMC_SetPowerModeRun(SMC_Type *base);
-
-SMC_SetPowerModeStop(SMC_Type *base, smc_partial_stop_option_t option);
-SMC_SetPowerModeVlps(SMC_Type *base);
-*/
-
 void BSP_Power_SetMode(BSP_Power_Mode_e mode)
 {
 	DEBUG("Current Mode:%X\r\n" , SMC_GetPowerModeState( SMC ));
 	
 	//SMC_SetPowerModeProtection( SMC , kSMC_AllowPowerModeVlls | kSMC_AllowPowerModeLls); 
-
 }
 
 
-#include "bsp_uart.h"
+void BSP_Power_EnterVLPS(void)
+{
+	DEBUG("ENTER VLPS\r\n");
+	BSP_E32_Power_OFF();
+	BSP_Uart0_Close();
+	
+	
+//	SMC_SetPowerModeProtection(SMC , kSMC_AllowPowerModeAll);
+//	SMC_SetPowerModeVlps(SMC);
+//	
+	
+	BOARD_RUNClockToVLPS();
+}
+
+
+
+
 // -------Test Func--------
 void BSP_Power_ModeTest(void)
 {
 	BSP_E32_Power_OFF();
 	BSP_Uart0_Close();
 //	DEBUG("Current Mode:%X\r\n" , SMC_GetPowerModeState( SMC ));
-//	SMC_SetPowerModeProtection(SMC , kSMC_AllowPowerModeAll);
-//	SMC_SetPowerModeVlps(SMC);
+	SMC_SetPowerModeProtection(SMC , kSMC_AllowPowerModeAll);
+	SMC_SetPowerModeVlps(SMC);
 //	
 //	DEBUG("Current Mode:%X\r\n" , SMC_GetPowerModeState( SMC ));
 //    while (SMC_GetPowerModeState(SMC) != kSMC_PowerStateVlpr)
 //    {
 //    }
 	
-	BOARD_BootClockVLPS();
+//	BOARD_BootClockVLPS();
 	//BOARD_BootClockVLPR();
 	
 	

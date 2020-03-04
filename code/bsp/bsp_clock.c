@@ -42,6 +42,8 @@
 #define OSC_CAP0P                                         0U  /*!< Oscillator 0pF capacitor load */
 #define OSC_ER_CLK_DISABLE                                0U  /*!< Disable external reference clock */
 #define SIM_OSC32KSEL_LPO_CLK                             3U  /*!< OSC32KSEL select: LPO clock */
+
+#define SIM_OSC32KSEL_RTC_CLKIN_CLK 					  2U
 #define SIM_PLLFLLSEL_MCGFLLCLK_CLK                       0U  /*!< PLLFLL select: MCGFLLCLK clock */
 #define SIM_PLLFLLSEL_MCGPLLCLK_CLK                       1U  /*!< PLLFLL select: MCGPLLCLK clock */
 
@@ -209,151 +211,59 @@ void BSP_SystemClockInit(void)
 }
 
 
-/*******************************************************************************
- ********************* Configuration BOARD_BootClockVLPR ***********************
- ******************************************************************************/
-/* TEXT BELOW IS USED AS SETTING FOR THE CLOCKS TOOL *****************************
-!!Configuration
-name: BOARD_BootClockVLPR
-outputs:
-- {id: Bus_clock.outFreq, value: 800 kHz}
-- {id: Core_clock.outFreq, value: 4 MHz, locked: true, accuracy: '0.001'}
-- {id: ERCLK32K.outFreq, value: 1 kHz}
-- {id: Flash_clock.outFreq, value: 800 kHz}
-- {id: LPO_clock.outFreq, value: 1 kHz}
-- {id: MCGIRCLK.outFreq, value: 4 MHz}
-- {id: System_clock.outFreq, value: 4 MHz}
-settings:
-- {id: MCGMode, value: BLPI}
-- {id: powerMode, value: VLPR}
-- {id: MCG.CLKS.sel, value: MCG.IRCS}
-- {id: MCG.FCRDIV.scale, value: '1'}
-- {id: MCG.FRDIV.scale, value: '32'}
-- {id: MCG.IRCS.sel, value: MCG.FCRDIV}
-- {id: MCG_C1_IRCLKEN_CFG, value: Enabled}
-- {id: MCG_C2_OSC_MODE_CFG, value: ModeOscLowPower}
-- {id: MCG_C2_RANGE0_CFG, value: Very_high}
-- {id: MCG_C2_RANGE0_FRDIV_CFG, value: Very_high}
-- {id: SIM.OSC32KSEL.sel, value: PMC.LPOCLK}
-- {id: SIM.OUTDIV4.scale, value: '5'}
-sources:
-- {id: OSC.OSC.outFreq, value: 8 MHz}
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR THE CLOCKS TOOL **/
-
-/*******************************************************************************
- * Variables for BOARD_BootClockVLPR configuration
- ******************************************************************************/
-const mcg_config_t mcgConfig_BOARD_BootClockVLPR =
-    {
-        .mcgMode = kMCG_ModeBLPI,                 /* BLPI - Bypassed Low Power Internal */
-        .irclkEnableMode = kMCG_IrclkEnable,      /* MCGIRCLK enabled, MCGIRCLK disabled in STOP mode */
-        .ircs = kMCG_IrcFast,                     /* Fast internal reference clock selected */
-        .fcrdiv = 0x0U,                           /* Fast IRC divider: divided by 1 */
-        .frdiv = 0x0U,                            /* FLL reference clock divider: divided by 32 */
-        .drs = kMCG_DrsLow,                       /* Low frequency range */
-        .dmx32 = kMCG_Dmx32Default,               /* DCO has a default range of 25% */
-        .pll0Config =
-            {
-                .enableMode = MCG_PLL_DISABLE,    /* MCGPLLCLK disabled */
-                .prdiv = 0x0U,                    /* PLL Reference divider: divided by 1 */
-                .vdiv = 0x0U,                     /* VCO divider: multiplied by 24 */
-            },
-    };
-	
-const mcg_config_t mcgConfig_BOARD_BootClockVPLS =
-    {
-        .mcgMode = kMCG_ModePBE,                 /* BLPI - Bypassed Low Power Internal */
-        .irclkEnableMode = kMCG_IrclkEnableInStop,      /* MCGIRCLK enabled, MCGIRCLK disabled in STOP mode */
-        .ircs = kMCG_IrcFast,                     /* Fast internal reference clock selected */
-        .fcrdiv = 0x0U,                           /* Fast IRC divider: divided by 1 */
-        .frdiv = 0x0U,                            /* FLL reference clock divider: divided by 32 */
-        .drs = kMCG_DrsLow,                       /* Low frequency range */
-        .dmx32 = kMCG_Dmx32Default,               /* DCO has a default range of 25% */
-        .pll0Config =
-            {
-                .enableMode = MCG_PLL_DISABLE,    /* MCGPLLCLK disabled */
-                .prdiv = 0x0U,                    /* PLL Reference divider: divided by 1 */
-                .vdiv = 0x0U,                     /* VCO divider: multiplied by 24 */
-            },
-    };	
 
 	
-	
-const sim_clock_config_t simConfig_BOARD_BootClockVLPR =
+const sim_clock_config_t simConfig_RUNClockVPLS =
     {
         .pllFllSel = SIM_PLLFLLSEL_MCGFLLCLK_CLK, /* PLLFLL select: MCGFLLCLK clock */
-        .er32kSrc = SIM_OSC32KSEL_LPO_CLK,        /* OSC32KSEL select: LPO clock */
-        .clkdiv1 = 0x40000U,                      /* SIM_CLKDIV1 - OUTDIV1: /1, OUTDIV4: /5 */
-    };
-	
-	
-const sim_clock_config_t simConfig_BOARD_BootClockVPLS =
-    {
-        .pllFllSel = SIM_PLLFLLSEL_MCGFLLCLK_CLK, /* PLLFLL select: MCGFLLCLK clock */
-        .er32kSrc = SIM_OSC32KSEL_LPO_CLK,        /* OSC32KSEL select: LPO clock */
+        .er32kSrc = SIM_OSC32KSEL_RTC_CLKIN_CLK,        /* OSC32KSEL select: LPO clock */
         .clkdiv1 = 0x40000U,                      /* SIM_CLKDIV1 - OUTDIV1: /1, OUTDIV4: /5 */
     };	
-	
-const osc_config_t oscConfig_BOARD_BootClockVLPR =
+const sim_clock_config_t simConfig_VPLSClockRUN =
     {
-        .freq = 0U,                               /* Oscillator frequency: 0Hz */
-        .capLoad = (OSC_CAP0P),                   /* Oscillator capacity load: 0pF */
-        .workMode = kOSC_ModeOscLowPower,         /* Oscillator low power */
-        .oscerConfig =
-            {
-                .enableMode = OSC_ER_CLK_DISABLE, /* Disable external reference clock */
-            }
-    };
+        .pllFllSel = SIM_PLLFLLSEL_MCGFLLCLK_CLK, /* PLLFLL select: MCGFLLCLK clock */
+        .er32kSrc = SIM_OSC32KSEL_RTC_CLKIN_CLK,        /* OSC32KSEL select: LPO clock */
+        .clkdiv1 = 0x10010000U,                   /* SIM_CLKDIV1 - OUTDIV1: /2, OUTDIV4: /2 */
+    };	
 
 
-void BOARD_BootClockVLPR(void)
+void BOARD_RUNClockToVLPS(void)
 {
-    /* Set the system clock dividers in SIM to safe value. */
-    CLOCK_SetSimSafeDivs();
-    /* Set MCG to BLPI mode. */
-    CLOCK_BootToBlpiMode(mcgConfig_BOARD_BootClockVLPR.fcrdiv,
-                         mcgConfig_BOARD_BootClockVLPR.ircs,
-                         mcgConfig_BOARD_BootClockVLPR.irclkEnableMode);
-    /* Set the clock configuration in SIM module. */
-    CLOCK_SetSimConfig(&simConfig_BOARD_BootClockVLPR);
-    /* Set VLPR power mode. */
-    SMC_SetPowerModeProtection(SMC, kSMC_AllowPowerModeAll);
-#if (defined(FSL_FEATURE_SMC_HAS_LPWUI) && FSL_FEATURE_SMC_HAS_LPWUI)
-    SMC_SetPowerModeVlpr(SMC, false);
-#else
-    SMC_SetPowerModeVlpr(SMC);
-#endif
-    while (SMC_GetPowerModeState(SMC) != kSMC_PowerStateVlpr)
-    {
-    }
-    /* Set SystemCoreClock variable. */
-    SystemCoreClock = BOARD_BOOTCLOCKVLPR_CORE_CLOCK;
-}
+	CLOCK_SetSimSafeDivs();
+	CLOCK_SetSimConfig(&simConfig_RUNClockVPLS);
 
+	CLOCK_ExternalModeToFbeModeQuick();
+	CLOCK_SetLowPowerEnable(true);
 
-void BOARD_BootClockVLPS(void)
-{
-    /* Set the system clock dividers in SIM to safe value. */
-    CLOCK_SetSimSafeDivs();
-    /* Set MCG to BLPI mode. */
-    CLOCK_BootToBlpiMode(mcgConfig_BOARD_BootClockVPLS.fcrdiv,
-                         mcgConfig_BOARD_BootClockVPLS.ircs,
-                         mcgConfig_BOARD_BootClockVPLS.irclkEnableMode);
-    /* Set the clock configuration in SIM module. */
-    CLOCK_SetSimConfig(&simConfig_BOARD_BootClockVPLS);
-    /* Set VLPR power mode. */
     SMC_SetPowerModeProtection(SMC, kSMC_AllowPowerModeAll);
-#if (defined(FSL_FEATURE_SMC_HAS_LPWUI) && FSL_FEATURE_SMC_HAS_LPWUI)
-    SMC_SetPowerModeVlpr(SMC, false);
-#else
     SMC_SetPowerModeVlps(SMC);
-#endif
     while (SMC_GetPowerModeState(SMC) != kSMC_PowerStateVlps)
     {
     }
     /* Set SystemCoreClock variable. */
-    SystemCoreClock = BOARD_BOOTCLOCKVLPR_CORE_CLOCK;
+    SystemCoreClock = BOARD_BOOTCLOCKVLPR_CORE_CLOCK;	
 }
+
+void BOARD_VLPSClockToRUN(void)
+{
+	CLOCK_SetSimSafeDivs();
+	CLOCK_SetSimConfig(&simConfig_VPLSClockRUN);
+
+	CLOCK_SetPeeMode();
+	
+	CLOCK_SetLowPowerEnable(false);
+
+    SMC_SetPowerModeProtection(SMC, kSMC_AllowPowerModeAll);
+    SMC_SetPowerModeVlps(SMC);
+    while (SMC_GetPowerModeState(SMC) != kSMC_PowerStateVlps)
+    {
+    }
+    /* Set SystemCoreClock variable. */
+    SystemCoreClock = BOARD_BOOTCLOCKVLPR_CORE_CLOCK;	
+}
+
+
+
 
 
 void BSP_ShowClock(void)

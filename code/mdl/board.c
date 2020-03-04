@@ -120,7 +120,7 @@ void Board_Init_BSP(void)
 	BSP_Clock_Init(BSP_CLOCK1);
 
 // --------Test func-------------	
-//	BSP_RTC_Init();
+	BSP_RTC_Init();
 //	BSP_ADC_Init();
 //	BSP_UART_Init( BSP_UART0 );
 //	BSP_UART_Init( BSP_UART2 );

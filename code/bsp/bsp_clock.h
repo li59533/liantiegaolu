@@ -110,9 +110,8 @@ extern const osc_config_t oscConfig_BOARD_BootClockVLPR;
  */
 void BSP_SystemClockInit(void);
 void BSP_ShowClock(void);
+void BOARD_RUNClockToVLPS(void);
 
-void BOARD_BootClockVLPR(void);
-void BOARD_BootClockVLPS(void);
 
 /**
  * @}
