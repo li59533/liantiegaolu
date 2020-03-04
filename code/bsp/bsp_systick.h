@@ -65,7 +65,7 @@
  */
 void BSP_SysTick_Init(void);
 
-
+void BSP_SysTick_DisableIRQ(void);
 void BSP_SYSTICK_IncTick(void);
 uint32_t BSP_SYSTICK_GetTick(void);
 

@@ -304,7 +304,7 @@ void RTC_IRQHandler(void)
 	if((RTC_GetStatusFlags( RTC ) & kRTC_AlarmFlag ) == kRTC_AlarmFlag)
 	{
 		RTC_ClearStatusFlags( RTC , kRTC_AlarmFlag);
-		NVIC_SystemReset();
+		//NVIC_SystemReset();
 		DEBUG("RTC_IRQHandler Alarm\r\n");
 	}
 }

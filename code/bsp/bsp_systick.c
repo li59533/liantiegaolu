@@ -105,6 +105,13 @@ void BSP_SysTick_Init(void)
 	SysTick_Config(CLOCK_GetFreq(kCLOCK_CoreSysClk) / 1000);
 }
 
+void BSP_SysTick_DisableIRQ(void)
+{
+	SysTick->CTRL = 0x00010006;
+	NVIC_DisableIRQ(SysTick_IRQn);
+}
+
+
 
 void BSP_SYSTICK_IncTick(void)
 {

@@ -160,7 +160,7 @@ void NetTask_Timer_Start_Event(osal_event_t event_flag,uint32_t timeout)
 
 void NetTask_Clear_Event(osal_event_t events)
 {
-
+	OS_Events_Clear(g_NetTask_Id,events);
 }
 /**
  * @}

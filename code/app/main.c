@@ -26,6 +26,9 @@
 
 #include "system_param.h"
 #include "bsp_flash.h"
+#include "bsp_uart.h"
+#include "bsp_power.h"
+#include "bsp_rtc.h"
 /**	
  * @addtogroup    main_Modules 
  * @{  
@@ -114,6 +117,24 @@ int main(void)
 	Board_Init_BSP();
 	
 	SystemParam_Init();
+
+// ---------------------
+
+//	while(1)
+//	{
+//		BSP_Systick_Delayms(1000); 
+//		
+//		
+//		DEBUG("default\r\n");
+//		BSP_RTC_Test();
+//		BSP_Power_EnterVLPS();
+//			
+//	}
+
+// ---------------------	
+	
+	
+	
 	
 	OS_Init(); // init osal
     

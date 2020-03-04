@@ -618,6 +618,26 @@ void BSP_E32_RevByteOneByte(uint8_t value)
 }
 
 
+void BSP_E32_Close(void)
+{
+	BSP_E32_Power_OFF();
+	BSP_Uart0_Close();
+	BSP_E32_CmdQueue.in = 0;
+	BSP_E32_CmdQueue.count = 0;
+	BSP_E32_CmdQueue.out = 0;
+	
+	NetTask_Clear_Event(NET_TASK_MODULE_INIT_EVENT);
+	NetTask_Clear_Event(NET_TASK_CORE_LOOP_EVENT);
+	NetTask_Clear_Event(NET_TASK_REV_EVENT);
+}
+
+void BSP_E32_Open(void)
+{
+	BSP_Uart0_Open();
+	BSP_E32_Power_ON();
+	NetTask_Send_Event(NET_TASK_CORE_LOOP_EVENT);
+}
+
 /**
  * @}
  */

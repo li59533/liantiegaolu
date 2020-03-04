@@ -20,6 +20,7 @@
 #include "bsp_e32.h"
 #include "bsp_clock.h"
 #include "bsp_uart.h"
+#include "bsp_systick.h"
 /**
  * @addtogroup    bsp_power_Modules 
  * @{  
@@ -119,15 +120,14 @@ void BSP_Power_SetMode(BSP_Power_Mode_e mode)
 void BSP_Power_EnterVLPS(void)
 {
 	DEBUG("ENTER VLPS\r\n");
-	BSP_E32_Power_OFF();
-	BSP_Uart0_Close();
-	
-	
-//	SMC_SetPowerModeProtection(SMC , kSMC_AllowPowerModeAll);
-//	SMC_SetPowerModeVlps(SMC);
-//	
+	BSP_E32_Close();
+	BSP_SysTick_DisableIRQ();
 	
 	BOARD_RUNClockToVLPS();
+	
+	BSP_SysTick_Init();
+	BSP_E32_Open();
+	
 }
 
 

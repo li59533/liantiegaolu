@@ -165,8 +165,12 @@ void BSP_Uart0_Close(void)
 	gpio_pin_config.pinDirection = kGPIO_DigitalInput;
 	GPIO_PinInit(GPIOA, 1, &gpio_pin_config);
 	// -----------------------		
-	
-	
+}
+
+void BSP_Uart0_Open(void)
+{
+	BSP_UART_Init( BSP_UART0 );
+	BSP_UART_SetBaudRate(BSP_UART0 , 115200);
 }
 
 

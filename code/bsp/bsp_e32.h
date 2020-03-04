@@ -119,6 +119,12 @@ void BSP_E32_Power_OFF(void);
 void BSP_E32_Rev(void);
 void BSP_E32_RevByteOneByte(uint8_t value);
 
+
+
+void BSP_E32_Close(void);
+
+void BSP_E32_Open(void);
+
 //-----------------------
 void BSP_E32_CoreLoop(void);
 void BSP_E32_AddSendBuf(uint8_t *buf , uint16_t len);

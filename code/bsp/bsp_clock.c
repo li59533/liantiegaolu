@@ -102,6 +102,8 @@ static void CLOCK_CONFIG_SetFllExtRefDiv(uint8_t frdiv)
 {
     MCG->C1 = ((MCG->C1 & ~MCG_C1_FRDIV_MASK) | MCG_C1_FRDIV(frdiv));
 }
+
+static void APP_SetClockRunFromVlps(void);
 /**
  * @}
  */
@@ -227,22 +229,71 @@ const sim_clock_config_t simConfig_VPLSClockRUN =
     };	
 
 
+	
+static void APP_SetClockRunFromVlps(void)
+{
+    const sim_clock_config_t simConfig = {
+        .pllFllSel = 1U,        /* PLLFLLSEL select PLL */
+        .er32kSrc = 2U,         /* ERCLK32K selection, use LPO */
+        .clkdiv1 = 0x10010000U, /* SIM_CLKDIV1 */
+    };
+
+    const mcg_pll_config_t pll0Config = {
+        .enableMode = 0U, .prdiv = 0x1U, .vdiv = 0x0U,
+    };
+
+    CLOCK_SetSimSafeDivs();
+
+    /* Currently in BLPI mode, will switch to PEE mode. */
+    /* Enter FBI. */
+    CLOCK_SetLowPowerEnable(false);
+    /* Enter FBE. */
+    CLOCK_SetFbeMode(3U, kMCG_Dmx32Default, kMCG_DrsLow, NULL);
+    /* Enter PBE. */
+    CLOCK_SetPbeMode(kMCG_PllClkSelPll0, &pll0Config);
+    /* Enter PEE. */
+    CLOCK_SetPeeMode();
+
+    CLOCK_SetSimConfig(&simConfig);
+}	
+	
+	
 void BOARD_RUNClockToVLPS(void)
 {
+	mcg_mode_t mcg_mode = 0 ;
+	mcg_mode = CLOCK_GetMode();
+	DEBUG("mcg_mode : %d\r\n",mcg_mode);
+	
 	CLOCK_SetSimSafeDivs();
 	CLOCK_SetSimConfig(&simConfig_RUNClockVPLS);
 
-	CLOCK_ExternalModeToFbeModeQuick();
+	mcg_pll_config_t  config;
+	config.enableMode = kMCG_PllEnableInStop;
+	config.prdiv = 0;
+	config.vdiv = 0;
+	CLOCK_SetPbeMode( 0 , &config);
+//	CLOCK_ExternalModeToFbeModeQuick();
+	
+	
 	CLOCK_SetLowPowerEnable(true);
 
     SMC_SetPowerModeProtection(SMC, kSMC_AllowPowerModeAll);
+	SMC_PreEnterStopModes();
     SMC_SetPowerModeVlps(SMC);
-    while (SMC_GetPowerModeState(SMC) != kSMC_PowerStateVlps)
-    {
-    }
-    /* Set SystemCoreClock variable. */
-    SystemCoreClock = BOARD_BOOTCLOCKVLPR_CORE_CLOCK;	
+	SMC_PostExitStopModes();
+	mcg_mode = CLOCK_GetMode();
+	DEBUG("mcg_mode : %d\r\n",mcg_mode);	
+	
+	SMC_SetPowerModeRun(SMC);
+	APP_SetClockRunFromVlps();
+
+	DEBUG("BOARD_WakeUp\r\n");
+	//BSP_ShowClock();
+	
 }
+
+
+
 
 void BOARD_VLPSClockToRUN(void)
 {
@@ -273,7 +324,7 @@ void BSP_ShowClock(void)
 	DEBUG("kCLOCK_BusClk:%d\r\n", CLOCK_GetFreq(kCLOCK_BusClk));
 	DEBUG("kCLOCK_FlashClk:%d\r\n", CLOCK_GetFreq(kCLOCK_FlashClk));
 	DEBUG("kCLOCK_PllFllSelClk:%d\r\n", CLOCK_GetFreq(kCLOCK_PllFllSelClk));
-	DEBUG("kCLOCK_Er32kClk:%d\r\n", CLOCK_GetFreq(kCLOCK_Er32kClk));
+	//DEBUG("kCLOCK_Er32kClk:%d\r\n", CLOCK_GetFreq(kCLOCK_Er32kClk));
 	DEBUG("kCLOCK_McgFixedFreqClk:%d\r\n", CLOCK_GetFreq(kCLOCK_McgFixedFreqClk));
 	DEBUG("kCLOCK_McgInternalRefClk:%d\r\n", CLOCK_GetFreq(kCLOCK_McgInternalRefClk));
 	DEBUG("kCLOCK_McgFllClk:%d\r\n", CLOCK_GetFreq(kCLOCK_McgFllClk));

@@ -23,6 +23,7 @@
 #include "bsp_led.h"
 #include "bsp_power.h"
 #include "bsp_rtc.h"
+#include "bsp_systick.h"
 /**
  * @addtogroup    user_task_Modules 
  * @{  
@@ -107,7 +108,7 @@ void UserTask_Init(uint8_t taskId)
 {
     g_UserTask_Id = taskId;
     //UserTask_Send_Event(USER_TASK_LOOP_EVENT);	
-	OS_Timer_Start(g_UserTask_Id, USER_TASK_LOOP_EVENT,5000);	
+	OS_Timer_Start(g_UserTask_Id, USER_TASK_LOOP_EVENT,3000);	
 	OS_Timer_Start(g_UserTask_Id, USER_TASK_LOOP2_EVENT,1000);	
 	BSP_LED_Blink( BSP_LED_TEST , 0 , 10, 1000);
 	
@@ -120,7 +121,8 @@ osal_event_t UserTask_Process(uint8_t taskid,osal_event_t events)
 		DEBUG("USER_TASK_LOOP_EVENT\r\n");
 		BSP_RTC_Test();
 		BSP_Power_EnterVLPS();
-		//OS_Timer_Start(g_UserTask_Id, USER_TASK_LOOP_EVENT,5000);			
+		BSP_SysTick_Init();
+		OS_Timer_Start(g_UserTask_Id, USER_TASK_LOOP_EVENT,15000);			
         return events ^ USER_TASK_LOOP_EVENT;
     }
 	
