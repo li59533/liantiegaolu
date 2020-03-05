@@ -1,6 +1,6 @@
 /**
  **************************************************************************************************
- * @file        bsp_adc.h
+ * @file        app_getdata.h
  * @author
  * @version
  * @date        
@@ -10,8 +10,8 @@
  *
  **************************************************************************************************
  */
-#ifndef _BSP_ADC_H_
-#define _BSP_ADC_H_
+#ifndef _APP_GETDATA_H_
+#define _APP_GETDATA_H_
 
 /**
  * @addtogroup    XXX 
@@ -19,12 +19,12 @@
  */
 #include "self_def.h"
 /**
- * @addtogroup    bsp_adc_Modules 
+ * @addtogroup    app_getdata_Modules 
  * @{  
  */
 
 /**
- * @defgroup      bsp_adc_Exported_Macros 
+ * @defgroup      app_getdata_Exported_Macros 
  * @{  
  */
 
@@ -34,7 +34,7 @@
  */
 
 /**
- * @defgroup      bsp_adc_Exported_Constants
+ * @defgroup      app_getdata_Exported_Constants
  * @{  
  */
 
@@ -43,7 +43,22 @@
  */
 
 /**
- * @defgroup      bsp_adc_Exported_Types 
+ * @defgroup      app_getdata_Exported_Types 
+ * @{  
+ */
+typedef  struct
+{
+	uint16_t original_value;
+	float real_mV;
+	float real_mA;
+	float need_value;
+}App_Data_t;
+/**
+ * @}
+ */
+
+/**
+ * @defgroup      app_getdata_Exported_Variables 
  * @{  
  */
 
@@ -52,25 +67,14 @@
  */
 
 /**
- * @defgroup      bsp_adc_Exported_Variables 
+ * @defgroup      app_getdata_Exported_Functions 
  * @{  
  */
+void APP_GetData_Init(void);
 
-/**
- * @}
- */
-
-/**
- * @defgroup      bsp_adc_Exported_Functions 
- * @{  
- */
-void BSP_ADC_Init(void);
-uint32_t BSP_ADC_GetValue(uint8_t channel);
-
-uint16_t BSP_ADC_GetAverageValue(uint8_t channel);
-void BSP_ADC_ShowValue(void);
-void BSP_ADC_DisableIRQ(void);
-void BSP_ADC_EnableIRQ(void);
+void APP_GetData_DeInit(void);
+App_Data_t * APP_GetData_Get(void);
+void APP_GetData_Calc(void);
 /**
  * @}
  */

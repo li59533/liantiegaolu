@@ -60,6 +60,13 @@
  * @brief         
  * @{  
  */
+typedef struct
+{
+	uint16_t adcbuf[8];
+	uint8_t in ;
+	uint16_t average;
+}bsp_adc_data_t;
+
 
 /**
  * @}
@@ -70,6 +77,12 @@
  * @brief         
  * @{  
  */
+bsp_adc_data_t bsp_adc_data = 
+{
+	.in = 0 ,
+	.average = 0,
+};
+
 
 /**
  * @}
@@ -90,6 +103,8 @@
  * @brief         
  * @{  
  */
+static void bsp_adc_addvalue(uint16_t value); 
+ 
 //static void bsp_adcDMA_init(void);
 /**
  * @}
@@ -166,6 +181,17 @@ void BSP_ADC_Init(void)
 	// -------------------------
 }
 
+void BSP_ADC_DisableIRQ(void)
+{
+	DisableIRQ(ADC0_IRQn);
+}
+
+void BSP_ADC_EnableIRQ(void)
+{
+	EnableIRQ(ADC0_IRQn);
+}
+
+
 //dma_handle_t dma_handle ;
 //dma_transfer_config_t transferConfig;	
 //#define BSP_ADC_DATA_LEN     16
@@ -213,6 +239,25 @@ uint32_t BSP_ADC_GetValue(uint8_t channel)
 	return ADC16_GetChannelConversionValue( ADC0 , 0);
 }
 
+
+static void bsp_adc_addvalue(uint16_t value)
+{
+	uint32_t sum  = 0 ;
+	bsp_adc_data.adcbuf[bsp_adc_data.in ++] = value;
+	bsp_adc_data.in %= 8;
+	for(uint8_t i = 0 ; i < 8 ; i ++)
+	{
+		sum += bsp_adc_data.adcbuf[i];
+	}
+	bsp_adc_data.average  = sum >> 3;
+}
+
+uint16_t BSP_ADC_GetAverageValue(uint8_t channel)
+{
+	return bsp_adc_data.average;
+}
+
+
 // --------------Test -----
 void BSP_ADC_ShowValue(void)
 {
@@ -225,9 +270,8 @@ void BSP_ADC_ShowValue(void)
 // -------IRQ ----------------
 void ADC0_IRQHandler(void)
 {
-	DEBUG("ADC0_IRQHandler%d\r\n" );
-	BSP_ADC_ShowValue();
-	BSP_LED_Toggle(BSP_LED_TEST);
+	//DEBUG("ADC0_IRQHandler\r\n" );
+	bsp_adc_addvalue((uint16_t)ADC16_GetChannelConversionValue( ADC0 , 0));
 }
 // ---------------------------
 /**

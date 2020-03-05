@@ -21,6 +21,7 @@
 #include "bsp_clock.h"
 #include "bsp_uart.h"
 #include "bsp_systick.h"
+#include "bsp_adc.h"
 /**
  * @addtogroup    bsp_power_Modules 
  * @{  
@@ -120,6 +121,7 @@ void BSP_Power_SetMode(BSP_Power_Mode_e mode)
 void BSP_Power_EnterVLPS(void)
 {
 	DEBUG("ENTER VLPS\r\n");
+	BSP_ADC_DisableIRQ();
 	BSP_E32_Close();
 	BSP_SysTick_DisableIRQ();
 	
@@ -127,7 +129,8 @@ void BSP_Power_EnterVLPS(void)
 	
 	BSP_SysTick_Init();
 	BSP_E32_Open();
-	
+	BSP_ADC_EnableIRQ();
+	BSP_SysTick_Init();
 }
 
 

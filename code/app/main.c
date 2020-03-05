@@ -118,24 +118,6 @@ int main(void)
 	
 	SystemParam_Init();
 
-// ---------------------
-
-//	while(1)
-//	{
-//		BSP_Systick_Delayms(1000); 
-//		
-//		
-//		DEBUG("default\r\n");
-//		BSP_RTC_Test();
-//		BSP_Power_EnterVLPS();
-//			
-//	}
-
-// ---------------------	
-	
-	
-	
-	
 	OS_Init(); // init osal
     
     OS_Start(); // while(1)

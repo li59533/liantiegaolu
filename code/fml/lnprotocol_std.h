@@ -1,8 +1,8 @@
 /**
  **************************************************************************************************
- * @file        bsp_adc.h
+ * @file        lnprotocol_std.h
  * @author
- * @version
+ * @version    v0.1.0
  * @date        
  * @brief
  **************************************************************************************************
@@ -10,8 +10,8 @@
  *
  **************************************************************************************************
  */
-#ifndef _BSP_ADC_H_
-#define _BSP_ADC_H_
+#ifndef _LNPROTOCOL_STD_H_
+#define _LNPROTOCOL_STD_H_
 
 /**
  * @addtogroup    XXX 
@@ -19,14 +19,16 @@
  */
 #include "self_def.h"
 /**
- * @addtogroup    bsp_adc_Modules 
+ * @addtogroup    lnprotocol_std_Modules 
  * @{  
  */
 
 /**
- * @defgroup      bsp_adc_Exported_Macros 
+ * @defgroup      lnprotocol_std_Exported_Macros 
  * @{  
  */
+#define LNPROTOCOL_STD_HEAD			0X7E
+#define LNPROTOCOL_STD_FOOT			0X7E
 
 
 /**
@@ -34,7 +36,28 @@
  */
 
 /**
- * @defgroup      bsp_adc_Exported_Constants
+ * @defgroup      lnprotocol_std_Exported_Constants
+ * @{  
+ */
+
+/**
+ * @}
+ */
+ 
+/**
+ * @defgroup      lnprotocol_std_Exported_Types 
+ * @{  
+ */
+ 
+
+ 
+
+/**
+ * @}
+ */
+
+/**
+ * @defgroup      lnprotocol_std_Exported_Variables 
  * @{  
  */
 
@@ -43,34 +66,10 @@
  */
 
 /**
- * @defgroup      bsp_adc_Exported_Types 
+ * @defgroup      lnprotocol_std_Exported_Functions 
  * @{  
  */
-
-/**
- * @}
- */
-
-/**
- * @defgroup      bsp_adc_Exported_Variables 
- * @{  
- */
-
-/**
- * @}
- */
-
-/**
- * @defgroup      bsp_adc_Exported_Functions 
- * @{  
- */
-void BSP_ADC_Init(void);
-uint32_t BSP_ADC_GetValue(uint8_t channel);
-
-uint16_t BSP_ADC_GetAverageValue(uint8_t channel);
-void BSP_ADC_ShowValue(void);
-void BSP_ADC_DisableIRQ(void);
-void BSP_ADC_EnableIRQ(void);
+int8_t LNprotocol_STD_Checksum(uint8_t * buf,uint16_t len);  // enter a complete buf
 /**
  * @}
  */

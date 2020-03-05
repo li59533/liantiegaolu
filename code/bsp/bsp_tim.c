@@ -197,8 +197,6 @@ void LPTMR0_IRQHandler(void)
 	//LPTMR_SetTimerPeriod(LPTMR0, MSEC_TO_COUNT(10000U, BOARD_BOOTCLOCKRUN_CORE_CLOCK));
 }
 
-
-
 void TPM0_IRQHandler(void)
 {
 	DEBUG("TPM0_IRQHandler\r\n");

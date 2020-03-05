@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>CPU_MKL16Z64VFM4</Define>
               <Undefine></Undefine>
-              <IncludePath>..\components\MKL16Z4\drivers;..\components\MKL16Z4;..\components\MKL16Z4\arm;..\mdl;..\bsp;..\components\MKL16Z4\utilities;..\components\CMSIS\Include;..\mdl\rttviewer;..\mdl\osal\ports;..\mdl\osal\src;..\task;..\fml;..\Utilities</IncludePath>
+              <IncludePath>..\components\MKL16Z4\drivers;..\components\MKL16Z4;..\components\MKL16Z4\arm;..\mdl;..\bsp;..\components\MKL16Z4\utilities;..\components\CMSIS\Include;..\mdl\rttviewer;..\mdl\osal\ports;..\mdl\osal\src;..\task;..\fml;..\Utilities;..\app</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -577,6 +577,16 @@
               <FileType>1</FileType>
               <FilePath>..\app\main.c</FilePath>
             </File>
+            <File>
+              <FileName>app_getdata.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\app\app_getdata.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_transfer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\app\app_transfer.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -646,6 +656,16 @@
               <FileName>system_param.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\fml\system_param.c</FilePath>
+            </File>
+            <File>
+              <FileName>lnprotocol.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\fml\lnprotocol.c</FilePath>
+            </File>
+            <File>
+              <FileName>lnprotocol_std.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\fml\lnprotocol_std.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -739,6 +759,11 @@
               <FileName>net_task.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\task\net_task.c</FilePath>
+            </File>
+            <File>
+              <FileName>app_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\task\app_task.c</FilePath>
             </File>
           </Files>
         </Group>

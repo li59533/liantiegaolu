@@ -52,6 +52,15 @@
  * @defgroup      system_param_Exported_Types 
  * @{  
  */
+ 
+typedef enum
+{
+	Normal_WorkingMode = 0,
+	LowPower_WorkingMode ,
+}WorkMode_e;	
+ 
+ 
+ 
 #pragma pack(1)
 
 typedef struct
@@ -69,9 +78,15 @@ typedef struct
 	uint8_t   module_power; //0:20dB 1:17dB 2:14dB 3:10dB
 }E32_conf_t;
 
+
+
 typedef struct
 {
 	uint8_t 	SNcode[8];
+	uint8_t workmode ;
+	uint8_t battery ;
+	uint32_t  firsttimestamp ;
+	uint32_t send_invteral ;
 	E32_conf_t E32_conf;
     uint16_t crc;           /*!< 所有的参数结构体必须按字节对其。且最后一个必须包
                                  含一个uint16_t类型的数据，该数据用于内部存储时的

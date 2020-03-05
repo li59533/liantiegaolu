@@ -69,9 +69,12 @@ void BSP_RTC_Init(void);
 void BSP_RTC_Stop(void);
 void BSP_RTC_SetDate(rtc_datetime_t *datetime);
 void BSP_RTC_GetDate(rtc_datetime_t *datetime);
+uint32_t BSP_RTC_GetCurTimeStamp(void);
+void BSP_RTC_SetTimeStamp(uint32_t timestamp);
 uint32_t BSP_RTC_ConvertDatetimeToSeconds(rtc_datetime_t *datetime);
 void BSP_RTC_ConvertSecondsToDatetime(uint32_t seconds ,  rtc_datetime_t *datetime);
 void BSP_RTC_SetAlarm_InTime(rtc_datetime_t *alarmTime);
+void BSP_RTC_SetAlarm_InTimeStamp(uint32_t timestamp);
 void BSP_RTC_SetAlarm_InSec(uint32_t sec);
 
 void BSP_RTC_AlarmInterruptEnable(void);

@@ -146,12 +146,6 @@ void BSP_RTC_Stop(void)
 	RTC_StopTimer( RTC );
 }
 
-void BSP_RTC_SetDate(rtc_datetime_t *datetime)
-{
-	RTC_StopTimer( RTC );
-	RTC_SetDatetime( RTC , datetime);
-	RTC_StartTimer( RTC );	
-}
 
 
 void BSP_RTC_ConvertSecondsToDatetime(uint32_t seconds ,  rtc_datetime_t *datetime)
@@ -260,14 +254,46 @@ void BSP_RTC_GetDate(rtc_datetime_t *datetime)
 	RTC_GetDatetime(RTC , datetime);
 }
 
+uint32_t BSP_RTC_GetCurTimeStamp(void)
+{
+	return RTC->TSR;
+}
+
+void BSP_RTC_SetDate(rtc_datetime_t *datetime)
+{
+	RTC_StopTimer( RTC );
+	RTC_SetDatetime( RTC , datetime);
+	RTC_StartTimer( RTC );	
+}
+
+void BSP_RTC_SetTimeStamp(uint32_t timestamp)
+{
+	RTC_StopTimer( RTC );
+	RTC->TSR = timestamp ;
+	RTC_StartTimer( RTC );	
+}
 
 void BSP_RTC_SetAlarm_InTime(rtc_datetime_t *alarmTime)
 {
 	RTC_SetAlarm( RTC , alarmTime);
 }
 
+void BSP_RTC_SetAlarm_InTimeStamp(uint32_t timestamp)
+{
 
+    uint32_t currSeconds = 0;
+    /* Get the current time */
+    currSeconds = RTC->TSR;
 
+    /* Return error if the alarm time has passed */
+    if (timestamp < currSeconds)
+    {
+        return ;
+    }
+
+    /* Set alarm in seconds*/
+    RTC->TAR = timestamp;
+}
 
 
 void BSP_RTC_AlarmInterruptEnable(void)

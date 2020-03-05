@@ -83,7 +83,11 @@ const SystemParam_Config_t SystemParam_Config_Default =
 	.E32_conf.module_wakeup_time = 0,//0:250ms 1;500ms 2£º750ms 3?1000  4£º1250   5£º1500 56:1750  72000
 	.E32_conf.module_FEC = 1,   //0:¹Ø±Õ 1£º¿ªÆô
 	.E32_conf.module_power = 0, //0:20dB 1:17dB 2:14dB 3:10dB
-		
+
+	.firsttimestamp = 0x5E0D5E85,
+	.send_invteral = 10,
+	.workmode = LowPower_WorkingMode,
+	.battery = 100,
 };
 /**
  * @}

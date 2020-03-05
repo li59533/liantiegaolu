@@ -29,7 +29,11 @@
  */
 
 #define USER_TASK_LOOP_EVENT            0x0001
-#define USER_TASK_LOOP2_EVENT            0x0002
+#define USER_TASK_LOOP2_EVENT           0x0002
+
+#define USER_TASK_GETDATA_EVENT			0x0004
+#define USER_TASK_CONFREV_EVENT			0x0008
+
 /**
  * @}
  */

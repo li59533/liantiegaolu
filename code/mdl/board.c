@@ -113,19 +113,15 @@ void Board_Init_ClockRUN(void)
 
 void Board_Init_BSP(void)
 {
+	BSP_RTC_Init();   //RTC Init
+	BSP_Flash_Init(); // Flash Init
 	
-	
-	//BSP_Clock_Init(BSP_CLOCK0);
-	
-	BSP_Clock_Init(BSP_CLOCK1);
-
 // --------Test func-------------	
-	BSP_RTC_Init();
 //	BSP_ADC_Init();
 //	BSP_UART_Init( BSP_UART0 );
 //	BSP_UART_Init( BSP_UART2 );
 // ------------------------------
-	BSP_Flash_Init();
+	
 }
 
 
