@@ -21,7 +21,7 @@
  */
 #include "app_revmessage.h"
 #include "lnprotocol.h"
-
+#include "bsp_rtc.h"
 #include "osal.h"
 /**
  * @addtogroup    app_revmessage_Modules 
@@ -254,8 +254,28 @@ uint8_t APP_RevGetAckFlag(void)
 static void app_revACK(uint8_t * payload , uint16_t len)
 {
 	app_revsetAckFlag();
+	
+	rtc_datetime_t datetime;
+	
+	datetime.year = *(uint16_t *)&payload[0];
+	datetime.month = payload[2];
+	datetime.day = payload[3];
+	datetime.hour = payload[4];
+	datetime.minute = payload[5];
+	datetime.second = payload[6];
+	
+	BSP_RTC_SetDate(&datetime);
+
+	if(1 )
+	{
+		
+	}
+	
 }
 	
+
+
+
 
 
 /**

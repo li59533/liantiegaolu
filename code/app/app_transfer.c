@@ -384,8 +384,9 @@ static void app_transfer_senddata_resp(void)
 		break;
 		case APP_RevACK_Timeout: // timeout
 		{
+			timeout_count ++;
 			DEBUG("APP_RevACK_Timeout :%d\r\n" , timeout_count);
-			if(timeout_count < APP_TRANSFER_RESEND_TIMES)
+			if(timeout_count <= APP_TRANSFER_RESEND_TIMES)
 			{
 				app_transfer_enqueue_cmd(AppTransfer_SendReq);
 				AppTask_Send_Event(APP_TASK_TRANSFER_CORELOOP_EVENT);
@@ -396,7 +397,7 @@ static void app_transfer_senddata_resp(void)
 				app_transfer_enqueue_cmd(AppTransfer_SerNextTime);
 				AppTask_Send_Event(APP_TASK_TRANSFER_CORELOOP_EVENT);
 			}
-			timeout_count ++;
+			
 		}
 		break;
 		default:break;
