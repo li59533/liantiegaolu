@@ -587,6 +587,11 @@
               <FileType>1</FileType>
               <FilePath>..\app\app_transfer.c</FilePath>
             </File>
+            <File>
+              <FileName>app_revmessage.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\app\app_revmessage.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

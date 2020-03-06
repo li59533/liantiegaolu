@@ -129,6 +129,7 @@ void BSP_E32_Open(void);
 void BSP_E32_CoreLoop(void);
 void BSP_E32_AddSendBuf(uint8_t *buf , uint16_t len);
 void BSP_E32_SetMode(E32_Mode_e mode);
+uint8_t BSP_E32_GetMode(void);
 uint8_t BSP_E32_GetAUX_Status(void);
 void BSP_E32_AddCmd(BSP_E32_CMD_e cmd , uint32_t delay_ms);
 uint8_t BSP_E32_LoadCmd(void);

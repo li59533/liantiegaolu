@@ -24,7 +24,7 @@
 #include "bsp_systick.h"
 #include "system_param.h"
 #include "bsp_led.h"
-
+#include "app_revmessage.h"
 
 /**
  * @addtogroup    bsp_e32_Modules 
@@ -292,6 +292,12 @@ void BSP_E32_SetMode(E32_Mode_e mode)  // after change mode ,the module need 1ms
 }
 
 
+uint8_t BSP_E32_GetMode(void)
+{
+	return BSP_E32_CurrentStatus;
+}
+
+
 void BSP_E32_WriteBytes(uint8_t *buf , uint16_t len)
 {
 	BSP_UART_WriteBytes_DMA( BSP_UART0 , buf,  len);
@@ -517,16 +523,26 @@ void BSP_E32_Rev(void)
 
 	bsp_e32_revbuf.len = 0;
 	
-	if(e32_revbuf[0] == 0xC0 && e32_revlen == 6)
+	//if(e32_revbuf[0] == 0xC0 && e32_revlen == 6)
+		
+	if(BSP_E32_GetMode() == E32_MODE_SLEEP)
 	{
 		e32_cmd_getconf_flag = 1;
 		BSP_E32_ModlueRevAnalysis(e32_revbuf , e32_revlen );
 	}
-	else
+	else if(BSP_E32_GetMode() == E32_MODE_NORMAL)
 	{
+		
+		
+		APP_RevMess_Analysis(e32_revbuf , e32_revlen );
 		BSP_LED_Blink( BSP_LED_TEST , 3 , 10, 150);
 	}
 }
+
+
+
+
+
 
 static void BSP_E32_ModlueRevAnalysis(uint8_t * buf, uint8_t len )
 {
@@ -637,6 +653,8 @@ void BSP_E32_Open(void)
 	BSP_E32_Power_ON();
 	NetTask_Send_Event(NET_TASK_CORE_LOOP_EVENT);
 }
+
+
 
 /**
  * @}
