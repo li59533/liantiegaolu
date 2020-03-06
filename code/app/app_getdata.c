@@ -135,9 +135,9 @@ void APP_GetData_Calc(void)
 	App_Data.real_mA = 0.00045776f * App_Data.original_value;
 	App_Data.need_value = App_Data.real_mA;
 
-	char cbuf[30] = {0};
-	sprintf(cbuf,"APP_GetData_Calc:%f mA" , App_Data.real_mA);
-	DEBUG("%s\r\n",cbuf);
+//	char cbuf[30] = {0};
+//	sprintf(cbuf,"APP_GetData_Calc:%f mA" , App_Data.real_mA);
+//	DEBUG("%s\r\n",cbuf);
 }
 
 

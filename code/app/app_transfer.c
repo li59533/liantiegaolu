@@ -28,6 +28,7 @@
 #include "lnprotocol.h"
 #include "app_task.h"
 #include "bsp_power.h"
+#include "app_revmessage.h"
 
 /**
  * @addtogroup    app_transfer_Modules 
@@ -49,7 +50,7 @@
  * @brief         
  * @{  
  */
-
+#define APP_TRANSFER_RESEND_TIMES     2 // if no ack need report times
 /**
  * @}
  */
@@ -105,9 +106,11 @@ static void app_transfer_enqueue_cmd(uint8_t cmd);
 static uint8_t app_transfer_dequeue_cmd(void);
 static uint8_t app_transfer_getcmdcount(void);
 static void app_transfer_settime(void);
-static void app_transfer_senddata(void);
+static void app_transfer_senddata_req(void);
 static int8_t app_transfer_checktime(void);
 static void app_transfer_lowpower(void);
+static void app_transfer_senddata_resp(void);
+
 /**
  * @}
  */
@@ -164,7 +167,7 @@ typedef enum
 {
 	AppTransfer_CheckTime = 1,
 	AppTransfer_SendReq ,
-	APPTransfer_SendResp ,
+	AppTransfer_SendResp ,
 	AppTransfer_SerNextTime ,
 	AppTransfer_LowPower,
 	
@@ -207,13 +210,15 @@ void APP_Transfer_CoreLoop(void)
 		case AppTransfer_SendReq:
 		{
 			DEBUG("AppTransfer_SendReq\r\n");
-			app_transfer_senddata();
-			app_transfer_enqueue_cmd(AppTransfer_SerNextTime);
-			AppTask_Timer_Start_Event(APP_TASK_TRANSFER_CORELOOP_EVENT , 5000);
+			app_transfer_senddata_req();
+			app_transfer_enqueue_cmd(AppTransfer_SendResp);
+			AppTask_Timer_Start_Event(APP_TASK_TRANSFER_CORELOOP_EVENT , 1000);
+			APP_RevClearAckFlag();
 		} 
 		break;
-		case APPTransfer_SendResp:
+		case AppTransfer_SendResp:
 		{
+			app_transfer_senddata_resp();
 			DEBUG("APPTransfer_SendResp\r\n");
 		}
 		break;
@@ -297,7 +302,7 @@ static void app_transfer_settime(void)
 	BSP_RTC_SetAlarm_InTimeStamp(next_time);
 }
 
-static void app_transfer_senddata(void)
+static void app_transfer_senddata_req(void)
 {
 	App_Data_t * App_Data;
 	ln_protocolintance_t * ln_protocolintance = 0;
@@ -349,7 +354,7 @@ static void app_transfer_senddata(void)
 	*buf_ptr = LNprotocol_GetChecksum(&ln_protocolintance->head , len + 3);
 	buf_ptr ++;
 	*(buf_ptr ) = LNPROTOCOL_FOOT;
-	
+	buf_ptr ++;
 
 	BSP_E32_SendData(g_SystemParam_Config.E32_conf.module_destination_addr ,\
 					g_SystemParam_Config.E32_conf.module_channel, \
@@ -357,6 +362,46 @@ static void app_transfer_senddata(void)
 					buf_ptr - &ln_protocolintance->head);
 }
 
+
+static void app_transfer_senddata_resp(void)
+{
+	static uint8_t timeout_count = 0;
+	switch(APP_RevGetAckFlag())
+	{
+		case APP_RevACK_Wait : // wait
+		{
+			DEBUG("APP_RevACK_Wait\r\n");
+			app_transfer_enqueue_cmd(AppTransfer_SendResp);
+			AppTask_Timer_Start_Event(APP_TASK_TRANSFER_CORELOOP_EVENT , 300);			
+		}
+		break;
+		case APP_RevACK_Get: //get
+		{
+			DEBUG("APP_RevACK_Get\r\n");
+			app_transfer_enqueue_cmd(AppTransfer_SerNextTime);
+			AppTask_Send_Event(APP_TASK_TRANSFER_CORELOOP_EVENT);
+		}
+		break;
+		case APP_RevACK_Timeout: // timeout
+		{
+			DEBUG("APP_RevACK_Timeout :%d\r\n" , timeout_count);
+			if(timeout_count < APP_TRANSFER_RESEND_TIMES)
+			{
+				app_transfer_enqueue_cmd(AppTransfer_SendReq);
+				AppTask_Send_Event(APP_TASK_TRANSFER_CORELOOP_EVENT);
+			}
+			else
+			{
+				timeout_count = 0 ;
+				app_transfer_enqueue_cmd(AppTransfer_SerNextTime);
+				AppTask_Send_Event(APP_TASK_TRANSFER_CORELOOP_EVENT);
+			}
+			timeout_count ++;
+		}
+		break;
+		default:break;
+	}
+}
 
 /**
  * @}

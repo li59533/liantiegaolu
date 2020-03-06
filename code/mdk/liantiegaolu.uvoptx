@@ -152,9 +152,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>229</LineNumber>
+          <LineNumber>353</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>7298</Address>
+          <Address>29050</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -163,7 +163,7 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\app\app_transfer.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\liantiegaolu\../app/app_transfer.c\229</Expression>
+          <Expression>\\liantiegaolu\../app/app_transfer.c\353</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>

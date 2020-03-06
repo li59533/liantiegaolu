@@ -306,10 +306,12 @@ void BSP_E32_WriteBytes(uint8_t *buf , uint16_t len)
 
 
 void BSP_E32_SendData(uint16_t destaddr , uint8_t channel, uint8_t *buf , uint16_t len)
-{
-	
+{	
 	bsp_e32_senddata_t * sendbuf = (bsp_e32_senddata_t *) &bsp_e32_senddatabuf;
-	sendbuf->destaddr = destaddr ;
+	//sendbuf->destaddr = destaddr ;
+	//sendbuf->destaddr &= 0x0000; 
+	sendbuf->destaddr = (*(uint8_t *)&destaddr << 8)| (*((uint8_t *)&destaddr + 1) );
+	
 	sendbuf->channel = channel;
 	memcpy( &sendbuf->payload , buf , len);
 	
@@ -396,7 +398,7 @@ void BSP_E32_CoreLoop(void)
 	}
 	else
 	{
-		DEBUG("E32_AUX_STATUS : 0\r\n");
+		//DEBUG("E32_AUX_STATUS : 0\r\n");
 		return;
 	}
 	

@@ -46,7 +46,12 @@
  * @defgroup      app_revmessage_Exported_Types 
  * @{  
  */
-
+typedef enum
+{
+	APP_RevACK_Wait = 1,
+	APP_RevACK_Get ,
+	APP_RevACK_Timeout ,
+}APP_RevACK_Status_e;
 /**
  * @}
  */
@@ -67,6 +72,11 @@
 
 
 void APP_RevMess_Analysis(uint8_t *buf , uint16_t len);
+void APP_RevMessage_Process(uint8_t * buf , uint16_t len);
+
+void APP_RevClearAckFlag(void);
+uint8_t APP_RevGetAckFlag(void);
+
 
 
 /**
