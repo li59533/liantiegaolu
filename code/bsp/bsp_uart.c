@@ -19,6 +19,7 @@
  */
 #include "bsp_led.h"
 #include "bsp_e32.h"
+#include "app_conf.h"
 /**
  * @addtogroup    bsp_uart_Modules 
  * @{  
@@ -273,6 +274,8 @@ static void bsp_uart2_init(void)
 	// --------open irq-------
 	//UART_EnableInterrupts(UART2, kUART_TransmissionCompleteInterruptEnable);
 	UART_EnableInterrupts(UART2, kUART_RxDataRegFullInterruptEnable);
+	UART_EnableInterrupts(UART2, kUART_RxActiveEdgeInterruptEnable);
+	
 	
 	NVIC_EnableIRQ(UART2_IRQn);
 
@@ -418,15 +421,14 @@ void BSP_UART_WriteBytes_Blocking(uint8_t BSP_UARTX , uint8_t *buf, uint16_t len
 
 void BSP_UART_WriteBytes_DMA(uint8_t BSP_UARTX , uint8_t *buf, uint16_t len)
 {
-	uint8_t status = 0;	
 	uart_transfer_t  xfer;
 	xfer.data = buf;
 	xfer.dataSize = len;	
 	switch(BSP_UARTX)
 	{
-		case BSP_UART0:status = LPSCI_TransferSendDMA(UART0, &uart0_dma_handle, (lpsci_transfer_t *)&xfer); break;
+		case BSP_UART0:LPSCI_TransferSendDMA(UART0, &uart0_dma_handle, (lpsci_transfer_t *)&xfer); break;
 		case BSP_UART1:break;
-		case BSP_UART2:status = UART_TransferSendDMA(UART2, &uart_dma_handle, &xfer); break;
+		case BSP_UART2:UART_TransferSendDMA(UART2, &uart_dma_handle, &xfer); break;
 		default:break;
 	}
 }
@@ -452,7 +454,16 @@ void UART2_IRQHandler(void)
 		uint8_t c = 0;
 		c = UART_ReadByte(UART2);
 		DEBUG("Uart R:%X\r\n" , c);
+		
+		APP_Conf_RevByteOneByte(c);
+		
 	}
+	
+	if((UART_GetStatusFlags(UART2) & kUART_RxActiveEdgeInterruptEnable )== kUART_RxActiveEdgeInterruptEnable)
+	{
+		UART2->S2 |= UART_S2_RXEDGIF(1);  
+	}	
+	
 }
 
 void UART0_IRQHandler(void)

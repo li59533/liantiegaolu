@@ -122,9 +122,9 @@ BSP_E32_DataQueue_t BSP_E32_SendQueue =
 
 static uint8_t BSP_E32_SetConfCMD_Save[6]	 = {0xC0 ,} ;
 static uint8_t BSP_E32_GetConfCMD[3]		 = {0xC1 ,0xC1 , 0xC1} ;
-static uint8_t BSP_E32_SetConfCMD_NoSave[6]	 = {0xC2 ,};
-static uint8_t BSP_E32_GetVersionCMD[3]		 = {0xC3 , 0xC3 , 0xC3};
-static uint8_t BSP_E32_RestCMD[3]			 = {0xC4 , 0xC4 ,0xC4};
+//static uint8_t BSP_E32_SetConfCMD_NoSave[6]	 = {0xC2 ,};
+//static uint8_t BSP_E32_GetVersionCMD[3]		 = {0xC3 , 0xC3 , 0xC3};
+//static uint8_t BSP_E32_RestCMD[3]			 = {0xC4 , 0xC4 ,0xC4};
 
 static uint8_t rev_flag = 0;
 static uint8_t BSP_E32_CurrentStatus = 0;
@@ -201,7 +201,7 @@ static void bsp_e32_halinit(void)
 	CLOCK_EnableClock(kCLOCK_PortE);
 	
 	PORT_SetPinMux(PORTD, 7,kPORT_MuxAsGpio);
-	gpio_pin_config_t gpio_pin_config = { 0 };
+	gpio_pin_config_t gpio_pin_config ;
 	gpio_pin_config.outputLogic = 0;
 	gpio_pin_config.pinDirection = kGPIO_DigitalOutput;
 	GPIO_PinInit(GPIOD, 7, &gpio_pin_config);

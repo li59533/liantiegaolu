@@ -117,8 +117,8 @@ static void bsp_adc_addvalue(uint16_t value);
  */
 void BSP_ADC_Init(void)
 {
-	adc16_config_t config = { 0 };
-	gpio_pin_config_t gpio_pin_config = { 0 };
+	adc16_config_t config;
+	gpio_pin_config_t gpio_pin_config;
 	
 	// ---------GPIO Init ----------------------
 	CLOCK_EnableClock(kCLOCK_PortC);

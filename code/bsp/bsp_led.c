@@ -150,14 +150,12 @@ static BSPLedControl_t s_BSPLedControlTable[BSP_LEDCOUNT] =
 void BSP_LED_Init(void)
 {
 	uint8_t i  = 0;
-	gpio_pin_config_t gpio_pin_config = { 0 };
+
 	for(i = 0; i < BSP_LEDCOUNT ; i++)
 	{
 		CLOCK_EnableClock(LED_IO[i].Pin.clock_ip_name);
 
 		PORT_SetPinMux( LED_IO[i].Pin.PORT_Type_base, LED_IO[i].Pin.pin, LED_IO[i].Pin.mux  );
-		gpio_pin_config.outputLogic = LED_IO[i].Pin.gpio_pin_config.outputLogic;
-		gpio_pin_config.pinDirection = LED_IO[i].Pin.gpio_pin_config.pinDirection;
 		GPIO_PinInit(LED_IO[i].Pin.GPIO_Type_base, LED_IO[i].Pin.pin, &LED_IO[i].Pin.gpio_pin_config);
 		
 		GPIO_WritePinOutput(LED_IO[i].Pin.GPIO_Type_base, LED_IO[i].Pin.pin, LED_IO[i].OffLevel);		

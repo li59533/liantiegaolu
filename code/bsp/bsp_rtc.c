@@ -113,7 +113,7 @@ void BSP_RTC_Init(void)
 	
 	CLOCK_EnableClock(kCLOCK_PortC);
 	PORT_SetPinMux(PORTC, 1,kPORT_MuxAsGpio);
-	gpio_pin_config_t gpio_pin_config = { 0 };
+	gpio_pin_config_t gpio_pin_config ;
 	GPIO_PinInit(GPIOC, 1, &gpio_pin_config);
 	
 	CLOCK_EnableClock(kCLOCK_Rtc0);
@@ -136,7 +136,8 @@ void BSP_RTC_Init(void)
 	
 	RTC_SetDatetime(RTC , &datetime);
 	
-	BSP_RTC_AlarmInterruptEnable() ; // Open Alarm Interrupt
+	RTC_EnableInterrupts( RTC , kRTC_AlarmInterruptEnable);
+	EnableIRQ(RTC_IRQn); ; // Open Alarm Interrupt
 
 	RTC_StartTimer(RTC);
 }
@@ -145,7 +146,11 @@ void BSP_RTC_Stop(void)
 {
 	RTC_StopTimer( RTC );
 }
-
+void BSP_RTC_AlarmInterruptEnable(void)
+{
+	RTC_EnableInterrupts( RTC , kRTC_AlarmInterruptEnable);
+	EnableIRQ(RTC_IRQn);
+}
 
 
 void BSP_RTC_ConvertSecondsToDatetime(uint32_t seconds ,  rtc_datetime_t *datetime)
@@ -296,11 +301,7 @@ void BSP_RTC_SetAlarm_InTimeStamp(uint32_t timestamp)
 }
 
 
-void BSP_RTC_AlarmInterruptEnable(void)
-{
-	RTC_EnableInterrupts( RTC , kRTC_AlarmInterruptEnable);
-	EnableIRQ(RTC_IRQn);
-}
+
 
 
 void BSP_RTC_SetAlarm_InSec(uint32_t sec)

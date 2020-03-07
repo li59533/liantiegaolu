@@ -115,6 +115,7 @@ void Board_Init_BSP(void)
 {
 	BSP_RTC_Init();   //RTC Init
 	BSP_Flash_Init(); // Flash Init
+	BSP_UART_Init( BSP_UART2 );
 	
 // --------Test func-------------	
 //	BSP_ADC_Init();

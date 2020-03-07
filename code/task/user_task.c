@@ -26,7 +26,7 @@
 #include "bsp_systick.h"
 
 #include "app_getdata.h"
-
+#include "app_conf.h"
 /**
  * @addtogroup    user_task_Modules 
  * @{  
@@ -126,9 +126,9 @@ osal_event_t UserTask_Process(uint8_t taskid,osal_event_t events)
     {
 		DEBUG("USER_TASK_LOOP_EVENT\r\n");
 		
+		APP_Conf_TestFunc();
 		
-		
-		OS_Timer_Start(g_UserTask_Id, USER_TASK_LOOP_EVENT,15000);			
+		OS_Timer_Start(g_UserTask_Id, USER_TASK_LOOP_EVENT,1000);			
         return events ^ USER_TASK_LOOP_EVENT;
     }
 	

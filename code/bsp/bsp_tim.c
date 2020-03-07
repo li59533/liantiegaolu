@@ -117,7 +117,7 @@ void BSP_Clock_Init(uint8_t BSP_CLOCKx)
 
 static void bsp_tmp0_init(void)
 {
-	tpm_config_t config = { 0 };
+	tpm_config_t config;
 	
 	CLOCK_EnableClock(kCLOCK_Tpm0);
 	CLOCK_SetTpmClock(1); //SIM->SOPT2   

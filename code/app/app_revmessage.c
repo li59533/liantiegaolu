@@ -23,6 +23,7 @@
 #include "lnprotocol.h"
 #include "bsp_rtc.h"
 #include "osal.h"
+#include "app_conf.h"
 /**
  * @addtogroup    app_revmessage_Modules 
  * @{  
@@ -122,8 +123,8 @@ typedef struct
 }rev_data_t;
 
 //rev_data_t break_buf = { 0 };
-rev_data_t temp_buf = { 0 };
-rev_data_t full_buf = { 0 };
+static rev_data_t temp_buf = { 0 };
+static rev_data_t full_buf = { 0 };
 
 void APP_RevMess_Analysis(uint8_t *buf , uint16_t len)
 {
@@ -220,6 +221,76 @@ void APP_RevMessage_Process(uint8_t * buf , uint16_t len)
 			app_revACK( (uint8_t *)&ln_protocolintance->payload, ln_protocolintance->len);
 		}
 		break;
+		case CMD_Conf_ID:
+		{
+			APP_Conf_ID( (uint8_t *)&ln_protocolintance->payload, ln_protocolintance->len);
+		}
+		break;
+		case CMD_Conf_Reply_Conf:
+		{
+			APP_Conf_ReplyConf( (uint8_t *)&ln_protocolintance->payload, ln_protocolintance->len);
+		}
+		break;
+		case CMD_Conf_Set_Conf:
+		{
+			APP_Conf_SetConf(buf , len);
+		}
+		break;
+		case CMD_Conf_Start:
+		{
+			APP_Conf_Start(buf , len);
+		}
+		break;
+		case CMD_Conf_Stop:
+		{
+			APP_Conf_Stop(buf , len);
+		}
+		break;
+		case CMD_Conf_GotoLowpower:
+		{
+			APP_Conf_GotoLowPower(buf , len);
+		}
+		break;
+		case CMD_Conf_Reply_Sample_Rate:
+		{
+			APP_Conf_Reply_Sample_Rate((uint8_t *)&ln_protocolintance->payload, ln_protocolintance->len);			
+		}
+		break;
+		case CMD_Conf_Set_Sample_Rate:
+		{
+			APP_Conf_Set_Sample_Rate(buf , len );
+		}
+		break;
+		case CMD_Conf_Reply_SelfStart:
+		{
+			APP_Conf_Reply_SelfStart((uint8_t *)&ln_protocolintance->payload, ln_protocolintance->len);
+		}
+		break;
+		case CMD_Conf_Set_SelfStart:
+		{
+			APP_Conf_Set_SelfStart(buf , len);
+		}
+		break;
+		case CMD_Conf_Set_EQ:
+		{
+			APP_Conf_Set_EQ(buf , len);
+		}
+		break;
+		case CMD_Conf_Set_AlarmTime:
+		{	
+			APP_Conf_Set_AlarmTime((uint8_t *)&ln_protocolintance->payload, ln_protocolintance->len);
+		}
+		break;
+		case CMD_Conf_Reply_AlarmTime:
+		{
+			APP_Conf_Reply_Alarm((uint8_t *)&ln_protocolintance->payload, ln_protocolintance->len);
+		}
+		break;		
+		case CMD_Conf_Set_SNcode:
+		{
+			APP_Conf_Set_SNcode(buf , len);
+		}
+		break;		
 		default:break;
 	}
 }

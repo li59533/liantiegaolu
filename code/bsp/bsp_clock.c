@@ -260,7 +260,7 @@ static void APP_SetClockRunFromVlps(void)
 	
 void BOARD_RUNClockToVLPS(void)
 {
-	mcg_mode_t mcg_mode = 0 ;
+	mcg_mode_t mcg_mode ;
 	mcg_mode = CLOCK_GetMode();
 	DEBUG("mcg_mode : %d\r\n",mcg_mode);
 	
@@ -271,7 +271,7 @@ void BOARD_RUNClockToVLPS(void)
 	config.enableMode = kMCG_PllEnableInStop;
 	config.prdiv = 0;
 	config.vdiv = 0;
-	CLOCK_SetPbeMode( 0 , &config);
+	CLOCK_SetPbeMode( kMCG_PllClkSelPll0 , &config);
 //	CLOCK_ExternalModeToFbeModeQuick();
 	
 	

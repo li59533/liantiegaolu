@@ -76,8 +76,8 @@ void BSP_RTC_ConvertSecondsToDatetime(uint32_t seconds ,  rtc_datetime_t *dateti
 void BSP_RTC_SetAlarm_InTime(rtc_datetime_t *alarmTime);
 void BSP_RTC_SetAlarm_InTimeStamp(uint32_t timestamp);
 void BSP_RTC_SetAlarm_InSec(uint32_t sec);
-
 void BSP_RTC_AlarmInterruptEnable(void);
+
 
 // -----Test Func-----------
 void BSP_ShowDate(void);

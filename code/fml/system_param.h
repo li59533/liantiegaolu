@@ -82,11 +82,11 @@ typedef struct
 
 typedef struct
 {
-	uint8_t 	SNcode[8];
+	uint8_t SNcode[8];
 	uint8_t workmode ;
 	uint8_t battery ;
 	uint32_t  firsttimestamp ;
-	uint32_t send_invteral ;
+	uint16_t send_invteral ;
 	E32_conf_t E32_conf;
     uint16_t crc;           /*!< 所有的参数结构体必须按字节对其。且最后一个必须包
                                  含一个uint16_t类型的数据，该数据用于内部存储时的
