@@ -142,7 +142,21 @@ void BSP_UART_SetBaudRate(uint8_t BSP_UARTX , uint32_t buadrate)
 {
 	switch(BSP_UARTX)
 	{
-		case BSP_UART0: LPSCI_SetBaudRate(UART0, buadrate, CLOCK_GetFreq(kCLOCK_CoreSysClk));break;
+		case BSP_UART0: 
+		{
+			LPSCI_SetBaudRate(UART0, buadrate, CLOCK_GetFreq(kCLOCK_CoreSysClk));
+			LPSCI_EnableRx(UART0, true);
+	
+			// -----------------------
+
+			// --------open irq-------
+			LPSCI_EnableInterrupts( UART0, kLPSCI_RxDataRegFullInterruptEnable);
+
+			//LPSCI_EnableInterrupts( UART0, kLPSCI_TransmissionCompleteInterruptEnable);
+
+			EnableIRQ(UART0_IRQn);
+		}
+		break;
 		case BSP_UART1: bsp_uart1_init();break;
 		case BSP_UART2: bsp_uart2_init();break;
 		default:break;
@@ -487,6 +501,14 @@ void UART0_IRQHandler(void)
 	{
 		LPSCI_ClearStatusFlags(UART0, kLPSCI_TxDataRegEmptyFlag);
 	}	
+
+	if((LPSCI_GetStatusFlags(UART0) & kLPSCI_RxOverrunFlag )== kLPSCI_RxOverrunFlag)
+	{
+		LPSCI_ClearStatusFlags(UART0, kLPSCI_RxOverrunFlag);
+	}	
+	
+	
+	
 }
 
 void DMA0_IRQHandler(void)

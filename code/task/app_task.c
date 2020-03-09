@@ -138,6 +138,11 @@ void AppTask_Timer_Start_Event(osal_event_t event_flag,uint32_t timeout)
 	OS_Timer_Start(g_AppTask_Id, event_flag,timeout);	
 }
 
+void AppTask_Timer_Stop_Event(osal_event_t event_flag)
+{
+	OS_Timer_Stop(g_AppTask_Id, event_flag);	
+}
+
 void AppTask_Clear_Event(osal_event_t events)
 {
 	OS_Events_Clear(g_AppTask_Id,events);

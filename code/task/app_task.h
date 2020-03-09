@@ -71,6 +71,7 @@ void AppTask_Init(uint8_t taskId);
 osal_event_t AppTask_Process(uint8_t taskid,osal_event_t events);
 void AppTask_Send_Event(osal_event_t events);
 void AppTask_Timer_Start_Event(osal_event_t event_flag,uint32_t timeout);
+void AppTask_Timer_Stop_Event(osal_event_t event_flag);
 void AppTask_Clear_Event(osal_event_t events);
 /**
  * @}

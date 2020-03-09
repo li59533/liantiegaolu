@@ -272,6 +272,7 @@ static int8_t app_transfer_checktime(void)
 		}
 		else
 		{
+			
 			return -1;
 		}		
 	}

@@ -25,6 +25,7 @@
 #include "system_param.h"
 #include "bsp_led.h"
 #include "app_revmessage.h"
+#include "app_task.h"
 
 /**
  * @addtogroup    bsp_e32_Modules 
@@ -163,7 +164,7 @@ static void bsp_e32_halinit(void);
 static void bsp_e32_sendtask(void);  
 static void bsp_e32_getconf(void);
 static void bsp_e32_setconf(void);
-
+static void bsp_e32_ClearCmd(void);
 static void BSP_E32_ModlueRevAnalysis(uint8_t * buf, uint8_t len );
 /**
  * @}
@@ -346,6 +347,13 @@ static void bsp_e32_sendtask(void)
 	}
 }
 
+static void bsp_e32_ClearCmd(void)
+{
+	BSP_E32_CmdQueue.count = 0;
+	BSP_E32_CmdQueue.in = 0;
+	BSP_E32_CmdQueue.out = 0;
+}
+
 void BSP_E32_AddCmd(BSP_E32_CMD_e cmd , uint32_t delay_ms)
 {
 	BSP_E32_CmdQueue.buf[BSP_E32_CmdQueue.in] = cmd;
@@ -390,14 +398,26 @@ void BSP_E32_CoreLoop(void)
 {
 	uint8_t currnt_cmd = 0;
 	uint32_t time_cout = 0;
-	
+	static uint8_t AUX_timeout  = 0;
 	
 	if(E32_AUX_STATUS == 1)
 	{
-		
+		AUX_timeout = 0;
 	}
 	else
 	{
+		if(AUX_timeout > 250)
+		{
+			AUX_timeout = 0;
+			DEBUG("AUX_timeout\r\n");
+			
+			NetTask_Clear_Event(NET_TASK_CORE_LOOP_EVENT);
+			NetTask_Timer_Stop_Event(NET_TASK_CORE_LOOP_EVENT);
+			
+			bsp_e32_ClearCmd();
+			NetTask_Send_Event(NET_TASK_MODULE_INIT_EVENT);
+		}
+		AUX_timeout ++;
 		//DEBUG("E32_AUX_STATUS : 0\r\n");
 		return;
 	}
@@ -454,7 +474,7 @@ void BSP_E32_CoreLoop(void)
 				DEBUG("E32_CMD_CONF_OK\r\n");
 				BSP_E32_SetMode(E32_MODE_NORMAL);
 				BSP_UART_SetBaudRate(BSP_UART0 , 115200);
-				
+				AppTask_Send_Event(APP_TASK_TRANSFER_CORELOOP_EVENT);
 				BSP_LED_Blink( BSP_LED_TEST , 3 , 50, 1000); // 
 			}
 			break;

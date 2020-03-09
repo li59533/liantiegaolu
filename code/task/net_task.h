@@ -73,6 +73,7 @@ void NetTask_Init(uint8_t taskId);
 osal_event_t NetTask_Process(uint8_t taskid,osal_event_t events);
 void NetTask_Send_Event(osal_event_t events);
 void NetTask_Timer_Start_Event(osal_event_t event_flag,uint32_t timeout);
+void NetTask_Timer_Stop_Event(osal_event_t event_flag);
 void NetTask_Clear_Event(osal_event_t events);
 /**
  * @}

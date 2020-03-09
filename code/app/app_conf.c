@@ -27,6 +27,7 @@
 #include "osal.h"
 #include "system_param.h"
 #include "bsp_e32.h"
+#include "app_task.h"
 
 /**
  * @addtogroup    app_conf_Modules 
@@ -255,8 +256,9 @@ void APP_Conf_Set_Sample_Rate(uint8_t * full_message , uint16_t full_len )
 {
 	// --------Send---------
 	APP_Conf_SendData( full_message , full_len);
-	// ---------------------	
-	g_SystemParam_Config.send_invteral = *(uint16_t *)&full_message[4];
+	// ---------------------
+	
+	g_SystemParam_Config.send_invteral = (uint16_t )(full_message[7] | full_message[8] << 8);
 	// ------Save -------
 	SystemParam_Save();
 	// ------------------	
@@ -277,10 +279,18 @@ void APP_Conf_Reply_Sample_Rate(uint8_t * payload , uint16_t len)
 	
 	uint8_t * buf_ptr = (uint8_t *)&ln_protocolintance->payload;
 
+	// --------budong shi shenme?? -----
+	buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)buf_temp, 3);
+	send_len += 3;		
+	
 	// --------send_invteral in sec -----
 	buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)&g_SystemParam_Config.send_invteral, 2);
 	send_len += 2;	
 
+	// --------budong shi shenme?? -----
+	buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)buf_temp, 4);
+	send_len += 4;		
+	
 	// ---------------------------------------
 	ln_protocolintance->len = send_len;
 	*buf_ptr = LNprotocol_GetChecksum(&ln_protocolintance->head , send_len + 6);
@@ -328,6 +338,9 @@ void APP_Conf_SetConf(uint8_t * full_message , uint16_t full_len)
 	// ------Save -------
 	SystemParam_Save();
 	// ------------------
+	AppTask_Timer_Stop_Event(APP_TASK_TRANSFER_CORELOOP_EVENT);
+	AppTask_Clear_Event(APP_TASK_TRANSFER_CORELOOP_EVENT);
+	
 	BSP_E32_AddCmd(E32_CMD_GETCONF_Req , 0);
 }
  

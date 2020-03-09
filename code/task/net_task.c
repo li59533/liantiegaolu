@@ -152,6 +152,11 @@ void NetTask_Timer_Start_Event(osal_event_t event_flag,uint32_t timeout)
 	OS_Timer_Start(g_NetTask_Id, event_flag,timeout);	
 }
 
+void NetTask_Timer_Stop_Event(osal_event_t event_flag)
+{
+	OS_Timer_Stop(g_NetTask_Id,event_flag);
+}
+
 void NetTask_Clear_Event(osal_event_t events)
 {
 	OS_Events_Clear(g_NetTask_Id,events);

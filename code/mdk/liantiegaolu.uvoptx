@@ -152,41 +152,41 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>231</LineNumber>
+          <LineNumber>406</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>4936</Address>
+          <Address>0</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\app\app_revmessage.c</Filename>
+          <BreakIfRCount>0</BreakIfRCount>
+          <Filename>..\bsp\bsp_e32.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\liantiegaolu\../app/app_revmessage.c\231</Expression>
+          <Expression></Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>236</LineNumber>
+          <LineNumber>260</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>4954</Address>
+          <Address>4584</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\app\app_revmessage.c</Filename>
+          <Filename>..\app\app_conf.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\liantiegaolu\../app/app_revmessage.c\236</Expression>
+          <Expression>\\liantiegaolu\../app/app_conf.c\260</Expression>
         </Bp>
         <Bp>
           <Number>2</Number>
           <Type>0</Type>
-          <LineNumber>428</LineNumber>
+          <LineNumber>302</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>3828</Address>
+          <Address>4118</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -195,55 +195,7 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\app\app_conf.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\liantiegaolu\../app/app_conf.c\428</Expression>
-        </Bp>
-        <Bp>
-          <Number>3</Number>
-          <Type>0</Type>
-          <LineNumber>420</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>3810</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\app\app_conf.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\liantiegaolu\../app/app_conf.c\420</Expression>
-        </Bp>
-        <Bp>
-          <Number>4</Number>
-          <Type>0</Type>
-          <LineNumber>256</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>4994</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\app\app_revmessage.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\liantiegaolu\../app/app_revmessage.c\256</Expression>
-        </Bp>
-        <Bp>
-          <Number>5</Number>
-          <Type>0</Type>
-          <LineNumber>261</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>5012</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\app\app_revmessage.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\liantiegaolu\../app/app_revmessage.c\261</Expression>
+          <Expression>\\liantiegaolu\../app/app_conf.c\302</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -335,11 +287,7 @@
       <pMultCmdsp></pMultCmdsp>
       <SystemViewers>
         <Entry>
-          <Name>System Viewer\RTC</Name>
-          <WinId>35905</WinId>
-        </Entry>
-        <Entry>
-          <Name>System Viewer\SIM</Name>
+          <Name>System Viewer\UART0</Name>
           <WinId>35904</WinId>
         </Entry>
       </SystemViewers>
