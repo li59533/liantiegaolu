@@ -170,7 +170,10 @@ static void bsp_lptmr_init(void)
 	/* Starts counting */
 	LPTMR_StartTimer(LPTMR0);	
 }
-
+void BSP_Clock_StartOnceTimer(uint8_t BSP_CLOCKx , uint32_t msec)
+{
+	
+}
 
 
 uint32_t BSP_GetTimrCurCount(uint8_t BSP_CLOCKx)

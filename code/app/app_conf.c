@@ -169,7 +169,7 @@ void APP_Conf_Reply_Alarm(uint8_t * payload , uint16_t len)
 	send_len += 1;	
 	// ---------------------------------------
 	ln_protocolintance->len = send_len;
-	*buf_ptr = LNprotocol_GetChecksum(&ln_protocolintance->head , send_len + 3);
+	*buf_ptr = LNprotocol_GetChecksum(&ln_protocolintance->head , send_len + 6);
 	buf_ptr ++;
 	*(buf_ptr ) = LNPROTOCOL_FOOT;
 	buf_ptr ++;
@@ -240,7 +240,7 @@ void APP_Conf_Reply_SelfStart(uint8_t * payload , uint16_t len)
 
 	// ---------------------------------------
 	ln_protocolintance->len = send_len;
-	*buf_ptr = LNprotocol_GetChecksum(&ln_protocolintance->head , send_len + 3);
+	*buf_ptr = LNprotocol_GetChecksum(&ln_protocolintance->head , send_len + 6);
 	buf_ptr ++;
 	*(buf_ptr ) = LNPROTOCOL_FOOT;
 	buf_ptr ++;
@@ -256,7 +256,7 @@ void APP_Conf_Set_Sample_Rate(uint8_t * full_message , uint16_t full_len )
 	// --------Send---------
 	APP_Conf_SendData( full_message , full_len);
 	// ---------------------	
-	g_SystemParam_Config.send_invteral = full_message[7]+(((uint16_t)full_message[8])<<8);
+	g_SystemParam_Config.send_invteral = *(uint16_t *)&full_message[4];
 	// ------Save -------
 	SystemParam_Save();
 	// ------------------	
@@ -277,18 +277,13 @@ void APP_Conf_Reply_Sample_Rate(uint8_t * payload , uint16_t len)
 	
 	uint8_t * buf_ptr = (uint8_t *)&ln_protocolintance->payload;
 
-	// --------defaultvalue ---
-
-	buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)buf_temp, 3);
-	send_len += 3;
-	
 	// --------send_invteral in sec -----
 	buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)&g_SystemParam_Config.send_invteral, 2);
 	send_len += 2;	
 
 	// ---------------------------------------
 	ln_protocolintance->len = send_len;
-	*buf_ptr = LNprotocol_GetChecksum(&ln_protocolintance->head , send_len + 3);
+	*buf_ptr = LNprotocol_GetChecksum(&ln_protocolintance->head , send_len + 6);
 	buf_ptr ++;
 	*(buf_ptr ) = LNPROTOCOL_FOOT;
 	buf_ptr ++;
@@ -366,7 +361,7 @@ void APP_Conf_ID(uint8_t * payload , uint16_t len)
 
 	// ---------------------------------------
 	ln_protocolintance->len = send_len;
-	*buf_ptr = LNprotocol_GetChecksum(&ln_protocolintance->head , send_len + 3);
+	*buf_ptr = LNprotocol_GetChecksum(&ln_protocolintance->head , send_len + 6);
 	buf_ptr ++;
 	*(buf_ptr ) = LNPROTOCOL_FOOT;
 	buf_ptr ++;
@@ -417,7 +412,7 @@ void APP_Conf_ReplyConf(uint8_t * payload , uint16_t len)
 	// ---------------------
 	// ---------------------------------------
 	ln_protocolintance->len = send_len;
-	*buf_ptr = LNprotocol_GetChecksum(&ln_protocolintance->head , send_len + 3);
+	*buf_ptr = LNprotocol_GetChecksum(&ln_protocolintance->head , send_len + 6);
 	buf_ptr ++;
 	*(buf_ptr ) = LNPROTOCOL_FOOT;
 	buf_ptr ++;

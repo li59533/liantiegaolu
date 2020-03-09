@@ -114,6 +114,7 @@ void BSP_RTC_Init(void)
 	CLOCK_EnableClock(kCLOCK_PortC);
 	PORT_SetPinMux(PORTC, 1,kPORT_MuxAsGpio);
 	gpio_pin_config_t gpio_pin_config ;
+	gpio_pin_config.pinDirection = kGPIO_DigitalInput;
 	GPIO_PinInit(GPIOC, 1, &gpio_pin_config);
 	
 	CLOCK_EnableClock(kCLOCK_Rtc0);
@@ -124,7 +125,7 @@ void BSP_RTC_Init(void)
 		
 	RTC_Init(RTC , &config);
 	
-	RTC_SetOscCapLoad(RTC, kRTC_Capacitor_8p);
+	RTC_SetOscCapLoad(RTC, kRTC_Capacitor_16p);
 	
 	
 	datetime.year = 2020;
@@ -137,7 +138,7 @@ void BSP_RTC_Init(void)
 	RTC_SetDatetime(RTC , &datetime);
 	
 	RTC_EnableInterrupts( RTC , kRTC_AlarmInterruptEnable);
-	EnableIRQ(RTC_IRQn); ; // Open Alarm Interrupt
+	EnableIRQ(RTC_IRQn);
 
 	RTC_StartTimer(RTC);
 }

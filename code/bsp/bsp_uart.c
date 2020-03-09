@@ -255,9 +255,10 @@ static void bsp_uart2_init(void)
 	
 	uart_config_t config ;
 	UART_GetDefaultConfig(&config);
+	config.baudRate_Bps = 9600U;
+
 /*
- *   uartConfig->baudRate_Bps = 115200U;
- *   uartConfig->bitCountPerChar = kUART_8BitsPerChar;
+*   uartConfig->bitCountPerChar = kUART_8BitsPerChar;
  *   uartConfig->parityMode = kUART_ParityDisabled;
  *   uartConfig->stopBitCount = kUART_OneStopBit;
  *   uartConfig->txFifoWatermark = 0;

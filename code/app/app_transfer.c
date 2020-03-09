@@ -351,7 +351,7 @@ static void app_transfer_senddata_req(void)
 	len += 7;	
 	// ---------------------------------------
 	ln_protocolintance->len = len;
-	*buf_ptr = LNprotocol_GetChecksum(&ln_protocolintance->head , len + 3);
+	*buf_ptr = LNprotocol_GetChecksum(&ln_protocolintance->head , len + 6);
 	buf_ptr ++;
 	*(buf_ptr ) = LNPROTOCOL_FOOT;
 	buf_ptr ++;
