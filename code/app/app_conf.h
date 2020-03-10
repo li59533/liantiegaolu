@@ -83,6 +83,13 @@ void APP_Conf_Reply_Alarm(uint8_t * payload , uint16_t len);
 void APP_Conf_Set_SNcode(uint8_t * full_message , uint16_t full_len);
 
 
+void APP_Conf_SetConfStatus(void);
+void APP_Conf_ClearConfStatus(void);
+uint8_t APP_Conf_GetConfStatus(void);
+	
+
+
+
 // -------- Test Func ------------
 void APP_Conf_TestFunc(void);
 // -------------------------------

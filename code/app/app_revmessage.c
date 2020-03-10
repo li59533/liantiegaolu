@@ -223,21 +223,25 @@ void APP_RevMessage_Process(uint8_t * buf , uint16_t len)
 		break;
 		case CMD_Conf_ID:
 		{
+			APP_Conf_SetConfStatus();
 			APP_Conf_ID( (uint8_t *)&ln_protocolintance->payload, ln_protocolintance->len);
 		}
 		break;
 		case CMD_Conf_Reply_Conf:
 		{
+			APP_Conf_SetConfStatus();
 			APP_Conf_ReplyConf( (uint8_t *)&ln_protocolintance->payload, ln_protocolintance->len);
 		}
 		break;
 		case CMD_Conf_Set_Conf:
 		{
+			APP_Conf_SetConfStatus();
 			APP_Conf_SetConf(buf , len);
 		}
 		break;
 		case CMD_Conf_Start:
 		{
+			APP_Conf_ClearConfStatus();
 			APP_Conf_Start(buf , len);
 		}
 		break;
@@ -253,11 +257,13 @@ void APP_RevMessage_Process(uint8_t * buf , uint16_t len)
 		break;
 		case CMD_Conf_Reply_Sample_Rate:
 		{
+			APP_Conf_SetConfStatus();
 			APP_Conf_Reply_Sample_Rate((uint8_t *)&ln_protocolintance->payload, ln_protocolintance->len);			
 		}
 		break;
 		case CMD_Conf_Set_Sample_Rate:
 		{
+			APP_Conf_SetConfStatus();
 			APP_Conf_Set_Sample_Rate(buf , len );
 		}
 		break;
@@ -315,7 +321,7 @@ uint8_t APP_RevGetAckFlag(void)
 {
 	app_ACKFlag.time_cur = OS_Clock_GetSeconds();	
 	
-	if((app_ACKFlag.time_cur - app_ACKFlag.time_wait) > 1 && app_ACKFlag.ACK_status != APP_RevACK_Get) // timeout  : 1S
+	if((app_ACKFlag.time_cur - app_ACKFlag.time_wait) >= 1 && app_ACKFlag.ACK_status != APP_RevACK_Get) // timeout  : 1S
 	{
 		app_ACKFlag.ACK_status = APP_RevACK_Timeout;
 	}

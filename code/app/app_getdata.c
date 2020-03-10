@@ -116,9 +116,13 @@ void APP_GetData_Init(void)
 	BSP_ADC_Init();
 	BSP_Clock_Init(BSP_CLOCK1);
 }
+
+
 	
 void APP_GetData_DeInit(void)
 {
+	BSP_Clock_DeInit(BSP_CLOCK1);
+	BSP_ADC_DeInit();
 	
 }
 

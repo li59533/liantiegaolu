@@ -168,7 +168,7 @@ void BSP_Uart0_Close(void)
 {
 	LPSCI_Deinit(UART0);
 	
-	//CLOCK_EnableClock(kCLOCK_PortA);
+	
 	PORT_SetPinMux(PORTA, 2,kPORT_MuxAsGpio);
 	gpio_pin_config_t gpio_pin_config;
 	gpio_pin_config.outputLogic = 0;
@@ -179,6 +179,9 @@ void BSP_Uart0_Close(void)
 	gpio_pin_config.outputLogic = 0;
 	gpio_pin_config.pinDirection = kGPIO_DigitalInput;
 	GPIO_PinInit(GPIOA, 1, &gpio_pin_config);
+	
+	CLOCK_EnableClock(kCLOCK_PortA);
+	
 	// -----------------------		
 }
 

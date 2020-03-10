@@ -65,6 +65,7 @@
  * @{  
  */
 void BSP_ADC_Init(void);
+void BSP_ADC_DeInit(void);
 uint32_t BSP_ADC_GetValue(uint8_t channel);
 
 uint16_t BSP_ADC_GetAverageValue(uint8_t channel);

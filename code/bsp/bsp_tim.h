@@ -67,7 +67,7 @@
  * @defgroup      bsp_tim_Exported_Functions 
  * @{  
  */
- 
+void BSP_Clock_DeInit(uint8_t BSP_CLOCKx);
 void BSP_Clock_Init(uint8_t BSP_CLOCKx);
 uint32_t BSP_GetTimrCurCount(uint8_t BSP_CLOCKx);
 void BSP_Clock_StartOnceTimer(uint8_t BSP_CLOCKx , uint32_t msec);

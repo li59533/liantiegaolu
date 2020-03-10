@@ -482,8 +482,13 @@ void BSP_E32_CoreLoop(void)
 			{
 				DEBUG("E32_CMD_SEND\r\n");
 				BSP_LED_Blink( BSP_LED_TEST , 2 , 50, 100);
-				bsp_e32_sendtask();
+				BSP_E32_AddCmd( E32_CMD_REALSEND , 20);
 			}	
+			break;
+		case E32_CMD_REALSEND:
+			{
+				bsp_e32_sendtask();
+			}
 			break;
 		default:break;
 	}

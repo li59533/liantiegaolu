@@ -71,7 +71,8 @@ typedef  struct
  * @{  
  */
 void APP_GetData_Init(void);
-
+	
+void APP_GetData_DeInit(void);
 void APP_GetData_DeInit(void);
 App_Data_t * APP_GetData_Get(void);
 void APP_GetData_Calc(void);

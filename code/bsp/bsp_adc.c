@@ -181,6 +181,51 @@ void BSP_ADC_Init(void)
 	// -------------------------
 }
 
+void BSP_ADC_DeInit(void)
+{
+	adc16_config_t config;
+	gpio_pin_config_t gpio_pin_config;
+	
+	// ---------GPIO Init ----------------------
+	
+	PORT_SetPinMux(PORTC, 2, kPORT_PinDisabledOrAnalog);
+	gpio_pin_config.outputLogic = 0;
+	gpio_pin_config.pinDirection = kGPIO_DigitalInput;
+	GPIO_PinInit(GPIOC, 2, &gpio_pin_config);
+	CLOCK_DisableClock(kCLOCK_PortC);	
+	// -----------------------------------------	
+	
+	
+/*
+ *   config->referenceVoltageSource     = kADC16_ReferenceVoltageSourceVref;
+ *   config->clockSource                = kADC16_ClockSourceAsynchronousClock;
+ *   config->enableAsynchronousClock    = true;
+ *   config->clockDivider               = kADC16_ClockDivider8;
+ *   config->resolution                 = kADC16_ResolutionSE12Bit;
+ *   config->longSampleMode             = kADC16_LongSampleDisabled;
+ *   config->enableHighSpeed            = false;
+ *   config->enableLowPower             = false;
+ *   config->enableContinuousConversion = false;
+*/
+
+//	config.clockDivider = ;
+//	config.clockSource = ;
+	config.enableAsynchronousClock = false;
+//	config.enableContinuousConversion = ;
+//	config.enableHighSpeed = ;
+//	config.enableLowPower = ;
+//	config.longSampleMode = kADC16_LongSampleCycle24;
+//	config.referenceVoltageSource = ;
+//	config.resolution = kADC16_Resolution16Bit;
+	ADC16_Init( ADC0, &config);	
+	
+	ADC16_Deinit(ADC0);
+	CLOCK_DisableClock(kCLOCK_Adc0);
+	DisableIRQ(ADC0_IRQn);
+	
+}
+
+
 void BSP_ADC_DisableIRQ(void)
 {
 	DisableIRQ(ADC0_IRQn);

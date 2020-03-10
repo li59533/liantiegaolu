@@ -92,7 +92,8 @@
  * @{  
  */
 static void bsp_lptmr_init(void);
-
+static void bsp_lptmr_deinit(void);
+static void bsp_tmp0_deinit(void);
 static void bsp_tmp0_init(void);
 /**
  * @}
@@ -113,6 +114,29 @@ void BSP_Clock_Init(uint8_t BSP_CLOCKx)
 		case BSP_CLOCK1 : bsp_tmp0_init();break;
 		default :break;
 	}
+}
+
+void BSP_Clock_DeInit(uint8_t BSP_CLOCKx)
+{
+	switch (BSP_CLOCKx)
+	{
+		case BSP_CLOCK0 :bsp_lptmr_deinit();break;
+		case BSP_CLOCK1 : bsp_tmp0_deinit();break;
+		default :break;
+	}
+}
+
+static void bsp_tmp0_deinit(void)
+{
+	TPM_StopTimer(TPM0);
+	TPM_Deinit(TPM0);
+	CLOCK_SetTpmClock(0);
+	CLOCK_DisableClock(kCLOCK_Tpm0);
+}
+
+static void bsp_lptmr_deinit(void)
+{
+	
 }
 
 static void bsp_tmp0_init(void)

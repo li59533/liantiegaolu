@@ -57,6 +57,7 @@ typedef enum
 	E32_CMD_CONF_OK,
 	E32_CMD_CONF_Resp,
 	E32_CMD_SEND ,
+	E32_CMD_REALSEND , 
 	
 }BSP_E32_CMD_e; 
 

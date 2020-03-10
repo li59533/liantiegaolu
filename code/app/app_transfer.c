@@ -29,6 +29,7 @@
 #include "app_task.h"
 #include "bsp_power.h"
 #include "app_revmessage.h"
+#include "app_conf.h"
 
 /**
  * @addtogroup    app_transfer_Modules 
@@ -193,18 +194,27 @@ void APP_Transfer_CoreLoop(void)
 		case AppTransfer_CheckTime :
 		{
 			DEBUG("AppTransfer_CheckTime\r\n");
-			if(app_transfer_checktime() == 1)
+			
+			if(APP_Conf_GetConfStatus() == 1)
 			{
-				app_transfer_enqueue_cmd(AppTransfer_SendReq);
-				//AppTask_Send_Event(APP_TASK_TRANSFER_CORELOOP_EVENT);
-				
+				AppTask_Timer_Start_Event(APP_TASK_TRANSFER_CORELOOP_EVENT , 1000);
 			}
 			else
 			{
-				//AppTask_Send_Event(APP_TASK_TRANSFER_CORELOOP_EVENT);
+				if(app_transfer_checktime() == 1)
+				{
+					app_transfer_enqueue_cmd(AppTransfer_SendReq);
+					AppTask_Send_Event(APP_TASK_TRANSFER_CORELOOP_EVENT);
+				}
+				else
+				{
+					app_transfer_enqueue_cmd(AppTransfer_SerNextTime);
+					AppTask_Timer_Start_Event(APP_TASK_TRANSFER_CORELOOP_EVENT , 1000);
+				}
+				
+				
+				
 			}
-			AppTask_Timer_Start_Event(APP_TASK_TRANSFER_CORELOOP_EVENT , 1000);
-
 		}
 		break;
 		case AppTransfer_SendReq:
@@ -247,6 +257,13 @@ static void app_transfer_lowpower(void)
 {
 	BSP_Power_EnterVLPS();
 }
+
+//typedef enum
+//{
+//	CheckTime_OnTime = 0 , 
+//	CheckTime_
+//}
+
 
 static int8_t app_transfer_checktime(void)
 {
@@ -373,11 +390,12 @@ static void app_transfer_senddata_resp(void)
 		{
 			DEBUG("APP_RevACK_Wait\r\n");
 			app_transfer_enqueue_cmd(AppTransfer_SendResp);
-			AppTask_Timer_Start_Event(APP_TASK_TRANSFER_CORELOOP_EVENT , 300);			
+			AppTask_Timer_Start_Event(APP_TASK_TRANSFER_CORELOOP_EVENT , 1000);			
 		}
 		break;
 		case APP_RevACK_Get: //get
 		{
+			timeout_count = 0;
 			DEBUG("APP_RevACK_Get\r\n");
 			app_transfer_enqueue_cmd(AppTransfer_SerNextTime);
 			AppTask_Send_Event(APP_TASK_TRANSFER_CORELOOP_EVENT);

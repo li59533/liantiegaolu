@@ -79,6 +79,7 @@ typedef struct
 //rev_data_t break_buf = { 0 };
 static rev_data_t temp_buf = { 0 };
 static rev_data_t full_buf = { 0 };
+static uint8_t app_conf_confstatus = 0;
 /**
  * @}
  */
@@ -522,16 +523,28 @@ static int8_t bsp_conf_rev(uint8_t * buf , uint16_t len)
 	return 0;
 }
 
-
-
-
-
-
 void APP_Conf_SendData( uint8_t *buf , uint16_t len)
 {
 	memcpy(app_confrev_space , buf , len);
 	BSP_UART_WriteBytes_DMA( BSP_UART2 , app_confrev_space,  len);
 }
+
+
+void APP_Conf_SetConfStatus(void)
+{
+	app_conf_confstatus = 1;
+}
+
+void APP_Conf_ClearConfStatus(void)
+{
+	app_conf_confstatus = 0;
+}
+
+uint8_t APP_Conf_GetConfStatus(void)
+{
+	return app_conf_confstatus;
+}
+
 
 // -------- Test Func ------------
 

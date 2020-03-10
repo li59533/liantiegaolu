@@ -106,7 +106,8 @@ uint8_t g_AppTask_Id = 0;
 void AppTask_Init(uint8_t taskId)
 {
     g_AppTask_Id = taskId;
-	AppTask_Send_Event(APP_TASK_TRANSFER_CORELOOP_EVENT);
+	//AppTask_Send_Event(APP_TASK_TRANSFER_CORELOOP_EVENT);
+	OS_Timer_Start(g_AppTask_Id, APP_TASK_TRANSFER_CORELOOP_EVENT,1000);		
 }
 
 osal_event_t AppTask_Process(uint8_t taskid,osal_event_t events)
