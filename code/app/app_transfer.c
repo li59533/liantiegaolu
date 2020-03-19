@@ -30,6 +30,8 @@
 #include "bsp_power.h"
 #include "app_revmessage.h"
 #include "app_conf.h"
+#include "app_battery.h"
+
 
 /**
  * @addtogroup    app_transfer_Modules 
@@ -258,12 +260,6 @@ static void app_transfer_lowpower(void)
 	BSP_Power_EnterVLPS();
 }
 
-//typedef enum
-//{
-//	CheckTime_OnTime = 0 , 
-//	CheckTime_
-//}
-
 
 static int8_t app_transfer_checktime(void)
 {
@@ -324,6 +320,7 @@ static void app_transfer_senddata_req(void)
 {
 	App_Data_t * App_Data;
 	ln_protocolintance_t * ln_protocolintance = 0;
+	uint16_t checksum = 0;
 	uint8_t sendbuf[100] = { 0 };
 	uint8_t buf_temp[10] = { 0 };
 	uint16_t len = 0; 
@@ -342,7 +339,21 @@ static void app_transfer_senddata_req(void)
 	buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)buf_temp , 1);
 	len += 1;
 	// --------Value ---
-	buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)&App_Data->real_mA , 4);
+	if(App_Data->device_status == MA4_20_OVER)
+	{
+		float errcode = 999.999f;
+		buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)&errcode , 4);
+	}
+	else if(App_Data->device_status == MA4_20_LOST)
+	{
+		float errcode = -999.999f;
+		buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)&errcode , 4);
+	}
+	else if(App_Data->device_status == MA4_20_NORMAL)
+	{
+		buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)&App_Data->need_value , 4);
+	}	
+
 	len += 4;
 	// --------Battery ---
 	buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)&g_SystemParam_Config.battery , 1);
@@ -368,9 +379,11 @@ static void app_transfer_senddata_req(void)
 	buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)buf_temp , 7);
 	len += 7;	
 	// ---------------------------------------
-	ln_protocolintance->len = len;
-	*buf_ptr = LNprotocol_GetChecksum(&ln_protocolintance->head , len + 6);
-	buf_ptr ++;
+	ln_protocolintance->len = len + 1; // 奇怪的报文格式~~~
+	//*buf_ptr = LNprotocol_GetChecksum(&ln_protocolintance->head , len + 6);
+	checksum = LNprotocol_GetChecksum116bits(&ln_protocolintance->head , len + 6);
+	memcpy(buf_ptr , (uint8_t *)&checksum , 2);
+	buf_ptr += 2;
 	*(buf_ptr ) = LNPROTOCOL_FOOT;
 	buf_ptr ++;
 
@@ -378,6 +391,8 @@ static void app_transfer_senddata_req(void)
 					g_SystemParam_Config.E32_conf.module_channel, \
 					&ln_protocolintance->head ,\
 					buf_ptr - &ln_protocolintance->head);
+					
+	APP_Battery_Reduce();				
 }
 
 

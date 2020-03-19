@@ -13,7 +13,7 @@
 
 #include "board.h"
 #include "bsp_clock.h"
-
+#include "bsp_power.h"
 #include "bsp_led.h"
 #include "bsp_tim.h"
 #include "bsp_rtc.h"
@@ -24,6 +24,8 @@
  * @addtogroup    XXX 
  * @{  
  */
+#include "clog.h"
+#include "version.h"
 
 /**
  * @addtogroup    board_Modules 
@@ -113,8 +115,10 @@ void Board_Init_ClockRUN(void)
 
 void Board_Init_BSP(void)
 {
+	DEBUG("Version:%s\r\n" , Version_Get_Str());
 	BSP_RTC_Init();   //RTC Init
 	BSP_Flash_Init(); // Flash Init
+	BSP_Power_Init();
 	BSP_UART_Init( BSP_UART2 );
 	
 // --------Test func-------------	
@@ -139,6 +143,12 @@ void BSP_Test_Delay(uint32_t count)
 }
 // ------------------------------------
 
+
+
+void NMI_Handler(void)
+{
+	DEBUG("NMI_Handler\r\n");
+}
 /**
  * @}
  */

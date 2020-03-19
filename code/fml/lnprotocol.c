@@ -160,6 +160,25 @@ uint8_t LNprotocol_GetChecksum(uint8_t *buf , uint16_t len)
 	return checksum;
 }
 
+
+uint16_t LNprotocol_GetChecksum116bits(uint8_t *buf , uint16_t len)
+{
+	uint16_t checksum = 0;
+	uint8_t * check_ptr = 0;
+	uint16_t check_len = 0;
+	
+	check_ptr = buf + 1 ;
+	check_len = len - 3 ;
+	
+	while(check_len --)
+	{
+		checksum += *(check_ptr ++);
+	}	
+	return checksum;	
+}
+
+
+
 int8_t LNprotocol_Checksum(uint8_t * buf,uint16_t len)  // enter a complete buf
 {
 	uint8_t checksum = 0;

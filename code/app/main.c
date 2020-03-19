@@ -29,6 +29,7 @@
 #include "bsp_uart.h"
 #include "bsp_power.h"
 #include "bsp_rtc.h"
+#include "bsp_e32.h"
 /**	
  * @addtogroup    main_Modules 
  * @{  
@@ -114,6 +115,7 @@ int main(void)
 	Board_Init_ClockRUN();
 	
 	BSP_SysTick_Init();
+	
 	Board_Init_BSP();
 	
 	SystemParam_Init();

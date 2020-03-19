@@ -29,6 +29,8 @@
 #include "bsp_e32.h"
 #include "app_task.h"
 
+#include "app_getdata.h"
+
 /**
  * @addtogroup    app_conf_Modules 
  * @{  
@@ -122,6 +124,57 @@ static int8_t bsp_conf_rev(uint8_t * buf , uint16_t len);
  * @{  
  */
 
+
+void APP_Conf_SetADCToRealValue(uint8_t * payload , uint16_t len)
+{
+	float Y1 = 0.0f;
+	float Y2 = 0.0f;
+	if(len == 8)
+	{
+		Y1 = *(float *)&payload[0];
+		Y2 = *(float *)&payload[4];		
+		
+		g_SystemParam_Config.Analog_conf.real_k = (Y2 - Y1) / 16;
+		g_SystemParam_Config.Analog_conf.real_b = Y1 - (Y2 - Y1)/4;
+		SystemParam_Save();
+	}
+
+}
+
+
+void APP_Conf_Set_ADCCalibration(uint8_t * payload , uint16_t len)
+{
+	static uint8_t flag_4 = 0;
+	static uint8_t flag_20 = 0;
+	static float X1 = 0.0f;
+	static float X2 = 0.0f;
+	
+	App_Data_t * App_Data;
+	
+	App_Data = APP_GetData_Get();	
+	
+	if(payload[0] == 0x01) 
+	{
+		flag_4 = 1;
+		X1 = App_Data->original_value * 0.00045776f;
+	}
+	else if(payload[1] == 0x01)
+	{
+		flag_20 = 1;
+		X2 = App_Data->original_value * 0.00045776f;		
+	}
+	
+	if(flag_4 == 1 && flag_20 == 1)
+	{
+		flag_4 = 0;
+		flag_20 = 0;
+		g_SystemParam_Config.Analog_conf.adc_k = (-16) / (X1 - X2);
+		g_SystemParam_Config.Analog_conf.adc_b = 4 + 16 * X1 / (X1 - X2);
+		SystemParam_Save();
+	}
+}
+
+
 void APP_Conf_Set_SNcode(uint8_t * full_message , uint16_t full_len)
 {
 	// --------Send---------
@@ -188,11 +241,11 @@ void APP_Conf_Set_AlarmTime(uint8_t * payload , uint16_t len)
 	rtc_datetime_t  datetime ;
 	
 	datetime.year = *(uint16_t *)&payload[0];
-	datetime.month = payload[6];
-	datetime.day = payload[7];
-	datetime.hour = payload[8];
-	datetime.minute = payload[9];
-	datetime.second = payload[10];
+	datetime.month = payload[2];
+	datetime.day = payload[3];
+	datetime.hour = payload[4];
+	datetime.minute = payload[5];
+	datetime.second = payload[6];
 	
 	g_SystemParam_Config.firsttimestamp = BSP_RTC_ConvertDatetimeToSeconds(&datetime);
 	

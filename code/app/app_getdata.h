@@ -46,9 +46,19 @@
  * @defgroup      app_getdata_Exported_Types 
  * @{  
  */
+
+typedef enum
+{
+	MA4_20_NORMAL = 0,
+	
+	MA4_20_OVER   = 1,
+	MA4_20_LOST	  = 2,
+}APP_Data_DeviceStatus_e;
+ 
 typedef  struct
 {
 	uint16_t original_value;
+	uint8_t device_status;
 	float real_mV;
 	float real_mA;
 	float need_value;

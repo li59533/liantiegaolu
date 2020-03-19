@@ -78,16 +78,24 @@ typedef struct
 	uint8_t   module_power; //0:20dB 1:17dB 2:14dB 3:10dB
 }E32_conf_t;
 
-
+typedef struct
+{
+	float adc_k;
+	float adc_b;
+	float real_k;
+	float real_b;
+}Analog_conf_t;
 
 typedef struct
 {
 	uint8_t SNcode[8];
 	uint8_t workmode ;
 	uint8_t battery ;
+	uint32_t current_boardtime;
 	uint32_t  firsttimestamp ;
 	uint16_t send_invteral ;
-	E32_conf_t E32_conf;
+	E32_conf_t E32_conf; 
+	Analog_conf_t Analog_conf;
     uint16_t crc;           /*!< 所有的参数结构体必须按字节对其。且最后一个必须包
                                  含一个uint16_t类型的数据，该数据用于内部存储时的
                                  crc校验和存储，用户在保存参数时不用关心该值数值。*/

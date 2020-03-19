@@ -166,6 +166,7 @@ static void bsp_e32_getconf(void);
 static void bsp_e32_setconf(void);
 static void bsp_e32_ClearCmd(void);
 static void BSP_E32_ModlueRevAnalysis(uint8_t * buf, uint8_t len );
+static void bsp_e32_haldeinit(void);
 /**
  * @}
  */
@@ -175,17 +176,51 @@ static void BSP_E32_ModlueRevAnalysis(uint8_t * buf, uint8_t len );
  * @brief         
  * @{  
  */
+ 
+
+ 
 void BSP_E32_Init(void)
 {
-	BSP_E32_Power_OFF();
 	bsp_e32_halinit();
+	// -------Uart ----------
+	BSP_UART_Init(BSP_UART0);
+	// ----------------------	
+	BSP_E32_Power_OFF();
 	BSP_Systick_Delayms(5);
 	BSP_E32_Power_ON();
 	BSP_Systick_Delayms(1);
 	DEBUG("BSP_E32_Init\r\n");
 	BSP_E32_AddCmd(E32_CMD_GETCONF_Req , 0);
+	
 }
+static void bsp_e32_haldeinit(void)
+{
 
+
+	gpio_pin_config_t gpio_pin_config ;
+	gpio_pin_config.outputLogic = 0;
+	gpio_pin_config.pinDirection = kGPIO_DigitalOutput;
+	GPIO_PinInit(GPIOD, 7, &gpio_pin_config);
+	
+
+	gpio_pin_config.outputLogic = 0;
+	gpio_pin_config.pinDirection = kGPIO_DigitalOutput;
+	GPIO_PinInit(GPIOD, 6, &gpio_pin_config);
+
+
+	gpio_pin_config.outputLogic = 0;
+	gpio_pin_config.pinDirection = kGPIO_DigitalOutput;  //AUX is input pin
+	GPIO_PinInit(GPIOA, 4, &gpio_pin_config);
+
+
+	
+	GPIO_WritePinOutput(GPIOD, 7, 0); // M0
+	GPIO_WritePinOutput(GPIOD, 6, 0); // M1
+	GPIO_WritePinOutput(GPIOA, 4, 0); // AUX
+
+
+	
+}
 /*
 M0 -> PD7
 M1 -> PD6
@@ -227,9 +262,7 @@ static void bsp_e32_halinit(void)
 	GPIO_WritePinOutput(GPIOA, 4, 0); // AUX
 	GPIO_WritePinOutput(GPIOE, 19, 0); // E32_Power
 	
-	// -------Uart ----------
-	BSP_UART_Init(BSP_UART0);
-	// ----------------------
+	
 }
 
 
@@ -481,6 +514,7 @@ void BSP_E32_CoreLoop(void)
 		case E32_CMD_SEND : 
 			{
 				DEBUG("E32_CMD_SEND\r\n");
+				BSP_E32_SetMode(E32_MODE_NORMAL);
 				BSP_LED_Blink( BSP_LED_TEST , 2 , 50, 100);
 				BSP_E32_AddCmd( E32_CMD_REALSEND , 20);
 			}	
@@ -664,7 +698,10 @@ void BSP_E32_RevByteOneByte(uint8_t value)
 void BSP_E32_Close(void)
 {
 	BSP_E32_Power_OFF();
+	
 	BSP_Uart0_Close();
+	bsp_e32_haldeinit();
+	
 	BSP_E32_CmdQueue.in = 0;
 	BSP_E32_CmdQueue.count = 0;
 	BSP_E32_CmdQueue.out = 0;
@@ -676,8 +713,11 @@ void BSP_E32_Close(void)
 
 void BSP_E32_Open(void)
 {
-	BSP_Uart0_Open();
+	
+	bsp_e32_halinit();
 	BSP_E32_Power_ON();
+	BSP_Uart0_Open();
+	
 	NetTask_Send_Event(NET_TASK_CORE_LOOP_EVENT);
 }
 

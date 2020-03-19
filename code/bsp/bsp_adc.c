@@ -118,12 +118,12 @@ static void bsp_adc_addvalue(uint16_t value);
 void BSP_ADC_Init(void)
 {
 	adc16_config_t config;
-	gpio_pin_config_t gpio_pin_config;
+	//gpio_pin_config_t gpio_pin_config;
 	
 	// ---------GPIO Init ----------------------
 	CLOCK_EnableClock(kCLOCK_PortC);
 	PORT_SetPinMux(PORTC, 2, kPORT_PinDisabledOrAnalog);
-	GPIO_PinInit(GPIOC, 2, &gpio_pin_config);
+	//GPIO_PinInit(GPIOC, 2, &gpio_pin_config);
 	
 	// -----------------------------------------
 	
@@ -188,11 +188,11 @@ void BSP_ADC_DeInit(void)
 	
 	// ---------GPIO Init ----------------------
 	
-	PORT_SetPinMux(PORTC, 2, kPORT_PinDisabledOrAnalog);
+	PORT_SetPinMux(PORTC, 2, kPORT_MuxAsGpio);
 	gpio_pin_config.outputLogic = 0;
-	gpio_pin_config.pinDirection = kGPIO_DigitalInput;
+	gpio_pin_config.pinDirection = kGPIO_DigitalOutput;
 	GPIO_PinInit(GPIOC, 2, &gpio_pin_config);
-	CLOCK_DisableClock(kCLOCK_PortC);	
+
 	// -----------------------------------------	
 	
 	
@@ -236,47 +236,6 @@ void BSP_ADC_EnableIRQ(void)
 	EnableIRQ(ADC0_IRQn);
 }
 
-
-//dma_handle_t dma_handle ;
-//dma_transfer_config_t transferConfig;	
-//#define BSP_ADC_DATA_LEN     16
-//uint32_t bsp_adc_DataArray[BSP_ADC_DATA_LEN] = { 0 };
-
-//static void bsp_adcDMA_init(void)
-//{
-//	ADC16_EnableDMA(ADC0, true);
-//	
-//	    /* Configure DMAMUX */
-//    DMAMUX_Init(DMAMUX0);
-//	
-//    DMAMUX_SetSource(DMAMUX0, 0, kDmaRequestMux0ADC0); /* Map ADC source to channel 0 */
-//    DMAMUX_EnableChannel(DMAMUX0, 0);
-
-//    DMA_Init(DMA0);
-//	
-//	
-//    DMA_CreateHandle(&dma_handle, DMA0, 0);
-//	
-//	
-//	
-//    /* Setup transfer */
-//	
-//    DMA_PrepareTransfer(&transferConfig, (void *)ADC16_RESULT_REG_ADDR, sizeof(uint32_t),
-//                        (void *)bsp_adc_DataArray, sizeof(uint32_t), sizeof(bsp_adc_DataArray),
-//                        kDMA_PeripheralToMemory);
-//						
-//    DMA_SetTransferConfig(DMA0, 0, &transferConfig);
-//    /* Enable interrupt when transfer is done. */
-//    DMA_EnableInterrupts(DMA0, 0);
-//    /* Enable async DMA request. */
-//    DMA_EnableAsyncRequest(DMA0, 0, true);
-//    /* Forces a single read/write transfer per request. */
-//    DMA_EnableCycleSteal(DMA0, 0, true);
-//    /* Enable transfer. */
-//    DMA_StartTransfer(&dma_handle);
-//    /* Enable IRQ. */
-//    NVIC_EnableIRQ(DMA0_IRQn);
-//}
 
 
 uint32_t BSP_ADC_GetValue(uint8_t channel)

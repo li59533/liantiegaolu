@@ -203,7 +203,7 @@ FPROT3          EQU     nFPROT3:EOR:0xFF
 ;     <o.5> FAST_INIT
 ;       <0=> Slower initialization
 ;       <1=> Fast Initialization
-FOPT          EQU     0xFF
+FOPT          EQU     0xFB
 ;   </h>
 ;   <h> Flash security byte (FSEC)
 ;     <i> WARNING: If SEC field is configured as "MCU security status is secure" and MEEN field is configured as "Mass erase is disabled",

@@ -296,8 +296,25 @@ void APP_RevMessage_Process(uint8_t * buf , uint16_t len)
 		{
 			APP_Conf_Set_SNcode(buf , len);
 		}
-		break;		
-		default:break;
+		break;
+		case CMD_Conf_Calibration:
+		{
+			APP_Conf_SetConfStatus();
+			APP_Conf_Set_ADCCalibration((uint8_t *)&ln_protocolintance->payload, ln_protocolintance->len);
+		}
+		break;
+		case CMD_Conf_ADCToRealValue:
+		{
+			APP_Conf_SetConfStatus();
+			APP_Conf_SetADCToRealValue((uint8_t *)&ln_protocolintance->payload, ln_protocolintance->len);
+		}
+		break;
+		default:
+		{
+			DEBUG("lnProtoCMD:%X\r\n" , ln_protocolintance->cmd);
+			
+		}
+		break;
 	}
 }
 

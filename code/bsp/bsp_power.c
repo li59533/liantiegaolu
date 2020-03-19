@@ -23,6 +23,7 @@
 #include "bsp_systick.h"
 #include "bsp_adc.h"
 #include "app_getdata.h"
+#include "bsp_led.h"
 /**
  * @addtogroup    bsp_power_Modules 
  * @{  
@@ -119,20 +120,51 @@ void BSP_Power_SetMode(BSP_Power_Mode_e mode)
 }
 
 
+void BSP_Power_Init(void)
+{
+ //------GPIO --------
+	gpio_pin_config_t gpio_pin_config ;
+	CLOCK_EnableClock(kCLOCK_PortD);
+	
+	PORT_SetPinMux(PORTD, 5,kPORT_MuxAsGpio);
+	gpio_pin_config.outputLogic = 0;
+	gpio_pin_config.pinDirection = kGPIO_DigitalOutput;
+	GPIO_PinInit(GPIOD, 5, &gpio_pin_config);	
+	
+	GPIO_WritePinOutput(GPIOD, 5, 0);
+}
+
+void BSP_Power_V30_ON(void)
+{
+	GPIO_WritePinOutput(GPIOD, 5, 1);
+}
+
+void BSP_Power_V30_OFF(void)
+{
+	GPIO_WritePinOutput(GPIOD, 5, 0);
+}
+
+
 void BSP_Power_EnterVLPS(void)
 {
 	DEBUG("ENTER VLPS\r\n");
+	
+	BSP_LED_Close(BSP_LED1);
+	
 	APP_GetData_DeInit();
 	BSP_E32_Close();
 	BSP_SysTick_DisableIRQ();
 	
+	BSP_Power_V30_OFF();
+	
 	BOARD_RUNClockToVLPS();
 	
+	BSP_Power_V30_ON();
 	BSP_SysTick_Init();
 	BSP_E32_Open();
 	APP_GetData_Init();
-	BSP_SysTick_Init();
 }
+
 
 
 
@@ -140,21 +172,8 @@ void BSP_Power_EnterVLPS(void)
 // -------Test Func--------
 void BSP_Power_ModeTest(void)
 {
-	BSP_E32_Power_OFF();
-	BSP_Uart0_Close();
-//	DEBUG("Current Mode:%X\r\n" , SMC_GetPowerModeState( SMC ));
-	SMC_SetPowerModeProtection(SMC , kSMC_AllowPowerModeAll);
-	SMC_SetPowerModeVlps(SMC);
-//	
-//	DEBUG("Current Mode:%X\r\n" , SMC_GetPowerModeState( SMC ));
-//    while (SMC_GetPowerModeState(SMC) != kSMC_PowerStateVlpr)
-//    {
-//    }
-	
-//	BOARD_BootClockVLPS();
-	//BOARD_BootClockVLPR();
-	
-	
+
+	BOARD_RUNClockToVLPS();
 }
 
 // ------------------------

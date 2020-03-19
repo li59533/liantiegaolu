@@ -64,6 +64,10 @@
  * @{  
  */
  
+void BSP_Power_Init(void);
+void BSP_Power_V30_ON(void);
+void BSP_Power_V30_OFF(void); 
+ 
 void BSP_Power_EnterVLPS(void);
 
 // -------Test Func------------- 

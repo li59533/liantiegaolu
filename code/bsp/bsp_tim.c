@@ -159,7 +159,7 @@ static void bsp_tmp0_init(void)
 	
 	TPM_Init(TPM0, &config);
 	
-	TPM_SetTimerPeriod(TPM0, 65535);
+	TPM_SetTimerPeriod(TPM0, 10000);
 	
 //	TPM_EnableInterrupts(TPM0, kTPM_TimeOverflowInterruptEnable);
 //	

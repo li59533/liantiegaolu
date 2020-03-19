@@ -113,12 +113,16 @@ typedef enum
 	CMD_Conf_Set_SelfStart	= 0x09,
 	CMD_Conf_Set_EQ		= 0x0a,
 	
-	
 	CMD_ReportData	 = 0x45,
 	CMD_Conf_GotoLowpower = 0x46,
 	CMD_Conf_Reply_AlarmTime = 0x47,
 	CMD_Conf_Set_AlarmTime = 0x49,
 	CMD_ReportDataACK = 0x50,
+	
+	CMD_Conf_Calibration = 0x69,
+	
+	CMD_Conf_ADCToRealValue = 0x6A,
+	
 	CMD_Conf_Set_SNcode = 0x88,
 	// ------
 	
@@ -186,7 +190,7 @@ uint8_t * LNprotocol_AddFoot(uint8_t * targetspace_ptr);
 void LNprotocol_Addlen(uint8_t *buf, uint16_t len);
 
 uint8_t LNprotocol_AddChecksum(uint8_t * buf,uint16_t len);
-
+uint16_t LNprotocol_GetChecksum116bits(uint8_t *buf , uint16_t len);
 uint8_t LN_AddTlv(uint8_t * disaddr,LN_Tlv_t * tlv_value);
 
 

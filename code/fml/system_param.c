@@ -72,7 +72,7 @@
 const SystemParam_Config_t SystemParam_Config_Default = 
 {
 	.SNcode ={ 0x12 , 0x34 ,0x56 , 0x78 , 0x90, 0xA0, 0xAB ,0x4F} ,
-	.E32_conf.module_source_addr = 0x000A , 
+	.E32_conf.module_source_addr = 0x000F , 
 	.E32_conf.module_destination_addr = 0x000B , 
 	.E32_conf.module_datacheck = 0 ,//0:8N1; 1:8o1;  2:8E1;  3:8N1;
 	.E32_conf.module_baudrate = 7 , //0:1200; 1:2400;  2:4800;  3:9600; 4:19200;  5:38400;  6:57600; 7:115200;
@@ -83,7 +83,12 @@ const SystemParam_Config_t SystemParam_Config_Default =
 	.E32_conf.module_wakeup_time = 0,//0:250ms 1;500ms 2£º750ms 3?1000  4£º1250   5£º1500 56:1750  72000
 	.E32_conf.module_FEC = 1,   //0:¹Ø±Õ 1£º¿ªÆô
 	.E32_conf.module_power = 0, //0:20dB 1:17dB 2:14dB 3:10dB
-
+	
+	.Analog_conf.adc_k = 1.0,
+	.Analog_conf.adc_b = 0.0,
+	.Analog_conf.real_k = 1.0,
+	.Analog_conf.real_b = 0.0,
+	
 	.firsttimestamp = 0x5E0D5E85,
 	.send_invteral = 10,
 	.workmode = LowPower_WorkingMode,
