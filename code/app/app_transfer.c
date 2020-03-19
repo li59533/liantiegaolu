@@ -31,7 +31,7 @@
 #include "app_revmessage.h"
 #include "app_conf.h"
 #include "app_battery.h"
-
+#include "bsp_e32.h"
 
 /**
  * @addtogroup    app_transfer_Modules 
@@ -216,10 +216,14 @@ void APP_Transfer_CoreLoop(void)
 		case AppTransfer_SendReq:
 		{
 			DEBUG("AppTransfer_SendReq\r\n");
-			app_transfer_senddata_req();
-			app_transfer_enqueue_cmd(AppTransfer_SendResp);
-			AppTask_Timer_Start_Event(APP_TASK_TRANSFER_CORELOOP_EVENT , 1000);
-			APP_RevClearAckFlag();
+			if(BSP_E32_GetMode() == E32_MODE_NORMAL)
+			{
+				app_transfer_senddata_req();
+				app_transfer_enqueue_cmd(AppTransfer_SendResp);
+				AppTask_Timer_Start_Event(APP_TASK_TRANSFER_CORELOOP_EVENT , 1000);
+				APP_RevClearAckFlag();				
+			}
+
 		} 
 		break;
 		case AppTransfer_SendResp:
@@ -376,7 +380,11 @@ static void app_transfer_senddata_req(void)
 	ln_protocolintance->len = len + 1; // 奇怪的报文格式~~~
 	//*buf_ptr = LNprotocol_GetChecksum(&ln_protocolintance->head , len + 6);
 	checksum = LNprotocol_GetChecksum116bits(&ln_protocolintance->head , len + 6);
-	memcpy(buf_ptr , (uint8_t *)&checksum , 2);
+	
+	buf_temp[0] = checksum >> 8;
+	buf_temp[1] = (uint8_t )checksum ;	
+	
+	memcpy(buf_ptr , (uint8_t *)&buf_temp , 2);
 	buf_ptr += 2;
 	*(buf_ptr ) = LNPROTOCOL_FOOT;
 	buf_ptr ++;

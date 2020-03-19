@@ -514,9 +514,8 @@ void BSP_E32_CoreLoop(void)
 		case E32_CMD_SEND : 
 			{
 				DEBUG("E32_CMD_SEND\r\n");
-				BSP_E32_SetMode(E32_MODE_NORMAL);
 				BSP_LED_Blink( BSP_LED_TEST , 2 , 50, 100);
-				BSP_E32_AddCmd( E32_CMD_REALSEND , 20);
+				BSP_E32_AddCmd( E32_CMD_REALSEND , 20);					
 			}	
 			break;
 		case E32_CMD_REALSEND:
@@ -717,7 +716,7 @@ void BSP_E32_Open(void)
 	bsp_e32_halinit();
 	BSP_E32_Power_ON();
 	BSP_Uart0_Open();
-	
+	BSP_E32_SetMode(E32_MODE_NORMAL);
 	NetTask_Send_Event(NET_TASK_CORE_LOOP_EVENT);
 }
 
