@@ -64,7 +64,7 @@
  * @defgroup      app_transfer_Exported_Functions 
  * @{  
  */
-void APP_Transfer_CoreLoop(void);
+void APP_Transfer_CoreLoop(void);   
 /**
  * @}
  */

@@ -70,14 +70,10 @@ typedef enum
  * @{  
  */
 
-
-void APP_RevMess_Analysis(uint8_t *buf , uint16_t len);
+void APP_RevMess_Analysis(uint8_t *buf , uint16_t len);    
 void APP_RevMessage_Process(uint8_t * buf , uint16_t len);
-
 void APP_RevClearAckFlag(void);
 uint8_t APP_RevGetAckFlag(void);
-
-
 
 /**
  * @}

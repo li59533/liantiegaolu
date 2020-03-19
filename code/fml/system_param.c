@@ -19,6 +19,8 @@
  */
 #include "clog.h"
 #include "crc.h"
+
+#include "bsp_conf.h"
 /**
  * @addtogroup    system_param_Modules 
  * @{  
@@ -71,9 +73,8 @@
  */
 const SystemParam_Config_t SystemParam_Config_Default = 
 {
-	.SNcode ={ 0x12 , 0x34 ,0x56 , 0x78 , 0x90, 0xA0, 0xAB ,0x4F} ,
-	.E32_conf.module_source_addr = 0x000F , 
-	.E32_conf.module_destination_addr = 0x000B , 
+	.E32_conf.module_source_addr = 0x0002 , 
+	.E32_conf.module_destination_addr = 0x0001 , 
 	.E32_conf.module_datacheck = 0 ,//0:8N1; 1:8o1;  2:8E1;  3:8N1;
 	.E32_conf.module_baudrate = 7 , //0:1200; 1:2400;  2:4800;  3:9600; 4:19200;  5:38400;  6:57600; 7:115200;
 	.E32_conf.module_airspeed = 4 ,//0:0.3K 1:1.2K 2:2.4k 3:4.8K 4:9.6K 5:19.2K
@@ -113,7 +114,8 @@ SystemParam_Config_t g_SystemParam_Config;
  * @brief         
  * @{  
  */
-
+// 12B -> 8B
+static void sys_makeUIDtoSNcode(void);
 /**
  * @}
  */
@@ -131,14 +133,56 @@ void SystemParam_Init(void)
 	BSP_Flash_ReadBytes(SYS_PARAM_SAVE_FLASH_FIRSTHEAD, (uint8_t *)&g_SystemParam_Config , sizeof(g_SystemParam_Config) );
 	if(CRC16_Modbus((uint8_t *)&g_SystemParam_Config,sizeof(g_SystemParam_Config)) == 0) // Same Save
 	{
-		DEBUG("SYS Param Read OK\r\n");
+		DEBUG("SYS First Read OK\r\n");
 	}
 	else
 	{
-		SystemParam_Reset();
+		BSP_Flash_ReadBytes(SYS_PARAM_SAVE_FLASH_SECONDHEAD, (uint8_t *)&g_SystemParam_Config , sizeof(g_SystemParam_Config) );
+		if(CRC16_Modbus((uint8_t *)&g_SystemParam_Config,sizeof(g_SystemParam_Config)) == 0)
+		{
+			
+			DEBUG("SYS Second Read OK\r\n");
+		}
+		else
+		{
+			SystemParam_Reset();
+		}
 	}
 
 }
+// 12B -> 8B
+static void sys_makeUIDtoSNcode(void)
+{
+	sim_uid_t sim_uid ; 
+	uint8_t uid[12] = { 0 };
+	uint8_t crc_temp[2] = { 0 };
+	uint8_t sn_temp[8] = { 0 }; 
+	uint16_t temp = 0;
+	SIM_GetUniqueId(&sim_uid);
+	memcpy(uid,(uint8_t *)&sim_uid , 12);
+	
+	crc_temp[0] = uid[0];
+	crc_temp[1] = uid[11];
+	temp = CRC16_Modbus(crc_temp,2);
+	memcpy(&sn_temp[0] , (uint8_t *)&temp , 2);
+	
+	crc_temp[0] = uid[1];
+	crc_temp[1] = uid[10];
+	temp = CRC16_Modbus(crc_temp,2);
+	memcpy(&sn_temp[2] , (uint8_t *)&temp , 2);	
+	
+	crc_temp[0] = uid[2];
+	crc_temp[1] = uid[9];
+	temp = CRC16_Modbus(crc_temp,2);
+	memcpy(&sn_temp[4] , (uint8_t *)&temp , 2);	
+		
+	temp = CRC16_Modbus(&uid[3],6);
+	memcpy(&sn_temp[6] , (uint8_t *)&temp , 2);	
+			
+	memcpy(g_SystemParam_Config.SNcode ,sn_temp , 8);
+	
+}
+
 
 int16_t SystemParam_Read(uint8_t handle)
 {
@@ -166,6 +210,7 @@ void SystemParam_Save(void)
 void SystemParam_Reset(void)
 {
 	g_SystemParam_Config = SystemParam_Config_Default;
+	sys_makeUIDtoSNcode();
 	SystemParam_Save();
 	DEBUG("SystemParam_Reset Load DefaultConf\r\n");
 

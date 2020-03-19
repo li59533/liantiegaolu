@@ -140,8 +140,6 @@ void SysTick_Handler(void)
 	OS_Timer_Update(1);
 	OS_Clock_Update(1);
 	BSP_SYSTICK_IncTick();
-	//DEBUG("SysTick_Handler\r\n");
-	//BSP_LED_Toggle(BSP_LED_TEST);
 }
 
 /**

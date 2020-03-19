@@ -71,6 +71,11 @@ typedef struct
 	uint32_t time_cur;
 }app_ACKFlag_t;
 
+typedef struct
+{
+	uint8_t buf[300];
+	uint8_t len;
+}rev_data_t;
 
 
 
@@ -84,6 +89,10 @@ typedef struct
  * @{  
  */
 static app_ACKFlag_t app_ACKFlag;
+static rev_data_t temp_buf = { 0 };
+static rev_data_t full_buf = { 0 };
+
+
 /**
  * @}
  */
@@ -116,22 +125,11 @@ static void app_revsetAckFlag(void);
  * @{  
  */
 
-typedef struct
-{
-	uint8_t buf[300];
-	uint8_t len;
-}rev_data_t;
-
-//rev_data_t break_buf = { 0 };
-static rev_data_t temp_buf = { 0 };
-static rev_data_t full_buf = { 0 };
-
 void APP_RevMess_Analysis(uint8_t *buf , uint16_t len)
 {
 	bsp_e32_rev( buf ,  len);
 }
 	
-
 static int8_t bsp_e32_rev(uint8_t * buf , uint16_t len)
 {
 	uint16_t i = 0; 
@@ -318,9 +316,6 @@ void APP_RevMessage_Process(uint8_t * buf , uint16_t len)
 	}
 }
 
-
-
-
 void APP_RevClearAckFlag(void)
 {
 	app_ACKFlag.ACK_status = APP_RevACK_Wait;
@@ -359,12 +354,6 @@ static void app_revACK(uint8_t * payload , uint16_t len)
 	datetime.second = payload[6];
 	
 	BSP_RTC_SetDate(&datetime);
-
-	if(1 )
-	{
-		
-	}
-	
 }
 	
 

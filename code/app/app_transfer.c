@@ -74,7 +74,25 @@
  * @{  
  */
 
+typedef enum
+{
+	AppTransfer_CheckTime = 1,
+	AppTransfer_SendReq ,
+	AppTransfer_SendResp ,
+	AppTransfer_SerNextTime ,
+	AppTransfer_LowPower,
+	
+}app_transfer_cmd_e;
 
+
+typedef struct
+{
+	uint8_t cmd[3];
+	uint8_t in ; 
+	uint8_t out ;
+	uint8_t count;
+	uint8_t size ;
+}app_transfer_cmd_queue_t;
 
 /**
  * @}
@@ -86,6 +104,13 @@
  * @{  
  */
 
+app_transfer_cmd_queue_t app_transfer_cmd_queue = 
+{
+	.in = 0,
+	.out = 0,
+	.count = 0,
+	.size = sizeof(app_transfer_cmd_queue.cmd) / sizeof(app_transfer_cmd_queue.cmd[0]),
+};
 /**
  * @}
  */
@@ -124,23 +149,6 @@ static void app_transfer_senddata_resp(void);
  * @{  
  */
 
-typedef struct
-{
-	uint8_t cmd[3];
-	uint8_t in ; 
-	uint8_t out ;
-	uint8_t count;
-	uint8_t size ;
-}app_transfer_cmd_queue_t;
-
-app_transfer_cmd_queue_t app_transfer_cmd_queue = 
-{
-	.in = 0,
-	.out = 0,
-	.count = 0,
-	.size = sizeof(app_transfer_cmd_queue.cmd) / sizeof(app_transfer_cmd_queue.cmd[0]),
-};
-
 static void app_transfer_enqueue_cmd(uint8_t cmd)
 {
 	app_transfer_cmd_queue.cmd[app_transfer_cmd_queue.in] = cmd;
@@ -165,17 +173,6 @@ static uint8_t app_transfer_getcmdcount(void)
 {
 	return app_transfer_cmd_queue.count;
 }
-
-typedef enum
-{
-	AppTransfer_CheckTime = 1,
-	AppTransfer_SendReq ,
-	AppTransfer_SendResp ,
-	AppTransfer_SerNextTime ,
-	AppTransfer_LowPower,
-	
-}app_transfer_cmd_e;
-	
 
 
 void APP_Transfer_CoreLoop(void)
@@ -213,9 +210,6 @@ void APP_Transfer_CoreLoop(void)
 					app_transfer_enqueue_cmd(AppTransfer_SerNextTime);
 					AppTask_Timer_Start_Event(APP_TASK_TRANSFER_CORELOOP_EVENT , 1000);
 				}
-				
-				
-				
 			}
 		}
 		break;

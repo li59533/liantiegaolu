@@ -115,7 +115,7 @@ App_Data_t App_Data =
  * @brief         
  * @{  
  */
-void APP_GetData_Init(void)
+void APP_GetData_Init(void)   
 {
 	BSP_Power_V30_ON();
 	BSP_ADC_Init();

@@ -151,9 +151,6 @@ void BSP_UART_SetBaudRate(uint8_t BSP_UARTX , uint32_t buadrate)
 
 			// --------open irq-------
 			LPSCI_EnableInterrupts( UART0, kLPSCI_RxDataRegFullInterruptEnable);
-
-			//LPSCI_EnableInterrupts( UART0, kLPSCI_TransmissionCompleteInterruptEnable);
-
 			EnableIRQ(UART0_IRQn);
 		}
 		break;
@@ -571,17 +568,9 @@ void DMA0_IRQHandler(void)
 void BSP_Uart_Test_Send(void)
 {
 	DEBUG("BSP_Uart_Test_Send\r\n");
-//	uint32_t flag = 0;
-//	flag = UART_GetStatusFlags(UART2);
-	
-	//while((flag & kUART_TxDataRegEmptyFlag ) == 0);
-	//UART_WriteByte(UART2, 0xf7);
-//	uint8_t test_bud[] = {0x00,0x12,0x32,0xff,0x00,0x11,0xcd,0x45};
-//	BSP_UART_WriteBytes_Blocking(BSP_UART2 , test_bud, sizeof(test_bud));	
-	
+
 	uint8_t test_bud[] = {0x00,0x12,0x32,0xff,0x00,0x11,0xcd,0x45};
-	//BSP_UART_WriteBytes_DMA(0,test_bud , sizeof(test_bud));
-	
+
 	BSP_UART_WriteBytes_DMA(BSP_UART0 , test_bud, sizeof(test_bud));
 	
 }

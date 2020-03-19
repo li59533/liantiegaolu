@@ -43,7 +43,7 @@
 #define BSP_USART_MODULE_ENABLE			1
 #define BSP_FLASH_MODULE_ENABLE			1
 #define BSP_LPV_MODULE_ENABLE			1
-
+#define BSP_UID_MODULE_ENABLE 			1
 
 #define BSP_CAN_MODULE_ENABLE 			0
 #define BSP_DAC_MODULE_ENABLE			0
@@ -59,10 +59,6 @@
 #if USING_MKL16_LIB == 1
 	#include "fsl_common.h"
 	#include "fsl_port.h"
-#endif
-
-#if BSP_ADC_MODULE_ENABLE == 1
-	#include "fsl_smc.h"
 #endif
 
 #if BSP_SMC_MODULE_ENABLE == 1
@@ -106,6 +102,10 @@
 #if BSP_LPV_MODULE_ENABLE == 1	
 	#include "fsl_smc.h"
 	#include "fsl_pmc.h"
+#endif	
+
+#if BSP_UID_MODULE_ENABLE == 1	
+	#include "fsl_sim.h"
 #endif	
 
 

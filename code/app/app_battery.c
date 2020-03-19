@@ -103,7 +103,7 @@ static uint32_t  powertime = 0;
  */
  
 
-void APP_Battery_Reduce(void)
+void APP_Battery_Reduce(void)  // 不理解这个函数
 {
 
 	g_SystemParam_Config.current_boardtime++;

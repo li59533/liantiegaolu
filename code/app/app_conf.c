@@ -78,10 +78,7 @@ typedef struct
 	uint8_t len;
 }rev_data_t;
 
-//rev_data_t break_buf = { 0 };
-static rev_data_t temp_buf = { 0 };
-static rev_data_t full_buf = { 0 };
-static uint8_t app_conf_confstatus = 0;
+
 /**
  * @}
  */
@@ -91,7 +88,9 @@ static uint8_t app_conf_confstatus = 0;
  * @brief         
  * @{  
  */
-
+static rev_data_t temp_buf = { 0 };
+static rev_data_t full_buf = { 0 };
+static uint8_t app_conf_confstatus = 0;
 static uint8_t app_confrev_space[APP_CONFREV_SPACE] = { 0 };
 /**
  * @}
@@ -168,9 +167,13 @@ void APP_Conf_Set_ADCCalibration(uint8_t * payload , uint16_t len)
 	{
 		flag_4 = 0;
 		flag_20 = 0;
-		g_SystemParam_Config.Analog_conf.adc_k = (-16) / (X1 - X2);
-		g_SystemParam_Config.Analog_conf.adc_b = 4 + 16 * X1 / (X1 - X2);
-		SystemParam_Save();
+		if(X1 != X2)
+		{
+			g_SystemParam_Config.Analog_conf.adc_k = (-16) / (X1 - X2);
+			g_SystemParam_Config.Analog_conf.adc_b = 4 + 16 * X1 / (X1 - X2);
+			SystemParam_Save();			
+		}
+
 	}
 }
 
