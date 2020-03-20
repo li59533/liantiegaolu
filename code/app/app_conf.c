@@ -31,6 +31,8 @@
 
 #include "app_getdata.h"
 
+#include "app_battery.h"
+
 /**
  * @addtogroup    app_conf_Modules 
  * @{  
@@ -264,6 +266,8 @@ void APP_Conf_Set_EQ(uint8_t * full_message , uint16_t full_len)
 	// --------Send---------
 	APP_Conf_SendData( full_message ,full_len);
 	// ----------------------
+	g_SystemParam_Config.current_boardtime = full_message[7];
+	APP_Battery_Reduce();		
 }
 
 void APP_Conf_Set_SelfStart(uint8_t * full_message , uint16_t full_len)
