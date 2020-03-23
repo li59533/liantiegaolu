@@ -126,7 +126,7 @@ typedef enum
 	CMD_Conf_Set_SNcode = 0x88,
 	// ------
 	
-
+	CMD_Conf_GetVersion = 0xA0
 	
 	// ------
 }LN_Protocol_Cmd_e;

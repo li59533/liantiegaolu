@@ -243,6 +243,7 @@ void APP_Transfer_CoreLoop(void)
 		case AppTransfer_LowPower:
 		{
 			DEBUG("AppTransfer_LowPower\r\n");
+			APP_Battery_Reduce();	
 			app_transfer_lowpower();
 			app_transfer_enqueue_cmd(AppTransfer_CheckTime);
 			AppTask_Send_Event(APP_TASK_TRANSFER_CORELOOP_EVENT);
@@ -394,7 +395,7 @@ static void app_transfer_senddata_req(void)
 					&ln_protocolintance->head ,\
 					buf_ptr - &ln_protocolintance->head);
 					
-	APP_Battery_Reduce();				
+				
 }
 
 

@@ -245,6 +245,7 @@ void APP_RevMessage_Process(uint8_t * buf , uint16_t len)
 		break;
 		case CMD_Conf_Stop:
 		{
+			APP_Conf_SetConfStatus();
 			APP_Conf_Stop(buf , len);
 		}
 		break;
@@ -305,6 +306,11 @@ void APP_RevMessage_Process(uint8_t * buf , uint16_t len)
 		{
 			APP_Conf_SetConfStatus();
 			APP_Conf_SetADCToRealValue((uint8_t *)&ln_protocolintance->payload, ln_protocolintance->len);
+		}
+		break;
+		case CMD_Conf_GetVersion:
+		{
+			APP_Conf_GetVersion((uint8_t *)&ln_protocolintance->payload, ln_protocolintance->len);
 		}
 		break;
 		default:

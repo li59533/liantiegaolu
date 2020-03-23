@@ -77,7 +77,7 @@ const SystemParam_Config_t SystemParam_Config_Default =
 	.E32_conf.module_destination_addr = 0x0001 , 
 	.E32_conf.module_datacheck = 0 ,//0:8N1; 1:8o1;  2:8E1;  3:8N1;
 	.E32_conf.module_baudrate = 7 , //0:1200; 1:2400;  2:4800;  3:9600; 4:19200;  5:38400;  6:57600; 7:115200;
-	.E32_conf.module_airspeed = 4 ,//0:0.3K 1:1.2K 2:2.4k 3:4.8K 4:9.6K 5:19.2K
+	.E32_conf.module_airspeed = 2 ,//0:0.3K 1:1.2K 2:2.4k 3:4.8K 4:9.6K 5:19.2K
 	.E32_conf.module_channel = 0x0F , //00H-1FH,频率 410~441MHz ；410MHz+CHAN * 1MHz
 	.E32_conf.module_transmission_mode = 1 ,//0:透明传输 1：定点传输
 	.E32_conf.module_IO_workstyle = 0 , //0:推挽输出 1：开路输出
@@ -90,7 +90,7 @@ const SystemParam_Config_t SystemParam_Config_Default =
 	.Analog_conf.real_k = 1.0,
 	.Analog_conf.real_b = 0.0,
 	
-	.firsttimestamp = 0x5E0D5E85,
+	.firsttimestamp = 0x386D4380,
 	.send_invteral = 10,
 	.workmode = LowPower_WorkingMode,
 	.battery = 100,
@@ -204,6 +204,7 @@ void SystemParam_Save(void)
 {
 	g_SystemParam_Config.crc = CRC16_Modbus((uint8_t*)&g_SystemParam_Config, sizeof(g_SystemParam_Config) - sizeof(g_SystemParam_Config.crc));
 	BSP_Flash_WriteBytes(SYS_PARAM_SAVE_FLASH_FIRSTHEAD,(uint8_t *)&g_SystemParam_Config,sizeof(g_SystemParam_Config));
+	BSP_Flash_WriteBytes(SYS_PARAM_SAVE_FLASH_SECONDHEAD,(uint8_t *)&g_SystemParam_Config,sizeof(g_SystemParam_Config));
 	DEBUG("Sys save\r\n");
 }
 

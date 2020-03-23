@@ -32,7 +32,7 @@
 #include "app_getdata.h"
 
 #include "app_battery.h"
-
+#include "version.h"
 /**
  * @addtogroup    app_conf_Modules 
  * @{  
@@ -125,6 +125,43 @@ static int8_t bsp_conf_rev(uint8_t * buf , uint16_t len);
  * @{  
  */
 
+
+void APP_Conf_GetVersion(uint8_t * payload , uint16_t len)
+{
+	ln_protocolintance_t * ln_protocolintance = 0;
+	uint8_t sendbuf[100] = { 0 };
+
+	uint16_t send_len = 0; 
+
+	ln_protocolintance = (ln_protocolintance_t *) sendbuf;
+	ln_protocolintance->head = LNPROTOCOL_HEAD;
+	ln_protocolintance->cmd = CMD_Conf_GetVersion;
+	
+	uint8_t * buf_ptr = (uint8_t *)&ln_protocolintance->payload;
+
+	// --------Version ---
+
+	uint32_t version = 0;
+	version = Version_Get_Bin();
+	buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)&version, 4);
+	send_len += 4;
+
+	// ---------------------------------------
+	ln_protocolintance->len = send_len;
+	*buf_ptr = LNprotocol_GetChecksum(&ln_protocolintance->head , send_len + 6);
+	buf_ptr ++;
+	*(buf_ptr ) = LNPROTOCOL_FOOT;
+	buf_ptr ++;
+
+
+	// --------Send---------
+	
+	APP_Conf_SendData( &ln_protocolintance->head , buf_ptr - &ln_protocolintance->head);
+	// ----------------------
+	
+	
+	
+}
 
 void APP_Conf_SetADCToRealValue(uint8_t * payload , uint16_t len)
 {
@@ -267,6 +304,7 @@ void APP_Conf_Set_EQ(uint8_t * full_message , uint16_t full_len)
 	APP_Conf_SendData( full_message ,full_len);
 	// ----------------------
 	g_SystemParam_Config.current_boardtime = full_message[7];
+	g_SystemParam_Config.battery = 100;
 	APP_Battery_Reduce();		
 }
 

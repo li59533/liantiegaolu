@@ -39,7 +39,7 @@
  * @brief         
  * @{  
  */
-
+#define APP_BATTERY_ALL_TIMES   80000
 /**
  * @}
  */
@@ -71,7 +71,7 @@
  * @brief         
  * @{  
  */
-static uint32_t  powertime = 0; 
+
 /**
  * @}
  */
@@ -101,25 +101,34 @@ static uint32_t  powertime = 0;
  * @brief         
  * @{  
  */
- 
 
-void APP_Battery_Reduce(void)  // 不理解这个函数
+
+void APP_Battery_Reduce(void)  
 {
-
-	g_SystemParam_Config.current_boardtime++;
-	powertime=500000*60/g_SystemParam_Config.send_invteral;
 	
-	if(g_SystemParam_Config.current_boardtime>(powertime-1))  
+	g_SystemParam_Config.current_boardtime++;
+	DEBUG("APP_Battery_Reduce Count :%d\r\n Battery:%d\r\n" , g_SystemParam_Config.current_boardtime,\
+															g_SystemParam_Config.battery);
+
+	
+	if(g_SystemParam_Config.current_boardtime < APP_BATTERY_ALL_TIMES)
 	{
-		g_SystemParam_Config.current_boardtime=powertime;
+		if((g_SystemParam_Config.current_boardtime % (APP_BATTERY_ALL_TIMES / 100)) == 0)
+		{
+			if(g_SystemParam_Config.battery >= 1)
+			{
+				DEBUG("APP_Battery_Reduce Save\r\n");
+				g_SystemParam_Config.battery -- ;
+				SystemParam_Save();
+			}
+		}			
+	}
+	else
+	{
+		g_SystemParam_Config.current_boardtime = APP_BATTERY_ALL_TIMES;
 	}
 	
-	g_SystemParam_Config.battery = g_SystemParam_Config.send_invteral * (powertime-g_SystemParam_Config.current_boardtime) / 300000;
-	
-	if((g_SystemParam_Config.current_boardtime % (powertime / 250)) == 1)
-	{
-		SystemParam_Save();
-	}	 
+ 
 }
 
 

@@ -64,6 +64,7 @@
  * @defgroup      app_conf_Exported_Functions 
  * @{  
  */
+void APP_Conf_GetVersion(uint8_t * payload , uint16_t len); 
 void APP_Conf_SetADCToRealValue(uint8_t * payload , uint16_t len); 
 void APP_Conf_Set_ADCCalibration(uint8_t * payload , uint16_t len); 
 void APP_Conf_RevByteOneByte(uint8_t value);
