@@ -125,7 +125,7 @@ void APP_Battery_Reduce(void)
 	}
 	else
 	{
-		g_SystemParam_Config.current_boardtime = APP_BATTERY_ALL_TIMES;
+		g_SystemParam_Config.current_boardtime = 0;
 	}
 	
  
