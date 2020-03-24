@@ -153,8 +153,7 @@ void BSP_Power_EnterVLPS(void)
 	
 	APP_GetData_DeInit();
 	BSP_E32_Close();
-	BSP_SysTick_DisableIRQ();
-	
+	BSP_SysTick_DeInit();
 	BSP_Power_V30_OFF();
 	
 	BOARD_RUNClockToVLPS();
@@ -163,6 +162,7 @@ void BSP_Power_EnterVLPS(void)
 	BSP_SysTick_Init();
 	BSP_E32_Open();
 	APP_GetData_Init();
+	
 }
 
 

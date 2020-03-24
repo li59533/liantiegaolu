@@ -236,8 +236,6 @@ void BSP_ADC_EnableIRQ(void)
 	EnableIRQ(ADC0_IRQn);
 }
 
-
-
 uint32_t BSP_ADC_GetValue(uint8_t channel)
 {
 	return ADC16_GetChannelConversionValue( ADC0 , 0);

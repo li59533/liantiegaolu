@@ -339,7 +339,7 @@ uint8_t APP_RevGetAckFlag(void)
 {
 	app_ACKFlag.time_cur = OS_Clock_GetSeconds();	
 	
-	if((app_ACKFlag.time_cur - app_ACKFlag.time_wait) >= 1 && app_ACKFlag.ACK_status != APP_RevACK_Get) // timeout  : 1S
+	if((app_ACKFlag.time_cur - app_ACKFlag.time_wait) >= 2 && app_ACKFlag.ACK_status != APP_RevACK_Get) // timeout  : 2S
 	{
 		app_ACKFlag.ACK_status = APP_RevACK_Timeout;
 	}

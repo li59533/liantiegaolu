@@ -514,7 +514,7 @@ void BSP_E32_CoreLoop(void)
 		case E32_CMD_SEND : 
 			{
 				DEBUG("E32_CMD_SEND\r\n");
-				BSP_LED_Blink( BSP_LED_TEST , 2 , 50, 100);
+				BSP_LED_Blink( BSP_LED_TEST , 2 , 10, 80);
 				BSP_E32_AddCmd( E32_CMD_REALSEND , 20);					
 			}	
 			break;
@@ -592,10 +592,8 @@ void BSP_E32_Rev(void)
 	}
 	else if(BSP_E32_GetMode() == E32_MODE_NORMAL)
 	{
-		
-		
 		APP_RevMess_Analysis(e32_revbuf , e32_revlen );
-		BSP_LED_Blink( BSP_LED_TEST , 3 , 10, 150);
+		BSP_LED_Blink( BSP_LED_TEST , 2 , 10, 80);
 	}
 }
 

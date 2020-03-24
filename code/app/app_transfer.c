@@ -78,6 +78,7 @@ typedef enum
 {
 	AppTransfer_CheckTime = 1,
 	AppTransfer_SendReq ,
+	App_Transfer_ReSendReq,
 	AppTransfer_SendResp ,
 	AppTransfer_SerNextTime ,
 	AppTransfer_LowPower,
@@ -93,6 +94,12 @@ typedef struct
 	uint8_t count;
 	uint8_t size ;
 }app_transfer_cmd_queue_t;
+
+typedef struct
+{
+	uint8_t buf[100];
+	uint8_t len;
+}app_transfer_resend_t;
 
 /**
  * @}
@@ -111,6 +118,10 @@ app_transfer_cmd_queue_t app_transfer_cmd_queue =
 	.count = 0,
 	.size = sizeof(app_transfer_cmd_queue.cmd) / sizeof(app_transfer_cmd_queue.cmd[0]),
 };
+
+
+static app_transfer_resend_t app_transfer_resend;
+
 /**
  * @}
  */
@@ -138,7 +149,7 @@ static void app_transfer_senddata_req(void);
 static int8_t app_transfer_checktime(void);
 static void app_transfer_lowpower(void);
 static void app_transfer_senddata_resp(void);
-
+static void app_transfer_re_senddata_req(void);
 /**
  * @}
  */
@@ -203,7 +214,8 @@ void APP_Transfer_CoreLoop(void)
 				if(app_transfer_checktime() == 1)
 				{
 					app_transfer_enqueue_cmd(AppTransfer_SendReq);
-					AppTask_Send_Event(APP_TASK_TRANSFER_CORELOOP_EVENT);
+					AppTask_Timer_Start_Event(APP_TASK_TRANSFER_CORELOOP_EVENT , 500);
+					//AppTask_Send_Event(APP_TASK_TRANSFER_CORELOOP_EVENT);
 				}
 				else
 				{
@@ -216,8 +228,11 @@ void APP_Transfer_CoreLoop(void)
 		case AppTransfer_SendReq:
 		{
 			DEBUG("AppTransfer_SendReq\r\n");
+			
+			
 			if(BSP_E32_GetMode() == E32_MODE_NORMAL)
 			{
+				
 				app_transfer_senddata_req();
 				app_transfer_enqueue_cmd(AppTransfer_SendResp);
 				AppTask_Timer_Start_Event(APP_TASK_TRANSFER_CORELOOP_EVENT , 1000);
@@ -225,6 +240,18 @@ void APP_Transfer_CoreLoop(void)
 			}
 
 		} 
+		break;
+		case App_Transfer_ReSendReq:
+		{
+			DEBUG("App_Transfer_ReSendReq\r\n");
+			if(BSP_E32_GetMode() == E32_MODE_NORMAL)
+			{
+				app_transfer_re_senddata_req();
+				app_transfer_enqueue_cmd(AppTransfer_SendResp);
+				AppTask_Timer_Start_Event(APP_TASK_TRANSFER_CORELOOP_EVENT , 1000);
+				APP_RevClearAckFlag();				
+			}			
+		}
 		break;
 		case AppTransfer_SendResp:
 		{
@@ -394,10 +421,19 @@ static void app_transfer_senddata_req(void)
 					g_SystemParam_Config.E32_conf.module_channel, \
 					&ln_protocolintance->head ,\
 					buf_ptr - &ln_protocolintance->head);
-					
-				
+	app_transfer_resend.len = buf_ptr - &ln_protocolintance->head;		
+	memcpy(app_transfer_resend.buf ,&ln_protocolintance->head, app_transfer_resend.len);
+	
 }
 
+
+static void app_transfer_re_senddata_req(void)
+{
+	BSP_E32_SendData(g_SystemParam_Config.E32_conf.module_destination_addr ,\
+					g_SystemParam_Config.E32_conf.module_channel, \
+					app_transfer_resend.buf ,\
+					app_transfer_resend.len);	
+}
 
 static void app_transfer_senddata_resp(void)
 {
@@ -425,7 +461,7 @@ static void app_transfer_senddata_resp(void)
 			DEBUG("APP_RevACK_Timeout :%d\r\n" , timeout_count);
 			if(timeout_count <= APP_TRANSFER_RESEND_TIMES)
 			{
-				app_transfer_enqueue_cmd(AppTransfer_SendReq);
+				app_transfer_enqueue_cmd(App_Transfer_ReSendReq);
 				AppTask_Send_Event(APP_TASK_TRANSFER_CORELOOP_EVENT);
 			}
 			else

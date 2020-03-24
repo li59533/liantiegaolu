@@ -33,6 +33,7 @@
 
 #include "app_battery.h"
 #include "version.h"
+#include "bsp_led.h"
 /**
  * @addtogroup    app_conf_Modules 
  * @{  
@@ -175,6 +176,36 @@ void APP_Conf_SetADCToRealValue(uint8_t * payload , uint16_t len)
 		g_SystemParam_Config.Analog_conf.real_k = (Y2 - Y1) / 16;
 		g_SystemParam_Config.Analog_conf.real_b = Y1 - (Y2 - Y1)/4;
 		SystemParam_Save();
+		
+		ln_protocolintance_t * ln_protocolintance = 0;
+		uint8_t sendbuf[100] = { 0 };
+		uint8_t buf_temp[10] = { 0 };
+		uint16_t send_len = 0; 
+
+		ln_protocolintance = (ln_protocolintance_t *) sendbuf;
+		ln_protocolintance->head = LNPROTOCOL_HEAD;
+		ln_protocolintance->cmd = CMD_Conf_ADCToRealValue;
+		
+		uint8_t * buf_ptr = (uint8_t *)&ln_protocolintance->payload;
+
+		// --------defaultvalue ---
+		buf_temp[0] = 0x01;
+		buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)buf_temp, 1);
+		send_len += 1;
+
+		// ---------------------------------------
+		ln_protocolintance->len = send_len;
+		*buf_ptr = LNprotocol_GetChecksum(&ln_protocolintance->head , send_len + 6);
+		buf_ptr ++;
+		*(buf_ptr ) = LNPROTOCOL_FOOT;
+		buf_ptr ++;
+
+		// --------Send---------
+		APP_Conf_SendData( &ln_protocolintance->head , buf_ptr - &ln_protocolintance->head);
+		// ----------------------			
+		
+		
+		
 	}
 
 }
@@ -210,7 +241,36 @@ void APP_Conf_Set_ADCCalibration(uint8_t * payload , uint16_t len)
 		{
 			g_SystemParam_Config.Analog_conf.adc_k = (-16) / (X1 - X2);
 			g_SystemParam_Config.Analog_conf.adc_b = 4 + 16 * X1 / (X1 - X2);
-			SystemParam_Save();			
+			SystemParam_Save();	
+			
+			
+			ln_protocolintance_t * ln_protocolintance = 0;
+			uint8_t sendbuf[100] = { 0 };
+			uint8_t buf_temp[10] = { 0 };
+			uint16_t send_len = 0; 
+
+			ln_protocolintance = (ln_protocolintance_t *) sendbuf;
+			ln_protocolintance->head = LNPROTOCOL_HEAD;
+			ln_protocolintance->cmd = CMD_Conf_Calibration;
+			
+			uint8_t * buf_ptr = (uint8_t *)&ln_protocolintance->payload;
+
+			// --------defaultvalue ---
+			buf_temp[0] = 0x01;
+			buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)buf_temp, 1);
+			send_len += 1;
+
+			// ---------------------------------------
+			ln_protocolintance->len = send_len;
+			*buf_ptr = LNprotocol_GetChecksum(&ln_protocolintance->head , send_len + 6);
+			buf_ptr ++;
+			*(buf_ptr ) = LNPROTOCOL_FOOT;
+			buf_ptr ++;
+
+			// --------Send---------
+			APP_Conf_SendData( &ln_protocolintance->head , buf_ptr - &ln_protocolintance->head);
+			// ----------------------	
+		
 		}
 
 	}
@@ -630,11 +690,13 @@ void APP_Conf_SendData( uint8_t *buf , uint16_t len)
 
 void APP_Conf_SetConfStatus(void)
 {
+	BSP_LED_Blink( BSP_LED_TEST , 0 , 50, 1000);
 	app_conf_confstatus = 1;
 }
 
 void APP_Conf_ClearConfStatus(void)
 {
+	BSP_LED_Blink( BSP_LED_TEST , 3 , 10, 150);
 	app_conf_confstatus = 0;
 }
 

@@ -114,7 +114,7 @@ void UserTask_Init(uint8_t taskId)
 	OS_Timer_Start(g_UserTask_Id, USER_TASK_LOOP2_EVENT,1000);	
 	BSP_LED_Blink( BSP_LED_TEST , 0 , 10, 1000);
 	
-
+	BSP_Power_V30_ON();
 	APP_GetData_Init();
 	UserTask_Send_Event(USER_TASK_GETDATA_EVENT);
 }
@@ -139,7 +139,7 @@ osal_event_t UserTask_Process(uint8_t taskid,osal_event_t events)
     if (events & USER_TASK_GETDATA_EVENT)
     {
 		APP_GetData_Calc();
-		OS_Timer_Start(g_UserTask_Id, USER_TASK_GETDATA_EVENT,1000);	
+		OS_Timer_Start(g_UserTask_Id, USER_TASK_GETDATA_EVENT,100);	
         return events ^ USER_TASK_GETDATA_EVENT;
     }	
 

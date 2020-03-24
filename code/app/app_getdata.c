@@ -117,7 +117,7 @@ App_Data_t App_Data =
  */
 void APP_GetData_Init(void)   
 {
-	BSP_Power_V30_ON();
+	
 	BSP_ADC_Init();
 	BSP_Clock_Init(BSP_CLOCK1);
 }
@@ -157,9 +157,9 @@ void APP_GetData_Calc(void)
 		App_Data.device_status = MA4_20_NORMAL;
 	}
 
-	char cbuf[30] = {0};
-	sprintf(cbuf,"APP_GetData_Calc:%f mA" , App_Data.real_mA);
-	DEBUG("%s\r\n",cbuf);
+//	char cbuf[30] = {0};
+//	sprintf(cbuf,"APP_GetData_Calc:%f mA" , App_Data.real_mA);
+//	DEBUG("%s\r\n",cbuf);
 }
 
 
