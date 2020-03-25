@@ -23,6 +23,7 @@
 #include "bsp_led.h"
 #include "bsp_e32.h"
 #include "app_transfer.h"
+#include "bsp_power.h"
 /**
  * @addtogroup    app_task_Modules 
  * @{  
@@ -107,7 +108,7 @@ void AppTask_Init(uint8_t taskId)
 {
     g_AppTask_Id = taskId;
 	BSP_LED_Blink( BSP_LED_TEST , 0 , 10, 1000);
-	
+	BSP_Power_EnterVLPS_WithCall(APP_LowPower_BeforeFunc , APP_LowPower_AfterFunc) ; 
 	
 	//AppTask_Send_Event(APP_TASK_TRANSFER_CORELOOP_EVENT);
 	OS_Timer_Start(g_AppTask_Id, APP_TASK_TRANSFER_CORELOOP_EVENT,1000);		

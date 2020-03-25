@@ -94,7 +94,8 @@
  * @brief         
  * @{  
  */
-
+static void (* bsp_beforefunc)(void);
+static void (* bsp_afterfunc)(void);
 /**
  * @}
  */
@@ -158,21 +159,43 @@ void BSP_Power_EnterVLPS(void)
 	
 	BOARD_RUNClockToVLPS();
 	
-	BSP_Power_V30_ON();
+	
 	BSP_SysTick_Init();
+	BSP_Power_V30_ON();
 	BSP_E32_Open();
 	APP_GetData_Init();
 	
 }
 
+void BSP_Power_EnterVLPS_WithCall(void (* beforefunc)(void) , void (* afterfunc)(void))  
+{
+	beforefunc();
+	BSP_SysTick_DisableIRQ();
+	BOARD_RUNClockToVLPS();
+	BSP_SysTick_Init();
+	afterfunc();
+}
+
+void BSP_Power_EnterVLPS_WithCallFunc(void)
+{
+	bsp_beforefunc();
+	BSP_SysTick_DisableIRQ();
+	BOARD_RUNClockToVLPS();
+	BSP_SysTick_Init();
+	bsp_afterfunc();	
+}
 
 
+void BSP_Power_RegisterCall(void (* beforefunc)(void) , void (* afterfunc)(void))
+{
+	bsp_beforefunc = beforefunc;
+	bsp_afterfunc = afterfunc;
+}
 
 
 // -------Test Func--------
 void BSP_Power_ModeTest(void)
 {
-
 	BOARD_RUNClockToVLPS();
 }
 
