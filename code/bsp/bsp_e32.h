@@ -57,7 +57,9 @@ typedef enum
 	E32_CMD_CONF_OK,
 	E32_CMD_CONF_Resp,
 	E32_CMD_SEND ,
+	E32_CMD_SENDDATA , 
 	E32_CMD_REALSEND , 
+	
 	
 }BSP_E32_CMD_e; 
 
@@ -119,7 +121,7 @@ void BSP_E32_Power_ON(void);
 void BSP_E32_Power_OFF(void);
 void BSP_E32_Rev(void);
 void BSP_E32_RevByteOneByte(uint8_t value);
-
+void BSP_E32_SendLoop(void);
 
 
 void BSP_E32_Close(void);

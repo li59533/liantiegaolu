@@ -189,6 +189,13 @@ static uint8_t app_transfer_getcmdcount(void)
 	return app_transfer_cmd_queue.count;
 }
 
+void APP_Transfer_cmdClear(void)
+{
+	app_transfer_cmd_queue.count = 0;
+	app_transfer_cmd_queue.in = 0;
+	app_transfer_cmd_queue.out = 0;
+}
+
 
 void APP_Transfer_CoreLoop(void)
 {
@@ -233,28 +240,26 @@ void APP_Transfer_CoreLoop(void)
 		{
 			DEBUG("AppTransfer_SendReq\r\n");
 			
-			
-			if(BSP_E32_GetMode() == E32_MODE_NORMAL)
-			{
-				
-				app_transfer_senddata_req();
-				app_transfer_enqueue_cmd(AppTransfer_SendResp);
-				AppTask_Timer_Start_Event(APP_TASK_TRANSFER_CORELOOP_EVENT , 1000);
-				APP_RevClearAckFlag();				
-			}
+			BSP_E32_SetMode(E32_MODE_NORMAL);
+			BSP_E32_Power_ON();
+			app_transfer_senddata_req();
+			app_transfer_enqueue_cmd(AppTransfer_SendResp);
+			AppTask_Timer_Start_Event(APP_TASK_TRANSFER_CORELOOP_EVENT , 1000);
+			APP_RevClearAckFlag();				
+
 
 		} 
 		break;
 		case App_Transfer_ReSendReq:
 		{
 			DEBUG("App_Transfer_ReSendReq\r\n");
-			if(BSP_E32_GetMode() == E32_MODE_NORMAL)
-			{
-				app_transfer_re_senddata_req();
-				app_transfer_enqueue_cmd(AppTransfer_SendResp);
-				AppTask_Timer_Start_Event(APP_TASK_TRANSFER_CORELOOP_EVENT , 1000);
-				APP_RevClearAckFlag();				
-			}			
+			BSP_E32_Power_ON();
+			BSP_E32_SetMode(E32_MODE_NORMAL);
+			app_transfer_re_senddata_req();
+			app_transfer_enqueue_cmd(AppTransfer_SendResp);
+			AppTask_Timer_Start_Event(APP_TASK_TRANSFER_CORELOOP_EVENT , 1000);
+			APP_RevClearAckFlag();				
+	
 		}
 		break;
 		case AppTransfer_SendResp:
@@ -276,27 +281,6 @@ void APP_Transfer_CoreLoop(void)
 			DEBUG("AppTransfer_LowPower\r\n");
 			APP_Battery_Reduce();	
 			app_transfer_lowpower();
-			app_transfer_enqueue_cmd(AppTransfer_OpenNet);
-			AppTask_Timer_Start_Event(APP_TASK_TRANSFER_CORELOOP_EVENT , 20);
-			//AppTask_Send_Event(APP_TASK_TRANSFER_CORELOOP_EVENT);
-		}
-		break;
-		case AppTransfer_NormalPower:
-		{
-			
-		}
-		break;
-		case AppTransfer_OpenNet:
-		{
-			BSP_E32_Open();
-			app_transfer_enqueue_cmd(AppTransfer_OpenADC);
-			AppTask_Timer_Start_Event(APP_TASK_TRANSFER_CORELOOP_EVENT , 20);
-		}
-		break;
-		case AppTransfer_OpenADC:
-		{
-			BSP_Power_V30_ON();
-			APP_GetData_Init();
 			app_transfer_enqueue_cmd(AppTransfer_CheckTime);
 			AppTask_Send_Event(APP_TASK_TRANSFER_CORELOOP_EVENT);
 		}
@@ -309,9 +293,8 @@ void APP_Transfer_CoreLoop(void)
 void APP_LowPower_BeforeFunc(void)
 {
 	BSP_LED_Close(BSP_LED1);
-	
-	APP_GetData_DeInit();
 	BSP_E32_Close();
+	APP_GetData_DeInit();
 	BSP_Power_V30_OFF();
 
 
@@ -319,7 +302,9 @@ void APP_LowPower_BeforeFunc(void)
 }
 void APP_LowPower_AfterFunc(void)
 {
-	
+	BSP_E32_Open();
+	BSP_Power_V30_ON();
+	APP_GetData_Init();	
 }
 
 
@@ -512,7 +497,6 @@ static void app_transfer_senddata_resp(void)
 				app_transfer_enqueue_cmd(AppTransfer_SerNextTime);
 				AppTask_Send_Event(APP_TASK_TRANSFER_CORELOOP_EVENT);
 			}
-			
 		}
 		break;
 		default:break;

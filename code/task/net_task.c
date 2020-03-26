@@ -131,6 +131,14 @@ osal_event_t NetTask_Process(uint8_t taskid,osal_event_t events)
 		NetTask_Timer_Start_Event(NET_TASK_CORE_LOOP_EVENT,20);
         return events ^ NET_TASK_CORE_LOOP_EVENT;
     }	
+	
+	if (events & NET_TASK_SEND_EVENT)
+    {
+		DEBUG("NET_TASK_SEND_EVENT\r\n");	
+		BSP_E32_SendLoop();
+        return events ^ NET_TASK_SEND_EVENT;
+    }		
+
 	if (events & NET_TASK_REV_EVENT)
     {
 		DEBUG("NET_TASK_REV_EVENT\r\n");	

@@ -160,8 +160,7 @@ static BSP_E32_CmdQueue_t BSP_E32_CmdQueue =
  * @brief         
  * @{  
  */
-static void bsp_e32_halinit(void);
-static void bsp_e32_sendtask(void);  
+static void bsp_e32_halinit(void); 
 static void bsp_e32_getconf(void);
 static void bsp_e32_setconf(void);
 static void bsp_e32_ClearCmd(void);
@@ -214,8 +213,8 @@ static void bsp_e32_haldeinit(void)
 
 
 	
-	GPIO_WritePinOutput(GPIOD, 7, 0); // M0
-	GPIO_WritePinOutput(GPIOD, 6, 0); // M1
+	//GPIO_WritePinOutput(GPIOD, 7, 0); // M0
+	//GPIO_WritePinOutput(GPIOD, 6, 0); // M1
 	GPIO_WritePinOutput(GPIOA, 4, 0); // AUX
 
 
@@ -257,12 +256,8 @@ static void bsp_e32_halinit(void)
 	gpio_pin_config.pinDirection = kGPIO_DigitalOutput;
 	GPIO_PinInit(GPIOE, 19, &gpio_pin_config);	
 	
-	GPIO_WritePinOutput(GPIOD, 7, 1); // M0
-	GPIO_WritePinOutput(GPIOD, 6, 1); // M1
-	GPIO_WritePinOutput(GPIOA, 4, 0); // AUX
-	GPIO_WritePinOutput(GPIOE, 19, 0); // E32_Power
-	
-	
+	BSP_E32_SetMode(E32_MODE_SLEEP);
+	GPIO_WritePinOutput(GPIOA, 4, 0); // AUX	
 }
 
 
@@ -342,13 +337,9 @@ void BSP_E32_WriteBytes(uint8_t *buf , uint16_t len)
 void BSP_E32_SendData(uint16_t destaddr , uint8_t channel, uint8_t *buf , uint16_t len)
 {	
 	bsp_e32_senddata_t * sendbuf = (bsp_e32_senddata_t *) &bsp_e32_senddatabuf;
-	//sendbuf->destaddr = destaddr ;
-	//sendbuf->destaddr &= 0x0000; 
 	sendbuf->destaddr = (*(uint8_t *)&destaddr << 8)| (*((uint8_t *)&destaddr + 1) );
-	
 	sendbuf->channel = channel;
 	memcpy( &sendbuf->payload , buf , len);
-	
 	BSP_E32_AddSendBuf( (uint8_t *)sendbuf , len  + 3);
 }
 
@@ -360,24 +351,7 @@ void BSP_E32_AddSendBuf(uint8_t *buf , uint16_t len)
 	BSP_E32_SendQueue.count ++;
 	BSP_E32_SendQueue.in %= BSP_E32_SendQueue.size;
 	
-	BSP_E32_AddCmd(E32_CMD_SEND, 0 );
-}
-
-static void bsp_e32_sendtask(void)   
-{
-	if(BSP_E32_SendQueue.count > 0)
-	{
-		DEBUG("BSP_E32_SendLen : %d\r\n" , BSP_E32_SendQueue.queue[BSP_E32_SendQueue.out].len);
-		BSP_E32_WriteBytes(BSP_E32_SendQueue.queue[BSP_E32_SendQueue.out].buf , BSP_E32_SendQueue.queue[BSP_E32_SendQueue.out].len);
-		BSP_E32_SendQueue.count -- ;
-		BSP_E32_SendQueue.out ++;
-		BSP_E32_SendQueue.out %= BSP_E32_SendQueue.size;
-		
-		if(BSP_E32_SendQueue.count > 0)
-		{
-			BSP_E32_AddCmd(E32_CMD_SEND , 0);
-		}
-	}
+	NetTask_Send_Event(NET_TASK_SEND_EVENT);
 }
 
 static void bsp_e32_ClearCmd(void)
@@ -439,7 +413,7 @@ void BSP_E32_CoreLoop(void)
 	}
 	else
 	{
-		if(AUX_timeout > 250)
+		if(AUX_timeout > 250)  // rest module
 		{
 			AUX_timeout = 0;
 			DEBUG("AUX_timeout\r\n");
@@ -451,7 +425,6 @@ void BSP_E32_CoreLoop(void)
 			NetTask_Send_Event(NET_TASK_MODULE_INIT_EVENT);
 		}
 		AUX_timeout ++;
-		//DEBUG("E32_AUX_STATUS : 0\r\n");
 		return;
 	}
 	
@@ -467,8 +440,6 @@ void BSP_E32_CoreLoop(void)
 		case E32_CMD_GETCONF_Req : 
 			{
 				DEBUG("E32_CMD_GETCONF_Req\r\n");
-				//BSP_LED_Blink( BSP_LED_TEST , 0 , 20, 500); // 
-				BSP_UART_SetBaudRate(BSP_UART0 , 9600);
 				bsp_e32_getconf();
 				BSP_E32_AddCmd( E32_CMD_GETCONF_Resp , 20);
 				time_cout = OS_Clock_GetSystemClock();
@@ -491,8 +462,7 @@ void BSP_E32_CoreLoop(void)
 				{
 					e32_cmd_getconf_flag = 0;
 					DEBUG("E32_CMD_GETCONF_Resp\r\n");
-				}
-				
+				}	
 			}
 			break;
 		case E32_CMD_SETCONF_Req:
@@ -505,22 +475,9 @@ void BSP_E32_CoreLoop(void)
 		case E32_CMD_CONF_OK:
 			{
 				DEBUG("E32_CMD_CONF_OK\r\n");
-				BSP_E32_SetMode(E32_MODE_NORMAL);
 				BSP_UART_SetBaudRate(BSP_UART0 , 115200);
 				AppTask_Send_Event(APP_TASK_TRANSFER_CORELOOP_EVENT);
 				BSP_LED_Blink( BSP_LED_TEST , 3 , 50, 1000); // 
-			}
-			break;
-		case E32_CMD_SEND : 
-			{
-				DEBUG("E32_CMD_SEND\r\n");
-				BSP_LED_Blink( BSP_LED_TEST , 2 , 10, 80);
-				BSP_E32_AddCmd( E32_CMD_REALSEND , 20);					
-			}	
-			break;
-		case E32_CMD_REALSEND:
-			{
-				bsp_e32_sendtask();
 			}
 			break;
 		default:break;
@@ -530,8 +487,10 @@ void BSP_E32_CoreLoop(void)
 
 static void bsp_e32_getconf(void)
 {
+	
+	BSP_UART_SetBaudRate(BSP_UART0 , 9600);
 	BSP_E32_SetMode(E32_MODE_SLEEP);
-	BSP_Systick_Delayms(1);
+	BSP_E32_Power_ON();	
 	BSP_E32_AddSendBuf(BSP_E32_GetConfCMD , sizeof(BSP_E32_GetConfCMD));
 }
 
@@ -597,11 +556,6 @@ void BSP_E32_Rev(void)
 	}
 }
 
-
-
-
-
-
 static void BSP_E32_ModlueRevAnalysis(uint8_t * buf, uint8_t len )
 {
 	uint16_t module_localaddr = 0 ;
@@ -647,31 +601,10 @@ static void BSP_E32_ModlueRevAnalysis(uint8_t * buf, uint8_t len )
 		BSP_E32_AddCmd( E32_CMD_CONF_OK , 0);
 	}
 	
-	
-//	//BSP_Systick_Delayms(100);
 	DEBUG("LocalAddr:%04X\r\n" , module_localaddr);
-//	DEBUG("module_TTLcheck:%X\r\n" , module_TTLcheck);
-//	DEBUG("module_TTLbaudrate:%X\r\n" , module_TTLbaudrate);
-//	DEBUG("module_Airbaudrate:%X\r\n" , module_Airbaudrate);
-//	DEBUG("module_chan:%X\r\n" , module_chan);
-//	DEBUG("module_transmission_mode:%X\r\n" , module_transmission_mode);
-//	DEBUG("module_IO_workstyle:%X\r\n" , module_IO_workstyle);
-//	DEBUG("module_wakeup_time:%X\r\n" , module_wakeup_time);	
-//	DEBUG("module_FEC:%X\r\n" , module_FEC);
-//	DEBUG("module_power:%X\r\n" , module_power);		
-//	
-//	DEBUG("-------------------------------\r\n");
-//	//BSP_Systick_Delayms(100);
+
 	DEBUG("g_LocalAddr:%04X\r\n" , g_SystemParam_Config.E32_conf.module_source_addr);
-//	DEBUG("g_module_TTLcheck:%X\r\n" , g_SystemParam_Config.module_datacheck);
-//	DEBUG("g_module_TTLbaudrate:%X\r\n" , g_SystemParam_Config.module_baudrate);
-//	DEBUG("g_module_Airbaudrate:%X\r\n" , g_SystemParam_Config.module_airspeed );
-//	DEBUG("g_module_chan:%X\r\n" , g_SystemParam_Config.module_channel);
-//	DEBUG("g_module_transmission_mode:%X\r\n" , g_SystemParam_Config.module_transmission_mode );
-//	DEBUG("g_module_IO_workstyle:%X\r\n" , g_SystemParam_Config.module_IO_workstyle );
-//	DEBUG("g_module_wakeup_time:%X\r\n" , g_SystemParam_Config.module_wakeup_time);	
-//	DEBUG("g_module_FEC:%X\r\n" , g_SystemParam_Config.module_FEC);
-//	DEBUG("g_module_power:%X\r\n" , g_SystemParam_Config.module_power);
+
 		
 }
 
@@ -694,6 +627,7 @@ void BSP_E32_RevByteOneByte(uint8_t value)
 
 void BSP_E32_Close(void)
 {
+	BSP_E32_SetMode(E32_MODE_SLEEP);
 	BSP_E32_Power_OFF();
 	
 	BSP_Uart0_Close();
@@ -712,13 +646,57 @@ void BSP_E32_Open(void)
 {
 	
 	bsp_e32_halinit();
+	BSP_E32_SetMode(E32_MODE_NORMAL);
+	
 	BSP_E32_Power_ON();
 	BSP_Uart0_Open();
-	BSP_E32_SetMode(E32_MODE_NORMAL);
+
 	NetTask_Send_Event(NET_TASK_CORE_LOOP_EVENT);
 }
 
+void BSP_E32_SendLoop(void)
+{
 
+	if(E32_AUX_STATUS == 1)
+	{
+
+	}
+	else
+	{
+		
+		NetTask_Timer_Start_Event(NET_TASK_SEND_EVENT , 10);
+		
+//		if(AUX_timeout > 250)  // rest module
+//		{
+//			AUX_timeout = 0;
+//			DEBUG("AUX_timeout\r\n");
+//			
+//			NetTask_Clear_Event(NET_TASK_CORE_LOOP_EVENT);
+//			NetTask_Timer_Stop_Event(NET_TASK_CORE_LOOP_EVENT);
+//			
+//			bsp_e32_ClearCmd();
+//			NetTask_Send_Event(NET_TASK_MODULE_INIT_EVENT);
+//		}
+
+		return;
+	}	
+	
+	
+	if(BSP_E32_SendQueue.count > 0)
+	{
+		DEBUG("BSP_E32_SendLen : %d\r\n" , BSP_E32_SendQueue.queue[BSP_E32_SendQueue.out].len);
+		BSP_LED_Blink( BSP_LED_TEST , 2 , 10, 80);
+		BSP_E32_WriteBytes(BSP_E32_SendQueue.queue[BSP_E32_SendQueue.out].buf , BSP_E32_SendQueue.queue[BSP_E32_SendQueue.out].len);
+		BSP_E32_SendQueue.count -- ;
+		BSP_E32_SendQueue.out ++;
+		BSP_E32_SendQueue.out %= BSP_E32_SendQueue.size;
+
+		if(BSP_E32_SendQueue.count > 0)
+		{
+			NetTask_Send_Event(NET_TASK_SEND_EVENT);
+		}
+	}
+}
 
 /**
  * @}

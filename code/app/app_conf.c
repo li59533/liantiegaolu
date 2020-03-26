@@ -34,6 +34,7 @@
 #include "app_battery.h"
 #include "version.h"
 #include "bsp_led.h"
+#include "app_transfer.h"
 /**
  * @addtogroup    app_conf_Modules 
  * @{  
@@ -658,6 +659,7 @@ static int8_t bsp_conf_rev(uint8_t * buf , uint16_t len)
 					}
 					else
 					{
+						memset( &temp_buf.buf[0] , 0 , sizeof(temp_buf.buf) ) ; 
 						temp_buf.len = 0;
 					}
 				}
@@ -691,6 +693,8 @@ void APP_Conf_SendData( uint8_t *buf , uint16_t len)
 void APP_Conf_SetConfStatus(void)
 {
 	BSP_LED_Blink( BSP_LED_TEST , 0 , 50, 1000);
+	
+	APP_Transfer_cmdClear();
 	app_conf_confstatus = 1;
 }
 

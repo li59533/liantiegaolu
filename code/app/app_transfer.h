@@ -65,6 +65,7 @@
  * @{  
  */
 void APP_Transfer_CoreLoop(void);  
+void APP_Transfer_cmdClear(void);
 
 void APP_LowPower_BeforeFunc(void);
 void APP_LowPower_AfterFunc(void);
