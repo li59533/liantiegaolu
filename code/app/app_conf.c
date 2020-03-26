@@ -696,6 +696,7 @@ void APP_Conf_SetConfStatus(void)
 	
 	APP_Transfer_cmdClear();
 	app_conf_confstatus = 1;
+	AppTask_Timer_Start_Event(APP_TASK_REPORTVALUE_INSERIAL_EVENT,1000);
 }
 
 void APP_Conf_ClearConfStatus(void)

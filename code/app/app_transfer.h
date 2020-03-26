@@ -69,6 +69,11 @@ void APP_Transfer_cmdClear(void);
 
 void APP_LowPower_BeforeFunc(void);
 void APP_LowPower_AfterFunc(void);
+
+void APP_Transfer_SendDataSerial_Process(void);
+
+void APP_Transfer_SendData_Serial(void);
+
 /**
  * @}
  */

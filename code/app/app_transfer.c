@@ -369,6 +369,82 @@ static void app_transfer_settime(void)
 	BSP_RTC_SetAlarm_InTimeStamp(next_time);
 }
 
+
+void APP_Transfer_SendDataSerial_Process(void)
+{
+	if(APP_Conf_GetConfStatus() == 1)
+	{
+		APP_Transfer_SendData_Serial();
+		AppTask_Timer_Start_Event(APP_TASK_REPORTVALUE_INSERIAL_EVENT,10000);
+	}
+	else
+	{
+		
+	}
+}
+
+
+void APP_Transfer_SendData_Serial(void)
+{
+	
+	App_Data_t * App_Data;
+	ln_protocolintance_t * ln_protocolintance = 0;
+	uint8_t sendbuf[100] = { 0 };
+	uint8_t buf_temp[10] = { 0 };
+	uint16_t len = 0; 
+
+
+	App_Data = APP_GetData_Get();
+
+
+	ln_protocolintance = (ln_protocolintance_t *) sendbuf;
+	ln_protocolintance->head = LNPROTOCOL_HEAD;
+	ln_protocolintance->cmd = CMD_ReportData;
+	
+	uint8_t * buf_ptr = (uint8_t *)&ln_protocolintance->payload;
+	// -------- add one flag ---
+	buf_temp[0] = 0x01;
+	buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)buf_temp , 1);
+	len += 1;
+	// --------Value ---
+	if(App_Data->device_status == MA4_20_OVER)
+	{
+		float errcode = 999.999f;
+		buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)&errcode , 4);
+	}
+	else if(App_Data->device_status == MA4_20_LOST)
+	{
+		float errcode = -999.999f;
+		buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)&errcode , 4);
+	}
+	else if(App_Data->device_status == MA4_20_NORMAL)
+	{
+		buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)&App_Data->need_value , 4);
+	}	
+
+	len += 4;
+	// --------Battery ---
+	buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)&g_SystemParam_Config.battery , 1);
+	len += 1;
+	// --------SNcode ---
+	buf_temp[0] = g_SystemParam_Config.E32_conf.module_source_addr >> 8;
+	buf_temp[1] = (uint8_t )g_SystemParam_Config.E32_conf.module_source_addr ;
+	buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)buf_temp , 2);
+	len += 2;
+
+	// ---------------------------------------
+	ln_protocolintance->len = len ; //
+	*buf_ptr = LNprotocol_GetChecksum(&ln_protocolintance->head , len + 6);
+
+	buf_ptr += 1;
+	*(buf_ptr ) = LNPROTOCOL_FOOT;
+	buf_ptr ++;
+
+	APP_Conf_SendData(&ln_protocolintance->head ,buf_ptr - &ln_protocolintance->head)	;	
+		 
+}
+
+
 static void app_transfer_senddata_req(void)
 {
 	App_Data_t * App_Data;

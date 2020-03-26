@@ -128,7 +128,11 @@ osal_event_t AppTask_Process(uint8_t taskid,osal_event_t events)
         return events ^ APP_TASK_TRANSFER_CORELOOP_EVENT;
     }	
 	
-	
+    if (events & APP_TASK_REPORTVALUE_INSERIAL_EVENT)
+    {		
+		APP_Transfer_SendDataSerial_Process();
+        return events ^ APP_TASK_REPORTVALUE_INSERIAL_EVENT;
+    }	
 	
     return 0;
 }
