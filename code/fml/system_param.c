@@ -74,7 +74,7 @@
 const SystemParam_Config_t SystemParam_Config_Default = 
 {
 	.E32_conf.module_source_addr = 0x0002 , 
-	.E32_conf.module_destination_addr = 0x0001 , 
+	.E32_conf.module_destination_addr = 4000 , 
 	.E32_conf.module_datacheck = 0 ,//0:8N1; 1:8o1;  2:8E1;  3:8N1;
 	.E32_conf.module_baudrate = 7 , //0:1200; 1:2400;  2:4800;  3:9600; 4:19200;  5:38400;  6:57600; 7:115200;
 	.E32_conf.module_airspeed = 2 ,//0:0.3K 1:1.2K 2:2.4k 3:4.8K 4:9.6K 5:19.2K
@@ -212,6 +212,9 @@ void SystemParam_Reset(void)
 {
 	g_SystemParam_Config = SystemParam_Config_Default;
 	sys_makeUIDtoSNcode();
+	
+	g_SystemParam_Config.E32_conf.module_source_addr =(uint16_t)( g_SystemParam_Config.SNcode[6] * 256 + g_SystemParam_Config.SNcode[7]);
+	
 	SystemParam_Save();
 	DEBUG("SystemParam_Reset Load DefaultConf\r\n");
 
