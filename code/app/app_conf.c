@@ -204,9 +204,7 @@ void APP_Conf_SetADCToRealValue(uint8_t * payload , uint16_t len)
 		// --------Send---------
 		APP_Conf_SendData( &ln_protocolintance->head , buf_ptr - &ln_protocolintance->head);
 		// ----------------------			
-		
-		
-		
+
 	}
 
 }

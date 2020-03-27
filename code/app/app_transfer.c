@@ -427,8 +427,8 @@ void APP_Transfer_SendData_Serial(void)
 	buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)&g_SystemParam_Config.battery , 1);
 	len += 1;
 	// --------SNcode ---
-	buf_temp[0] = g_SystemParam_Config.E32_conf.module_source_addr >> 8;
-	buf_temp[1] = (uint8_t )g_SystemParam_Config.E32_conf.module_source_addr ;
+	buf_temp[0] = g_SystemParam_Config.SNcode[6];
+	buf_temp[1] = g_SystemParam_Config.SNcode[7]; 
 	buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)buf_temp , 2);
 	len += 2;
 
@@ -488,13 +488,14 @@ static void app_transfer_senddata_req(void)
 	buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)&g_SystemParam_Config.battery , 1);
 	len += 1;
 	// --------SNcode ---
-	buf_temp[0] = g_SystemParam_Config.E32_conf.module_source_addr >> 8;
-	buf_temp[1] = (uint8_t )g_SystemParam_Config.E32_conf.module_source_addr ;
+					
+	buf_temp[0] = g_SystemParam_Config.SNcode[6];
+	buf_temp[1] = g_SystemParam_Config.SNcode[7] ;
 	buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)buf_temp , 2);
 	len += 2;
 	// --------module srcaddr ---
-	//buf_temp[0] = g_SystemParam_Config.E32_conf.module_source_addr >> 8;
-	//buf_temp[1] = (uint8_t )g_SystemParam_Config.E32_conf.module_source_addr ;
+	buf_temp[0] = g_SystemParam_Config.E32_conf.module_source_addr >> 8;
+	buf_temp[1] = (uint8_t )g_SystemParam_Config.E32_conf.module_source_addr ;
 	buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)buf_temp , 2);
 	len += 2;	
 	// --------year mon day hour min sec ---
