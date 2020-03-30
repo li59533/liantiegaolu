@@ -74,6 +74,8 @@ void APP_Transfer_SendDataSerial_Process(void);
 
 void APP_Transfer_SendData_Serial(void);
 
+void APP_Transfer_TrigSendValue(void);
+
 /**
  * @}
  */

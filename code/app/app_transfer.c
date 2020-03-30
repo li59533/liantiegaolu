@@ -580,6 +580,15 @@ static void app_transfer_senddata_resp(void)
 	}
 }
 
+void APP_Transfer_TrigSendValue(void)
+{
+	app_transfer_enqueue_cmd(AppTransfer_SendReq);
+	AppTask_Send_Event(APP_TASK_TRANSFER_CORELOOP_EVENT);
+}
+
+
+
+
 /**
  * @}
  */

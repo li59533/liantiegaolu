@@ -281,7 +281,14 @@ void APP_Conf_Set_SNcode(uint8_t * full_message , uint16_t full_len)
 	// --------Send---------
 	APP_Conf_SendData( full_message ,full_len);
 	// ----------------------
-	memcpy(g_SystemParam_Config.SNcode , &full_message[4] , 8);
+	
+	uint8_t temp[8] = { 0 }; 
+	
+	for(uint8_t i = 0 ; i < 8 ; i ++)
+	{
+		temp[i] = full_message[11 - i];
+	}
+	memcpy(g_SystemParam_Config.SNcode , temp , 8); 
 	
 	// ------Save -------
 	SystemParam_Save();
@@ -509,6 +516,8 @@ void APP_Conf_Stop(uint8_t * full_message , uint16_t full_len)
 void APP_Conf_Start(uint8_t * full_message , uint16_t full_len) 
 {
 	APP_Conf_SendData( full_message , full_len);
+	
+	APP_Transfer_TrigSendValue();
 }
  
 void APP_Conf_ID(uint8_t * payload , uint16_t len)
