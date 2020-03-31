@@ -105,7 +105,6 @@
 
 void APP_Battery_Reduce(void)  
 {
-	
 	g_SystemParam_Config.current_boardtime++;
 	DEBUG("APP_Battery_Reduce Count :%d\r\n Battery:%d\r\n" , g_SystemParam_Config.current_boardtime,\
 															g_SystemParam_Config.battery);
@@ -115,20 +114,26 @@ void APP_Battery_Reduce(void)
 	{
 		if((g_SystemParam_Config.current_boardtime % (APP_BATTERY_ALL_TIMES / 100)) == 0)
 		{
+			
 			if(g_SystemParam_Config.battery >= 1)
 			{
 				DEBUG("APP_Battery_Reduce Save\r\n");
 				g_SystemParam_Config.battery -- ;
 				SystemParam_Save();
-			}
+			}				
+
 		}			
 	}
 	else
 	{
 		g_SystemParam_Config.current_boardtime = 0;
 	}
-	
- 
+}
+
+void APP_Battery_Reduce_INRest(void)
+{
+	APP_Battery_Reduce();
+	SystemParam_Save();
 }
 
 

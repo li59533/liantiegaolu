@@ -26,6 +26,7 @@
  */
 #include "clog.h"
 #include "version.h"
+#include "app_battery.h"
 
 /**
  * @addtogroup    board_Modules 
@@ -120,6 +121,9 @@ void Board_Init_BSP(void)
 	BSP_Flash_Init(); // Flash Init
 	BSP_Power_Init();
 	BSP_UART_Init( BSP_UART2 );
+	
+	
+	APP_Battery_Reduce_INRest();
 	
 // --------Test func-------------	
 //	BSP_ADC_Init();

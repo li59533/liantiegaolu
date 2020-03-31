@@ -65,7 +65,11 @@
  * @{  
  */
 void APP_Battery_Reduce(void);
+void APP_Battery_Reduce_INRest(void);
+
+// ----------Test Func -----------------
 void APP_Battery_TestFunc(void);
+// -------------------------------------
 /**
  * @}
  */
