@@ -27,6 +27,7 @@
 #include "clog.h"
 #include "version.h"
 #include "app_battery.h"
+#include "system_param.h"
 
 /**
  * @addtogroup    board_Modules 
@@ -117,11 +118,13 @@ void Board_Init_ClockRUN(void)
 void Board_Init_BSP(void)
 {
 	DEBUG("Version:%s\r\n" , Version_Get_Str());
+	
 	BSP_RTC_Init();   //RTC Init
 	BSP_Flash_Init(); // Flash Init
 	BSP_Power_Init();
 	BSP_UART_Init( BSP_UART2 );
 	
+	SystemParam_Init();
 	
 	APP_Battery_Reduce_INRest();
 	

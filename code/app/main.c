@@ -118,7 +118,7 @@ int main(void)
 	
 	Board_Init_BSP();
 	
-	SystemParam_Init();
+	
 
 	OS_Init(); // init osal
     
