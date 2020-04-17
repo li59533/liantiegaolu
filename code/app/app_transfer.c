@@ -242,12 +242,13 @@ void APP_Transfer_CoreLoop(void)
 			
 			BSP_E32_SetMode(E32_MODE_NORMAL);
 			BSP_E32_Power_ON();
+			
 			app_transfer_senddata_req();
 			app_transfer_enqueue_cmd(AppTransfer_SendResp);
 			AppTask_Timer_Start_Event(APP_TASK_TRANSFER_CORELOOP_EVENT , 1000);
 			APP_RevClearAckFlag();				
 
-
+			BSP_Power_V30_OFF();
 		} 
 		break;
 		case App_Transfer_ReSendReq:
@@ -259,7 +260,7 @@ void APP_Transfer_CoreLoop(void)
 			app_transfer_enqueue_cmd(AppTransfer_SendResp);
 			AppTask_Timer_Start_Event(APP_TASK_TRANSFER_CORELOOP_EVENT , 1000);
 			APP_RevClearAckFlag();				
-	
+			APP_Battery_Reduce();
 		}
 		break;
 		case AppTransfer_SendResp:

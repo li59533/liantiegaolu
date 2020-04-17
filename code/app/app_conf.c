@@ -35,6 +35,7 @@
 #include "version.h"
 #include "bsp_led.h"
 #include "app_transfer.h"
+#include "bsp_power.h"
 /**
  * @addtogroup    app_conf_Modules 
  * @{  
@@ -700,7 +701,7 @@ void APP_Conf_SendData( uint8_t *buf , uint16_t len)
 void APP_Conf_SetConfStatus(void)
 {
 	BSP_LED_Blink( BSP_LED_TEST , 0 , 50, 1000);
-	
+	BSP_Power_V30_ON();
 	APP_Transfer_cmdClear();
 	app_conf_confstatus = 1;
 	AppTask_Timer_Start_Event(APP_TASK_REPORTVALUE_INSERIAL_EVENT,1000);

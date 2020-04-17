@@ -137,11 +137,13 @@ void BSP_Power_Init(void)
 
 void BSP_Power_V30_ON(void)
 {
+	DEBUG("BSP_Power_V30_ON\r\n");
 	GPIO_WritePinOutput(GPIOD, 5, 1);
 }
 
 void BSP_Power_V30_OFF(void)
 {
+	DEBUG("BSP_Power_V30_OFF\r\n");
 	GPIO_WritePinOutput(GPIOD, 5, 0);
 }
 

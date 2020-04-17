@@ -39,7 +39,7 @@
  * @brief         
  * @{  
  */
-#define APP_BATTERY_ALL_TIMES   80000
+#define APP_BATTERY_ALL_TIMES   90000
 /**
  * @}
  */
