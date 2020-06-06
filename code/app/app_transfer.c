@@ -78,6 +78,7 @@
 typedef enum
 {
 	AppTransfer_CheckTime = 1,
+	AppTransfer_CheckData ,
 	AppTransfer_SendReq ,
 	App_Transfer_ReSendReq,
 	AppTransfer_SendResp ,
@@ -154,6 +155,8 @@ static int8_t app_transfer_checktime(void);
 static void app_transfer_lowpower(void);
 static void app_transfer_senddata_resp(void);
 static void app_transfer_re_senddata_req(void);
+static int8_t app_transfer_checkdata(void);
+
 /**
  * @}
  */
@@ -224,7 +227,7 @@ void APP_Transfer_CoreLoop(void)
 			{
 				if(app_transfer_checktime() == 1)
 				{
-					app_transfer_enqueue_cmd(AppTransfer_SendReq);
+					app_transfer_enqueue_cmd(AppTransfer_CheckData);
 					AppTask_Timer_Start_Event(APP_TASK_TRANSFER_CORELOOP_EVENT , 500);
 					//AppTask_Send_Event(APP_TASK_TRANSFER_CORELOOP_EVENT);
 				}
@@ -235,6 +238,27 @@ void APP_Transfer_CoreLoop(void)
 				}
 			}
 		}
+		break;
+		case AppTransfer_CheckData:
+		{
+			int8_t status_ma = 0;
+			status_ma = app_transfer_checkdata();
+			if(status_ma == 1)
+			{
+				app_transfer_enqueue_cmd(AppTransfer_SendReq);
+				AppTask_Timer_Start_Event(APP_TASK_TRANSFER_CORELOOP_EVENT , 500);
+			}
+			else if(status_ma == -1)
+			{
+				app_transfer_enqueue_cmd(AppTransfer_CheckData);
+				AppTask_Timer_Start_Event(APP_TASK_TRANSFER_CORELOOP_EVENT , 1000);
+			}
+			else if(status_ma == -2)
+			{
+				app_transfer_enqueue_cmd(AppTransfer_SendReq);
+				AppTask_Timer_Start_Event(APP_TASK_TRANSFER_CORELOOP_EVENT , 10);		
+			}
+		}	
 		break;
 		case AppTransfer_SendReq:
 		{
@@ -345,6 +369,38 @@ static int8_t app_transfer_checktime(void)
 	}
 }
 
+static int8_t app_transfer_checkdata(void)
+{
+	static uint8_t checkerr_tims = 0;
+	App_Data_t * App_Data;
+	App_Data = APP_GetData_Get();	
+	
+	if(checkerr_tims >=2)
+	{
+		checkerr_tims = 0;
+		return 1;
+	}
+	
+	if(App_Data->device_status == MA4_20_NODevice)
+	{
+		return -2;
+	}
+	
+	if(App_Data->device_status != MA4_20_NORMAL)
+	{
+		checkerr_tims ++;
+		return -1;
+	}
+	else if (App_Data->device_status == MA4_20_NORMAL)
+	{
+		checkerr_tims = 0;
+		return 1;
+	}
+	
+	return 1;
+	
+	
+}
 
 static void app_transfer_settime(void)
 {
@@ -421,7 +477,12 @@ void APP_Transfer_SendData_Serial(void)
 	else if(App_Data->device_status == MA4_20_NORMAL)
 	{
 		buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)&App_Data->need_value , 4);
-	}	
+	}
+	else if(App_Data->device_status == MA4_20_NODevice)
+	{
+		float errcode = 0.0f;
+		buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)&errcode , 4);
+	}
 
 	len += 4;
 	// --------Battery ---
@@ -483,7 +544,11 @@ static void app_transfer_senddata_req(void)
 	{
 		buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)&App_Data->need_value , 4);
 	}	
-
+	else if(App_Data->device_status == MA4_20_NODevice)
+	{
+		float errcode = 0.0f;
+		buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)&errcode , 4);
+	}
 	len += 4;
 	// --------Battery ---
 	buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)&g_SystemParam_Config.battery , 1);

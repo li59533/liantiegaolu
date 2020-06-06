@@ -144,7 +144,11 @@ void APP_GetData_Calc(void)
 	App_Data.real_mA = 0.00045776f * App_Data.original_value * g_SystemParam_Config.Analog_conf.adc_k + g_SystemParam_Config.Analog_conf.adc_b;
 	App_Data.need_value = App_Data.real_mA * g_SystemParam_Config.Analog_conf.real_k + g_SystemParam_Config.Analog_conf.real_b;
 
-	if(App_Data.real_mA <= 3.7f )
+	if(App_Data.real_mA < 0.2f)
+	{
+		App_Data.device_status = MA4_20_NODevice;
+	}
+	else if(App_Data.real_mA <= 3.7f )
 	{
 		App_Data.device_status = MA4_20_LOST;
 	}

@@ -53,6 +53,7 @@ typedef enum
 	
 	MA4_20_OVER   = 1,
 	MA4_20_LOST	  = 2,
+	MA4_20_NODevice ,
 }APP_Data_DeviceStatus_e;
  
 typedef  struct
