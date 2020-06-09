@@ -39,7 +39,7 @@
  * @brief         
  * @{  
  */
-#define APP_BATTERY_ALL_TIMES   90000
+#define APP_BATTERY_ALL_TIMES   17000
 /**
  * @}
  */
@@ -110,9 +110,9 @@ void APP_Battery_Reduce(void)
 															g_SystemParam_Config.battery);
 
 	
-	if(g_SystemParam_Config.current_boardtime < APP_BATTERY_ALL_TIMES)
+	if(g_SystemParam_Config.current_boardtime < g_SystemParam_Config.total_sendcount)
 	{
-		if((g_SystemParam_Config.current_boardtime % (APP_BATTERY_ALL_TIMES / 100)) == 0)
+		if((g_SystemParam_Config.current_boardtime % (g_SystemParam_Config.total_sendcount / 100)) == 0)
 		{
 			
 			if(g_SystemParam_Config.battery >= 1)

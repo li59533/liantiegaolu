@@ -28,8 +28,8 @@
  * @{  
  */
 #define VERSION_MAJOR		0   // 0~255
-#define VERSION_MINOR		3   // 0~255
-#define VERSION_LITE		6	// 0~255
+#define VERSION_MINOR		4   // 0~255
+#define VERSION_LITE		1	// 0~255
 /**
  * @}
  */

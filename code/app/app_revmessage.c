@@ -313,6 +313,26 @@ void APP_RevMessage_Process(uint8_t * buf , uint16_t len)
 			APP_Conf_GetVersion((uint8_t *)&ln_protocolintance->payload, ln_protocolintance->len);
 		}
 		break;
+		case CMD_Conf_Set_WaitStable:
+		{
+			APP_Conf_Set_WaitStable((uint8_t *)&ln_protocolintance->payload, ln_protocolintance->len);
+		}
+		break;		
+		case CMD_Conf_Get_WaitStable:
+		{
+			APP_Conf_Get_WaitStable((uint8_t *)&ln_protocolintance->payload, ln_protocolintance->len);
+		}
+		break;		
+		case CMD_Conf_Set_TotalSendcount:
+		{
+			APP_Conf_Set_TotalSendcount((uint8_t *)&ln_protocolintance->payload, ln_protocolintance->len);
+		}
+		break;
+		case CMD_Conf_Get_TotalSendcount:
+		{
+			APP_Conf_Get_TotalSendcount((uint8_t *)&ln_protocolintance->payload, ln_protocolintance->len);
+		}
+		break;		
 		default:
 		{
 			DEBUG("lnProtoCMD:%X\r\n" , ln_protocolintance->cmd);

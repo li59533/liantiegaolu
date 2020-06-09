@@ -112,6 +112,11 @@ typedef enum
 	CMD_Conf_Reply_SelfStart = 0x08,
 	CMD_Conf_Set_SelfStart	= 0x09,
 	CMD_Conf_Set_EQ		= 0x0a,
+	CMD_Conf_Set_WaitStable = 0x10 ,
+	CMD_Conf_Get_WaitStable = 0x11 ,
+	CMD_Conf_Set_TotalSendcount = 0x12 , 
+	CMD_Conf_Get_TotalSendcount = 0x13 , 
+	
 	
 	CMD_ReportData	 = 0x45,
 	CMD_Conf_GotoLowpower = 0x46,

@@ -94,6 +94,8 @@ const SystemParam_Config_t SystemParam_Config_Default =
 	.send_invteral = 10,
 	.workmode = LowPower_WorkingMode,
 	.battery = 100,
+	.waitstable = 2000,
+	.total_sendcount = 90000,
 };
 /**
  * @}

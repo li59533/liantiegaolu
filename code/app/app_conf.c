@@ -719,6 +719,96 @@ uint8_t APP_Conf_GetConfStatus(void)
 }
 
 
+
+void APP_Conf_Set_WaitStable(uint8_t * payload , uint16_t len)
+{
+	if(len == 4)
+	{
+		uint32_t waitstable = 0;
+		waitstable = * (uint32_t * )payload;
+		g_SystemParam_Config.waitstable = waitstable;
+		// ------Save -------
+		SystemParam_Save();
+		// ------------------			
+	}
+
+}
+void APP_Conf_Get_WaitStable(uint8_t * payload , uint16_t len)
+{
+	ln_protocolintance_t * ln_protocolintance = 0;
+	uint8_t sendbuf[100] = { 0 };
+	uint8_t buf_temp[10] = { 0 };
+	uint16_t send_len = 0; 
+
+	ln_protocolintance = (ln_protocolintance_t *) sendbuf;
+	ln_protocolintance->head = LNPROTOCOL_HEAD;
+	ln_protocolintance->cmd = CMD_Conf_Get_WaitStable;
+	
+	uint8_t * buf_ptr = (uint8_t *)&ln_protocolintance->payload;
+
+
+	// --------wait stable-----
+	memcpy(buf_temp , (uint8_t * )g_SystemParam_Config.waitstable , 4);
+	buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)buf_temp, 4);
+	send_len += 4;		
+	
+	// ---------------------------------------
+	ln_protocolintance->len = send_len;
+	*buf_ptr = LNprotocol_GetChecksum(&ln_protocolintance->head , send_len + 6);
+	buf_ptr ++;
+	*(buf_ptr ) = LNPROTOCOL_FOOT;
+	buf_ptr ++;
+
+
+	// --------Send---------
+	APP_Conf_SendData( &ln_protocolintance->head , buf_ptr - &ln_protocolintance->head);
+	// ----------------------		
+}
+void APP_Conf_Set_TotalSendcount(uint8_t * payload , uint16_t len)
+{
+	if(len == 4)
+	{
+		uint32_t totalsendcount = 0;
+		totalsendcount = * (uint32_t * )payload;
+		g_SystemParam_Config.total_sendcount = totalsendcount;
+		// ------Save -------
+		SystemParam_Save();
+		// ------------------			
+	}	
+}
+void APP_Conf_Get_TotalSendcount(uint8_t * payload , uint16_t len)
+{
+	ln_protocolintance_t * ln_protocolintance = 0;
+	uint8_t sendbuf[100] = { 0 };
+	uint8_t buf_temp[10] = { 0 };
+	uint16_t send_len = 0; 
+
+	ln_protocolintance = (ln_protocolintance_t *) sendbuf;
+	ln_protocolintance->head = LNPROTOCOL_HEAD;
+	ln_protocolintance->cmd = CMD_Conf_Get_TotalSendcount;
+	
+	uint8_t * buf_ptr = (uint8_t *)&ln_protocolintance->payload;
+
+
+	// --------wait stable-----
+	memcpy(buf_temp , (uint8_t * )g_SystemParam_Config.total_sendcount , 4);
+	buf_ptr = LNprotocol_AddPayload(buf_ptr, (uint8_t *)buf_temp, 4);
+	send_len += 4;		
+	
+	// ---------------------------------------
+	ln_protocolintance->len = send_len;
+	*buf_ptr = LNprotocol_GetChecksum(&ln_protocolintance->head , send_len + 6);
+	buf_ptr ++;
+	*(buf_ptr ) = LNPROTOCOL_FOOT;
+	buf_ptr ++;
+
+	// --------Send---------
+	APP_Conf_SendData( &ln_protocolintance->head , buf_ptr - &ln_protocolintance->head);
+	// ----------------------			
+}
+
+
+
 // -------- Test Func ------------
 
 uint8_t temp[10] = {0x12,0xff,0x43,0xfe,0x88};

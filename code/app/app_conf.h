@@ -76,7 +76,7 @@ void APP_Conf_Start(uint8_t * full_message , uint16_t full_len) ;
 void APP_Conf_SetConf(uint8_t * full_message , uint16_t full_len) ;
 void APP_Conf_GotoLowPower(uint8_t * full_message , uint16_t full_len); 
 void APP_Conf_Reply_Sample_Rate(uint8_t * payload , uint16_t len);
-void APP_Conf_Set_Sample_Rate(uint8_t * payload , uint16_t len);
+
 void APP_Conf_Set_Sample_Rate(uint8_t * full_message , uint16_t full_len );
 void APP_Conf_Reply_SelfStart(uint8_t * payload , uint16_t len);
 void APP_Conf_Set_SelfStart(uint8_t * full_message , uint16_t full_len);
@@ -84,6 +84,12 @@ void APP_Conf_Set_EQ(uint8_t * full_message , uint16_t full_len);
 void APP_Conf_Set_AlarmTime(uint8_t * payload , uint16_t len);
 void APP_Conf_Reply_Alarm(uint8_t * payload , uint16_t len);
 void APP_Conf_Set_SNcode(uint8_t * full_message , uint16_t full_len);
+
+void APP_Conf_Set_WaitStable(uint8_t * payload , uint16_t len);
+void APP_Conf_Get_WaitStable(uint8_t * payload , uint16_t len);
+void APP_Conf_Set_TotalSendcount(uint8_t * payload , uint16_t len);
+void APP_Conf_Get_TotalSendcount(uint8_t * payload , uint16_t len);
+
 
 
 void APP_Conf_SetConfStatus(void);

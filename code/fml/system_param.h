@@ -96,6 +96,9 @@ typedef struct
 	uint16_t send_invteral ;
 	E32_conf_t E32_conf; 
 	Analog_conf_t Analog_conf;
+	uint32_t waitstable ;
+	uint32_t total_sendcount;
+	
     uint16_t crc;           /*!< 所有的参数结构体必须按字节对其。且最后一个必须包
                                  含一个uint16_t类型的数据，该数据用于内部存储时的
                                  crc校验和存储，用户在保存参数时不用关心该值数值。*/

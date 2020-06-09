@@ -246,7 +246,7 @@ void APP_Transfer_CoreLoop(void)
 			if(status_ma == 1)
 			{
 				app_transfer_enqueue_cmd(AppTransfer_SendReq);
-				AppTask_Timer_Start_Event(APP_TASK_TRANSFER_CORELOOP_EVENT , 500);
+				AppTask_Timer_Start_Event(APP_TASK_TRANSFER_CORELOOP_EVENT , g_SystemParam_Config.waitstable);
 			}
 			else if(status_ma == -1)
 			{
