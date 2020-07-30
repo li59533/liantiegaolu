@@ -24,6 +24,7 @@
 #include "bsp_rtc.h"
 #include "osal.h"
 #include "app_conf.h"
+#include "system_param.h"
 /**
  * @addtogroup    app_revmessage_Modules 
  * @{  
@@ -380,6 +381,15 @@ static void app_revACK(uint8_t * payload , uint16_t len)
 	datetime.second = payload[6];
 	
 	BSP_RTC_SetDate(&datetime);
+
+
+	if(payload[8]==1)
+	{
+		g_SystemParam_Config.current_boardtime=1;      //…Ë÷√Œ™1
+		SystemParam_Save();
+	}
+
+
 }
 	
 
