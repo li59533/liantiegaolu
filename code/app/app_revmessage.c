@@ -388,8 +388,6 @@ static void app_revACK(uint8_t * payload , uint16_t len)
 		g_SystemParam_Config.current_boardtime=1;      //ÉèÖÃÎª1
 		SystemParam_Save();
 	}
-
-
 }
 	
 
